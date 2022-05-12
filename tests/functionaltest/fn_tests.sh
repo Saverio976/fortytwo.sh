@@ -62,18 +62,18 @@ then
     echo "$resul"
 fi
 
-echo 'echo "env | grep USER" | '"$1"
-resul=$(echo "env | grep USER" | tcsh)
-tests=$(echo "env | grep USER" | $1)
-NB_TESTS=$(($NB_TESTS+1))
-if [[ "$resul" != "$tests" ]];
-then
-    NB_FAILED=$((NB_FAILED+1))
-    echo ">> you provide:"
-    echo "$tests"
-    echo ">> but true result:"
-    echo "$resul"
-fi
+# echo 'echo "env | grep USER" | '"$1"
+# resul=$(echo "env | grep USER" | tcsh)
+# tests=$(echo "env | grep USER" | $1)
+# NB_TESTS=$(($NB_TESTS+1))
+# if [[ "$resul" != "$tests" ]];
+# then
+#     NB_FAILED=$((NB_FAILED+1))
+#     echo ">> you provide:"
+#     echo "$tests"
+#     echo ">> but true result:"
+#     echo "$resul"
+# fi
 
 echo 'echo "cat /dev/urandom | head -c 1000" | '"$1"
 echo "cat /dev/urandom | head -c 1000" | timeout 10s $1 > /dev/null
