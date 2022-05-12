@@ -63,6 +63,8 @@ SRC_UTILS			:=	./src/utils/count_tokken.c					\
 						./src/utils/remove_quote.c					\
 						./src/utils/strsplit_not_rec.c
 
+SRC_PROMPT			:=	./src/prompt/display_prompt.c
+
 SRC					:=	./src/create_dict.c							\
 						./src/main.c								\
 						./src/help.c								\
@@ -70,6 +72,7 @@ SRC					:=	./src/create_dict.c							\
 						$(SRC_PARSECOMMAND)							\
 						$(SRC_UTILS)								\
 						$(SRC_EXECOMMAND)							\
+						$(SRC_PROMPT)								\
 						$(SRC_BUILTINS)
 
 OBJ					:=	$(SRC:%.c=%.o)
