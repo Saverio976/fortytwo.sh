@@ -1,0 +1,7 @@
+*.o
+*.a
+compile_flags.txt
+.vscode
+*.gcno
+*.gcda
+42sh
