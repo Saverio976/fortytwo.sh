@@ -116,7 +116,7 @@ FN_TEST_LDFLAGS	=	-lgcov
 
 %.o: %.c
 	@$(CC) $(CFLAGS) $^ -c -o $@
-	@echo -e $(BLUE)'compil : $(notdir $^) -> $(notdir $@)'$(RESET)
+	@echo -e $(BLUE)'compil :'$(RESET)' $(notdir $^) -> $(notdir $@)'
 
 # ----------------------------------------------------------------------------
 # Make the mysh
