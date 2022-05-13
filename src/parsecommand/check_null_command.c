@@ -7,6 +7,8 @@
 
 #include <stdbool.h>
 #include <stdlib.h>
+#include <unistd.h>
+#include "my_strings.h"
 #include "mysh_struct.h"
 #include "mysh.h"
 
@@ -19,6 +21,11 @@ bool check_null_command(list_t *pipes_str, shell_t *shell)
         tmp = get_binary_path(pipes_str->data, shell);
         if (tmp == NULL) {
             shell->status_code = 1;
+            return (false);
+        }
+        if (my_strcmp(tmp, "") == 0) {
+            shell->status_code = 1;
+            free(tmp);
             return (false);
         }
         free(tmp);
