@@ -1,5 +1,3 @@
 #!/bin/bash
 
-cd ./tests/functionaltest/
-
-sh ./runtests.sh "$1"
+sh ./tests/functionaltest/runtests.sh "$1"

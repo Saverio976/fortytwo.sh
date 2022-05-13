@@ -14,10 +14,6 @@ NB_FAILED=0
 EXEC_BINARY="./$1"
 
 clear
-cd ../../
-make clean
-mv $EXEC_BINARY tests/functionaltest/
-cd tests/functionaltest/
 
 echo -e "${BLEU_BOLD}
   _______ _____  _    _  _____ _    _
