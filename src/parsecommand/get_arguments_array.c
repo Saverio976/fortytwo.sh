@@ -54,8 +54,7 @@ static char **create_array_list(list_t *list, int len)
     arr[len] = NULL;
     for (int i = 0; i < len; list = list->next) {
         if (is_ok_count(list->data) == false) {
-            list = (my_strcontainc("<>", ((char *) list->data)[0])) ?
-                list : list->next;
+            list = list->next;
         } else {
             arr[i] = my_strdup(list->data);
             i++;
