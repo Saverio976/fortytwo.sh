@@ -19,6 +19,10 @@ static int get_out_of_noise(char const *str, int *is_error)
     while (str[i] != '\0' && my_strcontainc("\b\t\n\v\f\r ", str[i])) {
         i++;
     }
+    if (my_strcontainc("0123456789+-", str[i]) == 0) {
+        *is_error = 1;
+        return (84);
+    }
     return (i);
 }
 
@@ -40,7 +44,7 @@ static int get_out_of_sign(char const *str, int i, int *is_error)
     while (str[i] != '\0' && my_strcontainc("+-", str[i])) {
         i++;
     }
-    if (my_strcontainc("123456789", str[i]) == 0) {
+    if (my_strcontainc("123456789", str[i]) == 0 && my_strlen(str) != 1) {
         *is_error = 1;
         return (84);
     }
