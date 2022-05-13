@@ -343,4 +343,6 @@ int kill_inferior_commands(shell_t *shell, int wstatus, list_t *cms,
 **/
 list_t *remove_empty_commands(list_t *list);
 
+bool check_null_command(list_t *pipes_str, shell_t *shell);
+
 #endif
