@@ -142,9 +142,9 @@ test_this_command 'echo yo'
 test_this_command 'echo des    bons    espaces   et  		   des  			  tabulations 	 	'
 test_this_command 'touch _ ; _ ; rm _'
 test_this_command 'touch a b c d; mkdir m1 m2 m3; ls -l | cat -e ; rm a b c d ; rmdir m1 m2 m3'
-test_this_command './segcd' 2> /dev/null
-test_this_command './hello'
-test_this_command './divzerocd' 2> /dev/null
+test_this_command './tests/functionaltest/segcd' 2> /dev/null
+test_this_command './tests/functionaltest/hello'
+test_this_command './tests/functionaltest/divzerocd' 2> /dev/null
 test_this_command '/bin/ls'
 test_this_command 'ls -l < test.c < ./a.out'
 test_this_command 'ls -l > test >> ./a.out'
