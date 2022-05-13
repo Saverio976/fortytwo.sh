@@ -11,30 +11,30 @@ YELLOW_BOLD="\033[1;33m"
 BLEU_BOLD="\033[1;34m"
 NB_SUCCESS=0
 NB_FAILED=0
+EXEC_BINARY="./$1"
 
 clear
 cd ../../
-make re
 make clean
-mv 42sh tests/functionaltest/
+mv $EXEC_BINARY tests/functionaltest/
 cd tests/functionaltest/
 
 echo -e "${BLEU_BOLD}
-  _______ _____  _    _  _____ _    _ 
+  _______ _____  _    _  _____ _    _
  |__   __|  __ \| |  | |/ ____| |  | |
     | |  | |__) | |  | | (___ | |__| |
     | |  |  _  /| |  | |\___ \|  __  |
     | |  | | \ \| |__| |____) | |  | |
     |_|  |_|  \_|\____/|_____/|_|  |_|
 ${RESET}"
-                                
+
 
 function test_this_command()
 {
 	echo -e "${YELLOW}------------------${RESET}"
 	echo -e "${YELLOW}Testing:[$@]${RESET}"
 
-	MYSH=$(echo -e "$@" | ./42sh 2>&1)
+	MYSH=$(echo -e "$@" | $EXEC_BINARY 2>&1)
 	MYRETURNVALUE=$?
 	TCSH=$(echo -e "$@" | tcsh 2>&1)
 	TCSHRETURNVALUE=$?
