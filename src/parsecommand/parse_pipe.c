@@ -62,8 +62,8 @@ static list_t *add_to_parsed(list_t *pipes_str, shell_t *shell)
     command_t *cm = NULL;
     list_t *pipes_cm = NULL;
 
-    if (check_null_command(pipes_str, shell) == false) {
-        write(2, "Invalid null command.\n", 22);
+    if (check_missing_name(pipes_str, shell) == false ||
+            check_null_command(pipes_str, shell) == false) {
         return (NULL);
     }
     for (int i = 0; i < list_t_len(pipes_str) && shell->status_code == 0;

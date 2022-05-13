@@ -7,6 +7,7 @@
 
 #include <stdlib.h>
 #include <unistd.h>
+#include "macros.h"
 #include "my_list.h"
 #include "my_strings.h"
 #include "mysh.h"
@@ -22,14 +23,14 @@ static char *get_file_from_list(list_t *list, int *is_error)
     words = my_strsplit(string, " ");
     if (words == NULL || list_t_len(words) < 1 ||
             my_strstartswith(words->data, "<")) {
-        write(2, "Missing name for redirect.", 26);
+        write(2, MISSING_ERR, 27);
         list_t_destroy(words);
         *is_error = 1;
         return (NULL);
     }
     file = my_strdup(words->data);
     if (file == NULL) {
-        write(2, "Missing name for redirect.", 26);
+        write(2, MISSING_ERR, 27);
     }
     return (file);
 }
@@ -43,7 +44,8 @@ static char *get_right_file_single(char *string, const char *delim, int nb_max,
     list = my_strsplit(string, delim);
     if ((list_t_len(list) <= 0 || list_t_len(list) > nb_max)) {
         *is_error = 1;
-        write(2, "Ambiguous output redirect.\n", 27);
+        write(2, (list == NULL) ? MISSING_ERR : AMBIGUOUS_ERR, 27);
+        list_t_destroy(list);
         return (NULL);
     }
     if (list_t_len(list) == 2) {
@@ -110,8 +112,11 @@ char *get_redirect_to_file(char *string, int *is_error, command_t *cm)
 
     if (string == NULL) {
         *is_error = 1;
+        return (NULL);
     }
-    if (string == NULL) {
+    if (my_strcmp(string, ">>") == 0 || my_strcmp(string, ">") == 0) {
+        write(2, MISSING_ERR, 27);
+        *is_error = 1;
         return (NULL);
     }
     file = get_right_file(string, cm, is_error);

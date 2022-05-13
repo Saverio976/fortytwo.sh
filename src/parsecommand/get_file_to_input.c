@@ -7,6 +7,7 @@
 
 #include <stdlib.h>
 #include <unistd.h>
+#include "macros.h"
 #include "my_list.h"
 #include "my_strings.h"
 #include "mysh.h"
@@ -42,7 +43,8 @@ static char *get_right_file_single(char *string, const char *delim, int nb_max,
 
     list = my_strsplit(string, delim);
     if (list_t_len(list) <= 0 || list_t_len(list) > nb_max) {
-        write(2, "Ambiguous input redirect.\n", 26);
+        *is_error = 1;
+        write(2, (list == NULL) ? MISSING_ERR : AMBIGUOUS_ERR, 27);
         return (NULL);
     }
     if (list_t_len(list) == 2) {
@@ -66,6 +68,15 @@ static char *get_right_file(char *string, int *is_error)
 {
     char *file = NULL;
 
+    if (my_strcmp(string, "<<") == 0 || my_strcmp(string, "<") == 0) {
+        write(2, MISSING_ERR, 27);
+        *is_error = 1;
+        return (NULL);
+    }
+    file = get_right_file_single(string, "<<", 2, is_error);
+    if (*is_error == 1) {
+        return (NULL);
+    }
     file = get_right_file_single(string, "<", 2, is_error);
     if (file != NULL) {
         return (file);
@@ -79,8 +90,6 @@ char *get_file_to_input(char *string, int *is_error, command_t *cm)
 
     if (string == NULL) {
         *is_error = 1;
-    }
-    if (string == NULL) {
         return (NULL);
     }
     file = get_right_file(string, is_error);
