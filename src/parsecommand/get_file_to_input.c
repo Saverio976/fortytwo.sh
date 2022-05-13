@@ -97,6 +97,11 @@ char *get_file_to_input(char *string, int *is_error, command_t *cm)
     if (file == NULL) {
         *is_error = 1;
     }
+    if (my_strcmp(file, "") != 0 && access(file, R_OK) != 0) {
+        my_puterror(file, "No such file or directory.\n");
+        free(file);
+        return (NULL);
+    }
     cm->fd_input = -1;
     return (file);
 }
