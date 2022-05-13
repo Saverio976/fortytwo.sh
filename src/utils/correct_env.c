@@ -55,5 +55,6 @@ dico_t *correct_env(dico_t *env)
 {
     env = add_shelllvl(env);
     env = add_pwd_user(env);
+    env = dico_t_rem(env, "OLDPWD");
     return (env);
 }
