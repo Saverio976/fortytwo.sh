@@ -75,12 +75,14 @@ list_t *parse_pipe(char *input, shell_t *shell)
     list_t *pipes = NULL;
     list_t *piped = NULL;
 
+    shell->status_code = 0;
     pipes = my_strsplit(input, "|");
     if (pipes == NULL || list_t_len(pipes) != count_tokken(input, "|") + 1) {
         write(2, "Invalid null command.\n", 22);
         return (NULL);
     }
-    for (int i = 0; i < list_t_len(pipes); i++, pipes = pipes->next) {
+    for (int i = 0; i < list_t_len(pipes) && shell->status_code == 0;
+            i++, pipes = pipes->next) {
         piped = add_to_parsed(piped, pipes->data, shell);
     }
     list_t_destroy(pipes);
