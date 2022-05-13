@@ -61,7 +61,8 @@ SRC_UTILS			:=	./src/utils/count_tokken.c					\
 						./src/utils/my_puterror.c					\
 						./src/utils/remove_empty_command.c			\
 						./src/utils/remove_quote.c					\
-						./src/utils/strsplit_not_rec.c
+						./src/utils/strsplit_not_rec.c				\
+						./src/utils/correct_env.c
 
 SRC					:=	./src/create_dict.c							\
 						./src/main.c								\

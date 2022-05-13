@@ -343,4 +343,16 @@ int kill_inferior_commands(shell_t *shell, int wstatus, list_t *cms,
 **/
 list_t *remove_empty_commands(list_t *list);
 
+/**
+** @brief correct env (if it is empty, add pwd and user)
+**
+** @param env environment already parsed char **env
+**
+** @return {
+** NULL : could not add user and pwd
+** dico_t *: env
+** }
+**/
+dico_t *correct_env(dico_t *env);
+
 #endif
