@@ -26,7 +26,7 @@ void exit_builtins(shell_t *shell, command_t *command)
     }
     if (len == 2) {
         nbr = my_getnbri(command->arguments[1], &is_error);
-        if (is_error != 0) {
+        if (is_error != 0 || command->arguments[1][0] == '+') {
             shell->status_code = 1;
             my_puterror("exit", "Expression Syntax.\n");
             return;
