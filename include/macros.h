@@ -8,7 +8,8 @@
 #ifndef MACROS_H_
     #define MACROS_H_
 
-    #define AMBIGUOUS_ERR "Ambiguous output redirect.\n"
+    #define AMBIGUOUS_OU_ERR "Ambiguous output redirect.\n"
+    #define AMBIGUOUS_IN_ERR "Ambiguous input redirect.\n"
     #define MISSING_ERR "Missing name for redirect.\n"
 
 #endif

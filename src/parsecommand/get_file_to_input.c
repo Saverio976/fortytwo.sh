@@ -44,7 +44,8 @@ static char *get_right_file_single(char *string, const char *delim, int nb_max,
     list = my_strsplit(string, delim);
     if (list_t_len(list) <= 0 || list_t_len(list) > nb_max) {
         *is_error = 1;
-        write(2, (list == NULL) ? MISSING_ERR : AMBIGUOUS_ERR, 27);
+        write(2, (list == NULL) ? MISSING_ERR : AMBIGUOUS_IN_ERR,
+            (list == NULL) ? 27 : 26);
         return (NULL);
     }
     if (list_t_len(list) == 2) {
