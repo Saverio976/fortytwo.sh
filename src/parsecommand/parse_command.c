@@ -5,11 +5,11 @@
 ** parse char * to commands
 */
 
+#include <stdlib.h>
+#include "my_clear_str.h"
 #include "my_list.h"
 #include "mysh_struct.h"
 #include "mysh.h"
-#include "my_clear_str.h"
-#include <stdlib.h>
 
 int parse_commands(char *string, shell_t *shell)
 {
