@@ -53,7 +53,9 @@ SRC_PARSECOMMAND	:=	./src/parsecommand/get_arguments_array.c	\
 						./src/parsecommand/parse_pipe.c				\
 						./src/parsecommand/parse_single_command.c	\
 						./src/parsecommand/split_str.c				\
-						./src/parsecommand/split_str_add_to_list.c
+						./src/parsecommand/split_str_add_to_list.c	\
+						./src/parsecommand/clear_str.c				\
+						./src/parsecommand/find_word_in_str.c
 
 SRC_UTILS			:=	./src/utils/count_tokken.c					\
 						./src/utils/get_colors.c					\
