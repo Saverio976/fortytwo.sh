@@ -6,9 +6,9 @@
 */
 
 #include "my_clear_str.h"
+#include "my_strings.h"
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 
 static char *replace_tab_by_space(char *str)
 {
@@ -25,7 +25,7 @@ static word_list_t *add_word(word_list_t *list, char *word)
 
     if (new_word == NULL || word == NULL)
         return (list);
-    new_word->word = strdup(word);
+    new_word->word = my_strdup(word);
     new_word->next = NULL;
     if (list == NULL) {
         return (new_word);
@@ -57,7 +57,7 @@ static char *list_to_str(word_list_t *list)
     word_list_t *tmp = list;
 
     while (tmp != NULL) {
-        size += (strlen(tmp->word) + 1);
+        size += (my_strlen(tmp->word) + 1);
         tmp = tmp->next;
     }
     str = malloc(sizeof(char) * (size + 1));
@@ -66,9 +66,9 @@ static char *list_to_str(word_list_t *list)
     str[0] = '\0';
     tmp = list;
     while (tmp != NULL) {
-        strcat(str, tmp->word);
+        my_strcat(str, tmp->word);
         if (tmp->next != NULL)
-            strcat(str, " ");
+            my_strcat(str, " ");
         tmp = tmp->next;
     }
     return (str);
@@ -81,8 +81,8 @@ char *clear_str(char *str)
     word_list_t *list = NULL;
 
     replace_tab_by_space(str);
-    for (int i = 0; str[i] != '\0'; i ++, size = 0) {
-        if (str[i] == ' '  || str[i] == '\n')
+    for (int i = 0; str[i] != '\0'; size = 0, i += 1) {
+        if (str[i] == ' ' || str[i] == '\n')
             continue;
         if (str[i] == '"' || str[i] == '\'') {
             word = find_word_quotes(&str[i], &size);

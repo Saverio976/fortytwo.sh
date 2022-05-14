@@ -6,8 +6,8 @@
 */
 
 #include <stddef.h>
-#include <string.h>
 #include "my_clear_str.h"
+#include "my_strings.h"
 
 char *find_word(char *str, int *size)
 {
@@ -15,9 +15,9 @@ char *find_word(char *str, int *size)
     char *word = NULL;
 
     while (str[index] != ' ' && str[index] != '\0') {
-        index ++;
+        index += 1;
     }
-    word = strndup(str, index);
+    word = my_strndup(str, index);
     *size = index;
     return (word);
 }
@@ -29,9 +29,9 @@ char *find_word_quotes(char *str, int *size)
 
     while (str[index] != '"' && str[index] != '\0'
     && str[index] != '\'') {
-        index ++;
+        index += 1;
     }
-    word = strndup(&str[1], index - 1);
+    word = my_strndup(&str[1], index - 1);
     *size = index + 1;
     return (word);
 }
