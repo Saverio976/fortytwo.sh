@@ -1,14 +1,18 @@
 /*
 ** EPITECH PROJECT, 2022
-** 42sh
+** fortytwo.sh
 ** File description:
 ** display_prompt
 */
 
-#include <ctype.h>
-#include <stdio.h>
-#include <time.h>
 #include "prompt.h"
+#include <ctype.h>
+#include <limits.h>
+#include <libgen.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
 
 const fun_t PROMPT_FUNCTIONS[PROMPT_NB + 1] = {
     {'a',  &display_prompt_a},
@@ -27,15 +31,10 @@ const fun_t PROMPT_FUNCTIONS[PROMPT_NB + 1] = {
     {'@',  &display_prompt_at},
     {'A',  &display_prompt_cap_a},
     {'u',  &display_prompt_u},
-    {'v',  &display_prompt_v},
-    {'V',  &display_prompt_cap_v},
     {'w',  &display_prompt_w},
     {'W',  &display_prompt_cap_w},
-    {'!',  &display_prompt_exclamation},
-    {'#',  &display_prompt_pound},
     {'$',  &display_prompt_dollar},
     {'\\', &display_prompt_backslash},
-    {'[',  &display_prompt_non_printing},
     {'\0', &display_prompt_octal},
     {0},
 };
@@ -43,20 +42,15 @@ const fun_t PROMPT_FUNCTIONS[PROMPT_NB + 1] = {
 // \a     an ASCII bell character (07)
 PROMPT_FUN(display_prompt_a)
 {
-    (void)str;
     printf("\a");
-    return;
+    return 0;
 }
 
 // \d     the date in "Weekday Month Date" format (e.g., "Tue May 26")
 PROMPT_FUN(display_prompt_d)
 {
-    struct tm *tm = gmtime((time_t[]){time(NULL)});
-    char buf[256] = {0};
-
-    strftime(buf, sizeof buf, "%a %b %d", tm);
-    printf(buf);
-    return;
+    print_time("%a %b %d");
+    return 0;
 }
 
 // \D{format}
@@ -65,174 +59,205 @@ PROMPT_FUN(display_prompt_d)
 //        specific time representation.  The braces are required
 PROMPT_FUN(display_prompt_cap_d)
 {
-    return;
+    char format[256] = {0};
+
+    if (!get_substring(format, str, "{", "}")) {
+        printf("\\D");
+        return 0;
+    }
+    print_time(format);
+    return strlen(format) + 2;
 }
 
 // \e     an ASCII escape character (033)
 PROMPT_FUN(display_prompt_e)
 {
-    return;
+    printf("\033");
+    return 0;
 }
 
 // \h     the hostname up to the first `.'
 PROMPT_FUN(display_prompt_h)
 {
-    return;
+    char buf[256] = {0};
+    char *dot = NULL;
+
+    gethostname(buf, sizeof buf);
+    if ((dot = strchr(buf, '.'))) {
+        *dot = '\0';
+    }
+    printf(buf);
+    return 0;
 }
 
 // \H     the hostname
 PROMPT_FUN(display_prompt_cap_h)
 {
-    return;
+    char buf[256] = {0};
+
+    gethostname(buf, sizeof buf);
+    printf(buf);
+    return 0;
 }
 
 // \j     the number of jobs currently managed by the shell
 PROMPT_FUN(display_prompt_j)
 {
-    return;
+    printf("\\j");
+    return 0;
 }
 
 // \l     the basename of the shell's terminal device name
 PROMPT_FUN(display_prompt_l)
 {
-    return;
+    char buf[256];
+
+    strcpy(buf, ttyname(STDOUT_FILENO));
+    printf(basename(buf));
+    return 0;
 }
 
 // \n     newline
 PROMPT_FUN(display_prompt_n)
 {
-    (void)str;
     printf("\n");
-    return;
+    return 0;
 }
 
 // \r     carriage return
 PROMPT_FUN(display_prompt_r)
 {
-    return;
+    printf("\r");
+    return 0;
 }
 
 // \s     the name of the shell, the basename of $0 (the portion follow‐
 //        ing the final slash)
 PROMPT_FUN(display_prompt_s)
 {
-    return;
+    char buf[256];
+
+    strcpy(buf, program_invocation_name);
+    printf(basename(buf));
+    return 0;
 }
 
 // \t     the current time in 24-hour HH:MM:SS format
 PROMPT_FUN(display_prompt_t)
 {
-    return;
+    print_time("%T");
+    return 0;
 }
 
 // \T     the current time in 12-hour HH:MM:SS format
 PROMPT_FUN(display_prompt_cap_t)
 {
-    return;
+    print_time("%I:%M:%S");
+    return 0;
 }
 
 // \@     the current time in 12-hour am/pm format
 PROMPT_FUN(display_prompt_at)
 {
-    return;
+    print_time("%I:%M %p");
+    return 0;
 }
 
 // \A     the current time in 24-hour HH:MM format
 PROMPT_FUN(display_prompt_cap_a)
 {
-    return;
+    print_time("%H:%M");
+    return 0;
 }
 
 // \u     the username of the current user
 PROMPT_FUN(display_prompt_u)
 {
-    return;
-}
-
-// \v     the version of bash (e.g., 2.00)
-PROMPT_FUN(display_prompt_v)
-{
-    return;
-}
-
-// \V     the release of bash, version + patch level (e.g., 2.00.0)
-PROMPT_FUN(display_prompt_cap_v)
-{
-    return;
+    printf(getlogin());
+    return 0;
 }
 
 // \w     the current working directory, with $HOME abbreviated  with  a
 //        tilde (uses the value of the PROMPT_DIRTRIM variable)
 PROMPT_FUN(display_prompt_w)
 {
-    return;
+    const char *home = get_var_value(envp, "HOME");
+    size_t homelen = strlen(home);
+    char cwd[PATH_MAX] = {0};
+
+    getcwd(cwd, sizeof cwd);
+    if (strncmp(home, cwd, homelen) == 0) {
+        printf("~");
+        printf(cwd + homelen);
+    } else
+        printf(cwd);
+    return 0;
 }
 
 // \W     the  basename of the current working directory, with $HOME ab‐
 //        breviated with a tilde
 PROMPT_FUN(display_prompt_cap_w)
 {
-    return;
-}
+    const char *home = get_var_value(envp, "HOME");
+    char cwd[PATH_MAX] = {0};
 
-// \!     the history number of this command
-PROMPT_FUN(display_prompt_exclamation)
-{
-    return;
-}
-
-// \#     the command number of this command
-PROMPT_FUN(display_prompt_pound)
-{
-    return;
+    getcwd(cwd, sizeof cwd);
+    if (strcmp(home, cwd) == 0) {
+        printf("~");
+    } else
+        printf(basename(cwd));
+    return 0;
 }
 
 // \$     if the effective UID is 0, a #, otherwise a $
 PROMPT_FUN(display_prompt_dollar)
 {
-    return;
+    if (geteuid() == 0) {
+        printf("#");
+    } else {
+        printf("$");
+    }
+    return 0;
 }
 
 // \nnn   the character corresponding to the octal number nnn
 PROMPT_FUN(display_prompt_octal)
 {
-    return;
+    char *endptr = NULL;
+
+    printf("%c", (int)strtol(str, &endptr, 8) % 256);
+    return endptr - str - 1;
 }
 
 // \\     a backslash
 PROMPT_FUN(display_prompt_backslash)
 {
-    return;
+    printf("\\");
+    return 0;
 }
 
-// \[     begin a sequence of non-printing characters,  which  could  be
-//        used to embed a terminal control sequence into the prompt
-// \]     end a sequence of non-printing characters
-PROMPT_FUN(display_prompt_non_printing)
-{
-    return;
-}
-
-void print_opt(const char *str)
+static int print_opt(char *const *envp, const char *str)
 {
     if (isdigit(*str)) {
-        PROMPT_FUNCTIONS[PROMPT_OCTAL].fun(str);
-        return;
+        return PROMPT_FUNCTIONS[PROMPT_OCTAL].fun(envp, str);
     }
     for (int i = 0; PROMPT_FUNCTIONS[i].c; i++) {
         if (*str == PROMPT_FUNCTIONS[i].c) {
-            PROMPT_FUNCTIONS[i].fun(str);
-            return;
+            return PROMPT_FUNCTIONS[i].fun(envp, str + 1);
         }
     }
     printf("\\%c", *str);
+    return 0;
 }
 
-void display_prompt(const char *ps)
+void display_prompt(char *const *envp, const char *ps)
 {
+    size_t printed = 0;
+
     for (; *ps; ps++) {
         if (*ps == '\\') {
-            print_opt(++ps);
+            printed = print_opt(envp, ++ps);
+            ps += printed;
         } else {
             printf("%c", *ps);
         }
