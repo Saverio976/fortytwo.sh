@@ -13,8 +13,8 @@
     #endif
 
     #define UNUSED __attribute__((unused))
-    #define PROMPT_FUN(name) int (name)(UNUSED char *const *envp,    \
-                                            UNUSED const char *str)
+    #define PROMPT_FUN(name) int (name)(UNUSED char *const *envp, \
+            UNUSED const char *str)
 
 UNUSED typedef struct fun_s {
     char c;
