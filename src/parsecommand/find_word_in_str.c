@@ -14,6 +14,8 @@ char *find_word(char *str, int *size)
     int index = 0;
     char *word = NULL;
 
+    if (str == NULL || size == NULL)
+        return (NULL);
     while (str[index] != ' ' && str[index] != '\0') {
         index += 1;
     }
@@ -27,6 +29,8 @@ char *find_word_quotes(char *str, int *size)
     int index = 1;
     char *word = NULL;
 
+    if (str == NULL || size == NULL)
+        return (NULL);
     while (str[index] != '"' && str[index] != '\0'
     && str[index] != '\'') {
         index += 1;

@@ -5,25 +5,30 @@
 ** clear_str
 */
 
-#include "my_clear_str.h"
-#include "my_strings.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include "my_clear_str.h"
+#include "my_strings.h"
 
 static char *replace_tab_by_space(char *str)
 {
-    for (int i = 0; str[i] != '\0'; i ++)
-        if (str[i] == '\t')
+    for (int i = 0; str[i] != '\0'; i ++) {
+        if (str[i] == '\t') {
             str[i] = ' ';
+        }
+    }
     return (str);
 }
 
 static word_list_t *add_word(word_list_t *list, char *word)
 {
     word_list_t *tmp = list;
-    word_list_t *new_word = malloc(sizeof(word_list_t));
+    word_list_t *new_word = NULL;
 
-    if (new_word == NULL || word == NULL)
+    if (word == NULL)
+        return (list);
+    new_word = malloc(sizeof(word_list_t));
+    if (new_word == NULL)
         return (list);
     new_word->word = my_strdup(word);
     new_word->next = NULL;
@@ -44,7 +49,8 @@ static void free_list(word_list_t *list)
 
     while (tmp != NULL) {
         next = tmp->next;
-        free(tmp->word);
+        if (tmp->word != NULL)
+            free(tmp->word);
         free(tmp);
         tmp = next;
     }
