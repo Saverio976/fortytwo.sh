@@ -11,7 +11,7 @@
 
 void print_time(const char *format)
 {
-    struct tm *tm = localtime((time_t[]){time(NULL)});
+    struct tm *tm = localtime((time_t[]) {time(NULL)});
     char buf[256] = {0};
 
     strftime(buf, sizeof buf, format, tm);
