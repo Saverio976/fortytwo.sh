@@ -22,6 +22,9 @@ int main(int ac, char *const av[], char *const env[])
     if (dict == NULL) {
         return (84);
     }
+#include "prompt.h"
+    display_prompt(dict, "\\w");
+    return 0;
     status_code = entry_point(dict);
     return (status_code);
 }

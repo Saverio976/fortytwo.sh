@@ -88,7 +88,8 @@ SRC					:=	create_dict.c					\
 						$(SRC_PARSECOMMAND)				\
 						$(SRC_UTILS)					\
 						$(SRC_EXECOMMAND)				\
-						$(SRC_BUILTINS)
+						$(SRC_BUILTINS)					\
+						$(SRC_PROMPT)
 SRC					:=	$(addprefix src/,$(SRC))
 
 OBJ					:=	$(SRC:%.c=%.o)

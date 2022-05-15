@@ -44,12 +44,11 @@ PROMPT_FUN(display_prompt_u)
     return 0;
 }
 
-// TODO: get var
 // \w     the current working directory, with $HOME abbreviated  with  a
 //        tilde (uses the value of the PROMPT_DIRTRIM variable)
 PROMPT_FUN(display_prompt_w)
 {
-    const char *home = NULL; //get_var_value(env, "HOME");
+    const char *home = dico_t_get_value(env, "HOME");
     size_t homelen = strlen(home);
     char cwd[PATH_MAX] = {0};
 
@@ -62,12 +61,11 @@ PROMPT_FUN(display_prompt_w)
     return 0;
 }
 
-// TODO: get var
 // \W     the  basename of the current working directory, with $HOME ab‐
 //        breviated with a tilde
 PROMPT_FUN(display_prompt_cap_w)
 {
-    const char *home = NULL; //get_var_value(envp, "HOME");
+    const char *home = dico_t_get_value(env, "HOME");
     char cwd[PATH_MAX] = {0};
 
     getcwd(cwd, sizeof cwd);

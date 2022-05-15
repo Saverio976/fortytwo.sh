@@ -13,12 +13,13 @@
     #endif
 
     #include <stddef.h>
+    #include "my_dico.h"
 
     #define UNUSED __attribute__((unused))
-    #define PROMPT_FUN(name) int (name)(UNUSED const dico_t *env,   \
+    #define PROMPT_FUN(name) int (name)(UNUSED dico_t *env, \
             UNUSED const char *str)
 
-typedef struct fun_s {
+UNUSED typedef struct fun_s {
     char c;
     PROMPT_FUN(*fun);
 } fun_t;
@@ -71,8 +72,7 @@ PROMPT_FUN(display_prompt_dollar);
 PROMPT_FUN(display_prompt_backslash);
 PROMPT_FUN(display_prompt_octal);
 void print_time(const char *format);
-const char *get_var_value(dico_t *env, const char *varname);
 char *get_substr(char *buf, size_t size, const char *str, char *const delim[2]);
-void display_prompt(const dico_t *env, const char *ps);
+void display_prompt(dico_t *env, const char *ps);
 
 #endif /* prompt.h */
