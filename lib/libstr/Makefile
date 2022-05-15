@@ -38,7 +38,8 @@ SRC			:=	my_calloc.c 		\
 				my_strdup.c			\
 				my_strlen.c			\
 				my_strstartswith.c	\
-				my_strstrip.c
+				my_strstrip.c		\
+				my_strndup.c
 SRC 		:=	$(addprefix $(SRCDIR),$(SRC))
 
 OBJ			=	$(SRC:%.c=%.o)

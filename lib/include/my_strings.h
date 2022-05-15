@@ -97,6 +97,15 @@ char *my_strncpy(char *dest, char const *src, int n);
 char *my_strdup(char const *str);
 
 /**
+** @brief duplicate str (with malloc) and add a \0 at the end
+**
+** @param str
+** @param size
+** @return NULL if str equal null or cannot malloc; else the duplicated str
+**/
+char *my_strndup(char const *str, int n);
+
+/**
 ** @brief get lentgh of null terminated str
 **
 ** @param str
