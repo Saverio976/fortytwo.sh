@@ -20,18 +20,6 @@ void print_time(const char *format)
     printf(buf);
 }
 
-const char *get_var_value(char *const *envp, const char *varname)
-{
-    size_t varlen = strlen(varname);
-
-    for (; *envp; envp++) {
-        if (strncmp(*envp, varname, varlen) && (*envp)[varlen] == '=') {
-            return *envp + varlen + 1;
-        }
-    }
-    return NULL;
-}
-
 char *get_substr(char *buf, size_t size, const char *str, char *const delim[2])
 {
     const char *end = NULL;

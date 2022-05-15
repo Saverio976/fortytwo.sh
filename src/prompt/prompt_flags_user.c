@@ -44,16 +44,17 @@ PROMPT_FUN(display_prompt_u)
     return 0;
 }
 
+// TODO: get var
 // \w     the current working directory, with $HOME abbreviated  with  a
 //        tilde (uses the value of the PROMPT_DIRTRIM variable)
 PROMPT_FUN(display_prompt_w)
 {
-    const char *home = get_var_value(envp, "HOME");
+    const char *home = NULL; //get_var_value(env, "HOME");
     size_t homelen = strlen(home);
     char cwd[PATH_MAX] = {0};
 
     getcwd(cwd, sizeof cwd);
-    if (strncmp(home, cwd, homelen) == 0) {
+    if (home && strncmp(home, cwd, homelen) == 0) {
         printf("~");
         printf(cwd + homelen);
     } else
@@ -61,15 +62,16 @@ PROMPT_FUN(display_prompt_w)
     return 0;
 }
 
+// TODO: get var
 // \W     the  basename of the current working directory, with $HOME ab‐
 //        breviated with a tilde
 PROMPT_FUN(display_prompt_cap_w)
 {
-    const char *home = get_var_value(envp, "HOME");
+    const char *home = NULL; //get_var_value(envp, "HOME");
     char cwd[PATH_MAX] = {0};
 
     getcwd(cwd, sizeof cwd);
-    if (strcmp(home, cwd) == 0) {
+    if (home && strcmp(home, cwd) == 0) {
         printf("~");
     } else
         printf(basename(cwd));

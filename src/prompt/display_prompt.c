@@ -34,29 +34,29 @@ const fun_t PROMPT_FUNCTIONS[PROMPT_NB + 1] = {
     {0},
 };
 
-static int print_opt(char *const *envp, const char *str)
+static int print_opt(dico_t *env, const char *str)
 {
     if (isdigit(*str)) {
-        return PROMPT_FUNCTIONS[PROMPT_OCTAL].fun(envp, str);
+        return PROMPT_FUNCTIONS[PROMPT_OCTAL].fun(env, str);
     }
     for (int i = 0; PROMPT_FUNCTIONS[i].c; i++) {
         if (*str == PROMPT_FUNCTIONS[i].c) {
-            return PROMPT_FUNCTIONS[i].fun(envp, str + 1);
+            return PROMPT_FUNCTIONS[i].fun(env, str + 1);
         }
     }
     printf("\\%c", *str);
     return 0;
 }
 
-void display_prompt(char *const *envp, const char *ps)
+void display_prompt(dico_t *env, const char *ps)
 {
     size_t printed = 0;
 
-    if (!envp || !ps)
+    if (!env || !ps)
         return;
     for (; *ps; ps++) {
         if (*ps == '\\') {
-            printed = print_opt(envp, ++ps);
+            printed = print_opt(env, ++ps);
             ps += printed;
         } else {
             printf("%c", *ps);

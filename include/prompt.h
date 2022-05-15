@@ -15,7 +15,7 @@
     #include <stddef.h>
 
     #define UNUSED __attribute__((unused))
-    #define PROMPT_FUN(name) int (name)(UNUSED char *const *envp, \
+    #define PROMPT_FUN(name) int (name)(UNUSED const dico_t *env,   \
             UNUSED const char *str)
 
 typedef struct fun_s {
@@ -71,8 +71,8 @@ PROMPT_FUN(display_prompt_dollar);
 PROMPT_FUN(display_prompt_backslash);
 PROMPT_FUN(display_prompt_octal);
 void print_time(const char *format);
-const char *get_var_value(char *const *envp, const char *varname);
+const char *get_var_value(dico_t *env, const char *varname);
 char *get_substr(char *buf, size_t size, const char *str, char *const delim[2]);
-void display_prompt(char *const *envp, const char *ps);
+void display_prompt(const dico_t *env, const char *ps);
 
 #endif /* prompt.h */
