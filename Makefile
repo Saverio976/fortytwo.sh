@@ -63,7 +63,13 @@ SRC_UTILS			:=	./src/utils/count_tokken.c					\
 						./src/utils/remove_quote.c					\
 						./src/utils/strsplit_not_rec.c
 
-SRC_PROMPT			:=	./src/prompt/display_prompt.c
+SRC_PROMPT			:=	./src/prompt/display_prompt.c				\
+						./src/prompt/utils.c						\
+						./src/prompt/prompt_flags_char.c			\
+						./src/prompt/prompt_flags_date.c			\
+						./src/prompt/prompt_flags_shell.c			\
+						./src/prompt/prompt_flags_time.c			\
+						./src/prompt/prompt_flags_user.c
 
 SRC					:=	./src/create_dict.c							\
 						./src/main.c								\
