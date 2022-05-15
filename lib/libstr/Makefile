@@ -61,7 +61,10 @@ LIBS_DEP	=
 
 all: 	CURR_RULE = all
 all: 	init
+	@$(MAKE) COMPIL_FASTER -s -j2
 	@$(MAKE) $(NAME) -s
+
+COMPIL_FASTER: $(OBJ)
 
 $(NAME): CURR_RULE = $(NAME)
 $(NAME): init $(LIBS_DEP) $(OBJ)
