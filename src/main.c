@@ -12,9 +12,16 @@
 
 int main(int ac, char *const av[], char *const env[])
 {
-    (void)ac;
-    (void)av;
-    (void)env;
-#include "prompt.h"
-    display_prompt("\\d\n");
+    dico_t *dict = NULL;
+    int status_code = 0;
+
+    if (ac == 2 && my_strcmp(av[1], "-h") == 0) {
+        return (print_help(av[0]));
+    }
+    dict = parse_env(env);
+    if (dict == NULL) {
+        return (84);
+    }
+    status_code = entry_point(dict);
+    return (status_code);
 }
