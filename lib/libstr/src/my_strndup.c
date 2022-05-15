@@ -13,6 +13,8 @@ char *my_strndup(char const *str, int n)
     int i = 0;
     char *str2 = NULL;
 
+    if (str == NULL)
+        return (NULL);
     str2 = malloc(sizeof(char) * n + 1);
     if (str2 == NULL)
         return (NULL);
