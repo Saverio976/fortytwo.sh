@@ -7,13 +7,15 @@
 
 #include <stdio.h>
 #include <string.h>
+#include <sys/param.h>
 #include <time.h>
 
 void print_time(const char *format)
 {
-    struct tm *tm = localtime((time_t[]) {time(NULL)});
+    struct tm *tm;
     char buf[256] = {0};
 
+    tm = localtime((time_t[]) {time(NULL)});
     strftime(buf, sizeof buf, format, tm);
     printf(buf);
 }
@@ -30,18 +32,24 @@ const char *get_var_value(char *const *envp, const char *varname)
     return NULL;
 }
 
-char *get_substring(char *buf, const char *str,
-        const char *start, const char *end)
+char *get_substr(char *buf, size_t size, const char *str, char *const delim[2])
 {
-    const char *endstr = NULL;
-    size_t startlen = strlen(start);
+    const char *end = NULL;
+    size_t startlen = strlen(delim[0]);
+    size_t substr_len = 0;
+    size_t buflen = 0;
 
-    if (strncmp(str, start, startlen))
+    if (strncmp(str, delim[0], startlen)) {
         return NULL;
+    }
     str += startlen;
-    endstr = strstr(str, end);
-    if (!endstr)
+    end = strstr(str, delim[1]);
+    if (!end) {
         return NULL;
-    strncpy(buf, str, endstr - str);
+    }
+    substr_len = end - str;
+    buflen = MIN(substr_len, size - 1);
+    strncpy(buf, str, buflen);
+    buf[buflen] = '\0';
     return buf;
 }

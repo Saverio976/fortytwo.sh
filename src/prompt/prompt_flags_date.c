@@ -24,7 +24,7 @@ PROMPT_FUN(display_prompt_cap_d)
 {
     char format[256] = {0};
 
-    if (!get_substring(format, str, "{", "}")) {
+    if (!get_substr(format, sizeof format, str, (char*[]) {"{", "}"})) {
         printf("\\D");
         return 0;
     }

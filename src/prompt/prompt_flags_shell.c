@@ -23,10 +23,7 @@ PROMPT_FUN(display_prompt_j)
 // \l     the basename of the shell's terminal device name
 PROMPT_FUN(display_prompt_l)
 {
-    char buf[256];
-
-    strcpy(buf, ttyname(STDOUT_FILENO));
-    printf(basename(buf));
+    printf(basename(ttyname(STDOUT_FILENO)));
     return 0;
 }
 
@@ -34,9 +31,9 @@ PROMPT_FUN(display_prompt_l)
 //        ing the final slash)
 PROMPT_FUN(display_prompt_s)
 {
-    char buf[256];
+    char buf[256] = {0};
 
-    strcpy(buf, program_invocation_name);
+    strncpy(buf, program_invocation_name, sizeof buf - 1);
     printf(basename(buf));
     return 0;
 }

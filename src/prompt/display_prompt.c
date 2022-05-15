@@ -52,6 +52,8 @@ void display_prompt(char *const *envp, const char *ps)
 {
     size_t printed = 0;
 
+    if (!envp || !ps)
+        return;
     for (; *ps; ps++) {
         if (*ps == '\\') {
             printed = print_opt(envp, ++ps);

@@ -64,11 +64,36 @@ static char *get_binary_path_str(const char *string, shell_t *shell)
     if (string == NULL) {
         return (NULL);
     }
-    if (my_strstartswith(string, "./") || check_if_builtins(string)) {
+    if (my_strstartswith(string, "./") || check_if_builtins(string) ||
+            my_strcmp(string, "") == 0) {
         return (my_strdup(string));
     }
     binary = get_binary_from_path(string, shell);
     return (binary);
+}
+
+static const char *get_str_value(list_t *list)
+{
+    int is_ok = 0;
+
+    for (int i = 0; is_ok == 0 && i < list_t_len(list);
+            i++, list = list->next) {
+        is_ok = 1;
+        if (my_strcmp(list->data, ">") == 0 ||
+                my_strcmp(list->data, ">") == 0) {
+            i++;
+            list = list->next;
+            is_ok = 0;
+        }
+        if (is_ok == 1 && (my_strstartswith(list->data, ">") ||
+                my_strstartswith(list->data, "<"))) {
+            is_ok = 0;
+        }
+        if (is_ok == 1) {
+            return (list->data);
+        }
+    }
+    return ("");
 }
 
 char *get_binary_path(char *string, shell_t *shell)
@@ -83,7 +108,7 @@ char *get_binary_path(char *string, shell_t *shell)
     if (list == NULL) {
         return (NULL);
     }
-    binary = get_binary_path_str(list->data, shell);
+    binary = get_binary_path_str(get_str_value(list), shell);
     if (binary == NULL) {
         my_puterror(list->data, "Command not found.\n");
     }

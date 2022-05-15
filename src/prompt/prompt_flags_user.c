@@ -19,7 +19,8 @@ PROMPT_FUN(display_prompt_h)
     char *dot = NULL;
 
     gethostname(buf, sizeof buf);
-    if ((dot = strchr(buf, '.'))) {
+    dot = strchr(buf, '.');
+    if (dot) {
         *dot = '\0';
     }
     printf(buf);

@@ -12,11 +12,13 @@
         #define _GNU_SOURCE 1
     #endif
 
+    #include <stddef.h>
+
     #define UNUSED __attribute__((unused))
     #define PROMPT_FUN(name) int (name)(UNUSED char *const *envp, \
             UNUSED const char *str)
 
-UNUSED typedef struct fun_s {
+typedef struct fun_s {
     char c;
     PROMPT_FUN(*fun);
 } fun_t;
@@ -70,8 +72,7 @@ PROMPT_FUN(display_prompt_backslash);
 PROMPT_FUN(display_prompt_octal);
 void print_time(const char *format);
 const char *get_var_value(char *const *envp, const char *varname);
-char *get_substring(char *buf, const char *str,
-        const char *start, const char *end);
+char *get_substr(char *buf, size_t size, const char *str, char *const delim[2]);
 void display_prompt(char *const *envp, const char *ps);
 
 #endif /* prompt.h */

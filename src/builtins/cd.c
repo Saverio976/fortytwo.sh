@@ -87,7 +87,7 @@ void cd_builtins(shell_t *shell, command_t *command)
     if (chdir(path) != -1) {
         shell->status_code = set_up_pwd(shell);
     } else {
-        my_puterror("cd", strerror(errno));
+        my_puterror(path, strerror(errno));
         write(2, ".\n", 2);
         shell->status_code = 1;
     }
