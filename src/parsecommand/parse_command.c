@@ -6,6 +6,7 @@
 */
 
 #include <stdlib.h>
+#include "my_strings.h"
 #include "my_list.h"
 #include "mysh_struct.h"
 #include "mysh.h"
@@ -13,7 +14,7 @@
 list_t *or_separator(list_t *list)
 {
     list_t *new = NULL;
-    list_t *tmp = list;
+    list_t *tmp = NULL;
 
     if (list == NULL) {
         return (NULL);
@@ -21,16 +22,18 @@ list_t *or_separator(list_t *list)
     for (int i = 0; i < list_t_len(list); i++, list = list->next) {
         tmp = my_strsplit(list->data, "||");
         for (int y = 0; y < list_t_len(tmp); y++, tmp = tmp->next) {
-            new = list_t_add(new, tmp->data, &free);
+            new = list_t_add(new, my_strdup(tmp->data), &free);
         }
+        list_t_destroy(tmp);
     }
+    list_t_destroy(list);
     return (new);
 }
 
 list_t *ampersand_separator(list_t *list)
 {
     list_t *new = NULL;
-    list_t *tmp = list;
+    list_t *tmp = NULL;
 
     if (list == NULL) {
         return (NULL);
@@ -38,9 +41,11 @@ list_t *ampersand_separator(list_t *list)
     for (int i = 0; i < list_t_len(list); i++, list = list->next) {
         tmp = my_strsplit(list->data, "&&");
         for (int y = 0; y < list_t_len(tmp); y++, tmp = tmp->next) {
-            new = list_t_add(new, tmp->data, &free);
+            new = list_t_add(new, my_strdup(tmp->data), &free);
         }
+        list_t_destroy(tmp);
     }
+    list_t_destroy(list);
     return (new);
 }
 
