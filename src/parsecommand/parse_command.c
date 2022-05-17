@@ -15,14 +15,17 @@ list_t *or_separator(list_t *list)
 {
     list_t *new = NULL;
     list_t *tmp = NULL;
+    int separator = 0;
 
     if (list == NULL) {
         return (NULL);
     }
     for (int i = 0; i < list_t_len(list); i++, list = list->next) {
+        separator = list->separator;
         tmp = my_strsplit(list->data, "||");
         for (int y = 0; y < list_t_len(tmp); y++, tmp = tmp->next) {
-            new = list_t_add(new, my_strdup(tmp->data), &free);
+            new = list_t_add(new, separator, my_strdup(tmp->data), &free);
+            separator = 2;
         }
         list_t_destroy(tmp);
     }
@@ -34,14 +37,17 @@ list_t *ampersand_separator(list_t *list)
 {
     list_t *new = NULL;
     list_t *tmp = NULL;
+    int separator = 0;
 
     if (list == NULL) {
         return (NULL);
     }
     for (int i = 0; i < list_t_len(list); i++, list = list->next) {
+        separator = list->separator;
         tmp = my_strsplit(list->data, "&&");
         for (int y = 0; y < list_t_len(tmp); y++, tmp = tmp->next) {
-            new = list_t_add(new, my_strdup(tmp->data), &free);
+            new = list_t_add(new, separator, my_strdup(tmp->data), &free);
+            separator = 1;
         }
         list_t_destroy(tmp);
     }

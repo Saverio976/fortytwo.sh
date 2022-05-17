@@ -106,7 +106,7 @@ list_t *strsplit_not_rec(char *str, const char *delim)
         }
         if (to_add != NULL) {
             last_index = i + my_strlen(delim);
-            list = list_t_add(list, compute_str_to_add(to_add), &free);
+            list = list_t_add(list, 0, compute_str_to_add(to_add), &free);
             to_add = NULL;
         }
     }

@@ -66,7 +66,7 @@ static list_t *add_to_parsed(list_t *list, char *data, shell_t *shell)
         shell->status_code = 1;
         return (NULL);
     }
-    list = list_t_add(list, cm, free_command_void);
+    list = list_t_add(list, 0, cm, free_command_void);
     return (list);
 }
 

@@ -8,7 +8,8 @@
 #include <stdlib.h>
 #include "my_list.h"
 
-list_t *list_t_add(list_t *list, void *data, void (*destroy)(void *data))
+list_t *list_t_add(list_t *list, int separator, void *data,
+void (*destroy)(void *data))
 {
     list_t *new = NULL;
 
@@ -20,6 +21,7 @@ list_t *list_t_add(list_t *list, void *data, void (*destroy)(void *data))
         return (list);
     }
     new->data = data;
+    new->separator = separator;
     new->destroy = destroy;
     new->last = (list != NULL) ? list->last : new;
     new->next = (list != NULL) ? list : new;

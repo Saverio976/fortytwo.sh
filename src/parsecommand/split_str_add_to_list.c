@@ -57,5 +57,5 @@ list_t *split_str_add_to_list(list_t *list, char *to_add, int *is_first)
     }
     to_add = compute_str_to_add(to_add);
     *is_first += 1;
-    return (list_t_add(list, to_add, &free));
+    return (list_t_add(list, 0, to_add, &free));
 }
