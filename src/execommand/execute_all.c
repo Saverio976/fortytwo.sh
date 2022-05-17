@@ -20,7 +20,8 @@ int execute_all(shell_t *shell)
     }
     tmp = shell->command;
     do {
-        if (tmp->separator == 0 || (tmp->separator == 1 && status == 0) ||
+        if (tmp->separator == 21 || tmp->separator == 11 ||
+        tmp->separator == 0 || (tmp->separator == 1 && status == 0) ||
         (tmp->separator == 2 && status != 0)) {
             status = execute_command(shell, tmp->data);
         }
