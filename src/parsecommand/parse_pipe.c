@@ -74,7 +74,7 @@ static list_t *add_to_parsed(list_t *pipes_str, shell_t *shell)
             shell->status_code = 1;
             return (NULL);
         }
-        pipes_cm = list_t_add(pipes_cm, cm, free_command_void);
+        pipes_cm = list_t_add(pipes_cm, 0, cm, free_command_void);
     }
     return (pipes_cm);
 }

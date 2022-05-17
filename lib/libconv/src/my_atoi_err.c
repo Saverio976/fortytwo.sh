@@ -40,7 +40,8 @@ static int get_out_of_sign(char const *str, int i, int *is_error)
     while (str[i] != '\0' && my_strcontainc("+-", str[i])) {
         i++;
     }
-    if (my_strcontainc("123456789", str[i]) == 0) {
+    if (my_strcontainc("123456789", str[i]) == 0 &&
+            my_strcmp(str + i, "0") != 0) {
         *is_error = 1;
         return (84);
     }
