@@ -100,9 +100,10 @@ TSRCDIR		:=	tests/unitest/
 
 TSRC		:=	test_basic.c	\
 				env.c			\
-				help.c
+				help.c			\
+				my_strstrip.c
 TSRC		:=	$(addprefix $(TSRCDIR),$(TSRC))
-TSRC		:= 	$(filter-out ./src/main.c,$(SRC)) $(TSRC)
+TSRC		:= 	$(filter-out src/main.c,$(SRC)) $(TSRC)
 
 TOBJ		:=	$(TSRC:%.c=%.o)
 # ----------------------------------------------------------------------------

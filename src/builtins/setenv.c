@@ -13,12 +13,22 @@
 #include "mysh.h"
 #include "mysh_struct.h"
 
+static const char ALPHA_LETTER[] = "abcdefghijklmnopqrstuvwxyz" \
+                                    "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
 static int check_params_bad(const char *str)
 {
+    if (my_strcontainc(ALPHA_LETTER, str[0]) == 0) {
+        my_puterror("setenv",
+            "Variable name must begin with a letter.");
+        return (1);
+    }
     for (int i = 0; str[i] != '\0'; i++) {
         if (my_strcontainc("abcdefghijklmnopqrstuvwxyz", str[i]) == 0 &&
             my_strcontainc("ABCDEFGHIJKLMNOPQRSTUVWXYZ", str[i]) == 0 &&
             my_strcontainc("0123456789", str[i]) == 0) {
+            my_puterror("setenv",
+                "Variable name must contain alphanumeric characters.");
             return (1);
         }
     }
@@ -37,8 +47,6 @@ static int check_args(shell_t *shell, command_t *command, int len)
         return (1);
     }
     if (check_params_bad(command->arguments[1]) == 1) {
-        my_puterror("setenv",
-            "Variable name must contain alphanumeric characters.");
         shell->status_code = 1;
         return (1);
     }
