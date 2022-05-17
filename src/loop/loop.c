@@ -23,6 +23,9 @@ static int end_loop(int ret_code, shell_t *shell)
     shell->last_input = NULL;
     shell->last_input_len = 0;
     shell->status_code = ret_code;
+    if (shell->almost_the_end == true) {
+        shell->is_end = true;
+    }
     return (ret_code);
 }
 

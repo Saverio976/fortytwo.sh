@@ -57,6 +57,8 @@ SRC_PARSECOMMAND	:=	get_arguments_array.c			\
 						parse_single_command.c			\
 						split_str.c						\
 						split_str_add_to_list.c			\
+						clear_str.c						\
+						find_word_in_str.c				\
 						check_null_command.c
 SRC_PARSECOMMAND	:=	$(addprefix parsecommand/,$(SRC_PARSECOMMAND))
 

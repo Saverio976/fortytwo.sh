@@ -33,5 +33,5 @@ void exit_builtins(shell_t *shell, command_t *command)
         }
     }
     shell->status_code = nbr;
-    shell->is_end = true;
+    shell->almost_the_end = true;
 }

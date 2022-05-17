@@ -8,6 +8,7 @@
 #include "my_list.h"
 #include "mysh_struct.h"
 #include "mysh.h"
+#include "my_puts.h"
 
 int execute_all(shell_t *shell)
 {
@@ -19,7 +20,11 @@ int execute_all(shell_t *shell)
     }
     tmp = shell->command;
     do {
-        status = execute_command(shell, tmp->data);
+        if (tmp->separator == 21 || tmp->separator == 11 ||
+        tmp->separator == 0 || (tmp->separator == 1 && status == 0) ||
+        (tmp->separator == 2 && status != 0)) {
+            status = execute_command(shell, tmp->data);
+        }
         tmp = tmp->next;
     } while (tmp != shell->command);
     return (status);

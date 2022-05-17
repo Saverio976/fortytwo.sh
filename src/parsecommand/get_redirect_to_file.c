@@ -51,8 +51,7 @@ static char *get_right_file_single(char *string, const char *delim, int nb_max,
     if (list_t_len(list) == 2) {
         file = get_file_from_list(list, is_error);
     } else {
-        file = malloc(sizeof(char) * 1);
-        file[0] = '\0';
+        file = my_calloc(1);
     }
     list_t_destroy(list);
     return (file);

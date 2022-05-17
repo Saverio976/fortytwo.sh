@@ -40,6 +40,7 @@ struct shell_s {
     list_t *command;
     dico_t *env;
     bool is_end;
+    bool almost_the_end;
     size_t last_input_len;
 };
 

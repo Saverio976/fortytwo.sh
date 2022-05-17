@@ -51,6 +51,7 @@ bool check_missing_name(list_t *pipes_str, shell_t *shell)
         if (tmp == NULL) {
             return (false);
         }
+        free(tmp);
     }
     return (true);
 }
