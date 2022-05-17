@@ -6,7 +6,11 @@
 */
 
 #include <stdlib.h>
+<<<<<<< HEAD
 #include "my_strings.h"
+=======
+#include "my_clear_str.h"
+>>>>>>> dev
 #include "my_list.h"
 #include "mysh_struct.h"
 #include "mysh.h"
@@ -57,10 +61,14 @@ list_t *ampersand_separator(list_t *list)
 
 int parse_commands(char *string, shell_t *shell)
 {
+    char *user_input = NULL;
+
     list_t_destroy(shell->command);
+    user_input = clear_str(string);
     shell->command = my_strsplit(string, ";");
     shell->command = ampersand_separator(shell->command);
     shell->command = or_separator(shell->command);
     shell->command = remove_empty_commands(shell->command);
+    free(user_input);
     return (0);
 }
