@@ -30,7 +30,7 @@ static char *compute_str_to_add(char *str)
     if (str == NULL) {
         return (NULL);
     }
-    new = clear_str(new);
+    new = clear_str(str);
     if (new == NULL) {
         return (str);
     }
