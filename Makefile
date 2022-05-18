@@ -72,6 +72,14 @@ SRC_UTILS			:=	count_tokken.c					\
 						correct_env.c
 SRC_UTILS			:=	$(addprefix utils/,$(SRC_UTILS))
 
+SRC_PROMPT			:=	display_prompt.c				\
+						prompt_flags_char.c				\
+						prompt_flags_date.c				\
+						prompt_flags_shell.c			\
+						prompt_flags_time.c				\
+						prompt_flags_user.c
+SRC_PROMPT			:=	$(addprefix prompt/,$(SRC_PROMPT))
+
 SRC					:=	create_dict.c					\
 						main.c							\
 						help.c							\
@@ -79,7 +87,8 @@ SRC					:=	create_dict.c					\
 						$(SRC_PARSECOMMAND)				\
 						$(SRC_UTILS)					\
 						$(SRC_EXECOMMAND)				\
-						$(SRC_BUILTINS)
+						$(SRC_BUILTINS)					\
+						$(SRC_PROMPT)
 SRC					:=	$(addprefix src/,$(SRC))
 
 OBJ					:=	$(SRC:%.c=%.o)

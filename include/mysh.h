@@ -375,4 +375,12 @@ bool check_missing_name(list_t *pipes_str, shell_t *shell);
 **/
 dico_t *correct_env(dico_t *env);
 
+/**
+** @brief display prompt
+**
+** @param env environment already parsed char **env
+** @param ps string to parse and display as prompt (usually env variable PS*)
+**/
+void display_prompt(dico_t *env, const char *ps);
+
 #endif
