@@ -11,22 +11,22 @@
 #include "my_dico.h"
 #include "mysh.h"
 
-Test(parse_env, null)
-{
-    char **env = NULL;
-
-    cr_assert_null(parse_env(env));
-}
-
-Test(parse_env, bad_value)
-{
-    char *env[] = {
-        "ENV",
-        NULL
-    };
-
-    cr_assert_null(parse_env(env));
-}
+// Test(parse_env, null)
+// {
+//     char **env = NULL;
+//
+//     cr_assert_null(parse_env(env));
+// }
+//
+// Test(parse_env, bad_value)
+// {
+//     char *env[] = {
+//         "ENV",
+//         NULL
+//     };
+//
+//     cr_assert_null(parse_env(env));
+// }
 
 Test(parse_env, empty_value)
 {

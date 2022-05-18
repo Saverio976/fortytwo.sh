@@ -51,8 +51,7 @@ static char *get_right_file_single(char *string, const char *delim, int nb_max,
     if (list_t_len(list) == 2) {
         file = get_file_from_list(list, is_error);
     } else {
-        file = malloc(sizeof(char) * 1);
-        file[0] = '\0';
+        file = my_calloc(1);
     }
     list_t_destroy(list);
     return (file);
@@ -76,8 +75,12 @@ static char *get_right_file(char *string, int *is_error)
     }
     file = get_right_file_single(string, "<<", 2, is_error);
     if (*is_error == 1) {
+        if (file != NULL) {
+            free(file);
+        }
         return (NULL);
     }
+    free(file);
     file = get_right_file_single(string, "<", 2, is_error);
     if (file != NULL) {
         return (file);
@@ -96,6 +99,11 @@ char *get_file_to_input(char *string, int *is_error, command_t *cm)
     file = get_right_file(string, is_error);
     if (file == NULL) {
         *is_error = 1;
+    }
+    if (my_strcmp(file, "") != 0 && access(file, R_OK) != 0) {
+        my_puterror(file, "No such file or directory.\n");
+        free(file);
+        return (NULL);
     }
     cm->fd_input = -1;
     return (file);

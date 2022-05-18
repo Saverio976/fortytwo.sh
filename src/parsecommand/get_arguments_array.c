@@ -55,9 +55,10 @@ static char **create_array_list(list_t *list, int len)
     for (int i = 0; i < len; list = list->next) {
         if (is_ok_count(list->data) == false) {
             list = list->next;
+        } else {
+            arr[i] = my_strdup(list->data);
+            i++;
         }
-        arr[i] = my_strdup(list->data);
-        i++;
     }
     return (arr);
 }

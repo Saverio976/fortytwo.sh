@@ -11,7 +11,11 @@
 #include "my_dico.h"
 #include "my_strings.h"
 
-dico_t *add_shelllvl(dico_t *env)
+static const char nls_path_default[] = "/usr/share/locale/%L/LC_MESSAGES/" \
+                                        "%N.cat:/usr/share/locale/%l/" \
+                                        "LC_MESSAGES/%N.cat";
+
+static dico_t *add_shelllvl(dico_t *env)
 {
     dico_t *shlvl = NULL;
     char *tmp = NULL;
@@ -32,7 +36,7 @@ dico_t *add_shelllvl(dico_t *env)
     return (env);
 }
 
-dico_t *add_pwd_user(dico_t *env)
+static dico_t *add_pwd_user(dico_t *env)
 {
     dico_t *pwd = dico_t_get_elem(env, "PWD");
     dico_t *user = NULL;
@@ -51,10 +55,25 @@ dico_t *add_pwd_user(dico_t *env)
     return (env);
 }
 
+static dico_t *add_vars(dico_t *env)
+{
+    char *tmp = NULL;
+
+    if (dico_t_get_value(env, "NLSPATH") == NULL) {
+        tmp = my_strdup(nls_path_default);
+        if (tmp == NULL) {
+            return (env);
+        }
+        env = dico_t_add_data(env, "NLSPATH", tmp, free);
+    }
+    return (env);
+}
+
 dico_t *correct_env(dico_t *env)
 {
     env = add_shelllvl(env);
     env = add_pwd_user(env);
     env = dico_t_rem(env, "OLDPWD");
+    env = add_vars(env);
     return (env);
 }
