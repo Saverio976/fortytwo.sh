@@ -73,7 +73,6 @@ SRC_UTILS			:=	count_tokken.c					\
 SRC_UTILS			:=	$(addprefix utils/,$(SRC_UTILS))
 
 SRC_PROMPT			:=	display_prompt.c				\
-						utils.c							\
 						prompt_flags_char.c				\
 						prompt_flags_date.c				\
 						prompt_flags_shell.c			\

@@ -1,6 +1,6 @@
 /*
 ** EPITECH PROJECT, 2022
-** fortytwo.sh
+** prompt
 ** File description:
 ** prompt
 */
@@ -73,6 +73,5 @@ PROMPT_FUN(display_prompt_backslash);
 PROMPT_FUN(display_prompt_octal);
 void print_time(const char *format);
 char *get_substr(char *buf, size_t size, const char *str, char *const delim[2]);
-void display_prompt(dico_t *env, const char *ps);
 
 #endif /* prompt.h */
