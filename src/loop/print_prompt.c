@@ -12,7 +12,7 @@
 #include "mysh.h"
 #include "colors.h"
 
-const char *get_right_status_color(int status)
+static const char *get_right_status_color(int status)
 {
     if (status == 0) {
         return (get_color("green"));
@@ -20,7 +20,7 @@ const char *get_right_status_color(int status)
     return (get_color("red"));
 }
 
-int print_prompt(shell_t *shell)
+static int print_prompt_default(shell_t *shell)
 {
     char *home = NULL;
     char *pwd = NULL;
@@ -37,5 +37,20 @@ int print_prompt(shell_t *shell)
         my_printf("~%s(%s)%s", get_color("purple"), pwd, get_reset());
     }
     my_putstr("\n╰─$ ");
+    return (0);
+}
+
+int print_prompt(shell_t *shell)
+{
+    const char *ps1 = NULL;
+
+    if (shell == NULL) {
+        return (0);
+    }
+    ps1 = dico_t_get_value(shell->env, "PS1");
+    if (ps1 == NULL) {
+        return (print_prompt_default(shell));
+    }
+    display_prompt(shell->env, ps1);
     return (0);
 }
