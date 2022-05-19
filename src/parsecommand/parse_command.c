@@ -60,6 +60,11 @@ list_t *ampersand_separator(list_t *list)
     return (new);
 }
 
+list_t *check_alias(list_t *cm, list_t *alias)
+{
+    return cm;
+}
+
 int parse_commands(char *string, shell_t *shell)
 {
     list_t_destroy(shell->command);
@@ -67,5 +72,6 @@ int parse_commands(char *string, shell_t *shell)
     shell->command = ampersand_separator(shell->command);
     shell->command = or_separator(shell->command);
     shell->command = remove_empty_commands(shell->command);
+    shell->command = check_alias(shell->command, shell->alias);
     return (0);
 }
