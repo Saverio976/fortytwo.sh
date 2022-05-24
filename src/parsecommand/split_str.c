@@ -50,7 +50,6 @@ list_t *my_strsplit(char *str, const char *delim)
         }
         if (to_add != NULL) {
             last_index = i + my_strlen(delim);
-            my_printf("to add : %s\n", to_add);
             list = split_str_add_to_list(list, to_add, &is_first);
             to_add = NULL;
         }
