@@ -6,6 +6,7 @@
 */
 
 #include <stdlib.h>
+#include <unistd.h>
 #include "my_strings.h"
 #include "my_wordarray.h"
 #include "mysh_struct.h"
@@ -44,6 +45,10 @@ static int set_values(command_t *cm, int *is_error, shell_t *shell)
     }
     cm->binary = get_binary_path(cm->command, shell);
     if (cm->binary == NULL) {
+        return (-1);
+    }
+    if (my_strcmp(cm->binary, "") == 0) {
+        write(2, "Invalid null command.\n", 22);
         return (-1);
     }
     cm->arguments = get_arguments_array(cm->command);

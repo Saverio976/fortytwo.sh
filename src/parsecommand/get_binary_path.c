@@ -11,6 +11,7 @@
 #include "my_dico.h"
 #include "my_puts.h"
 #include "my_strings.h"
+#include "my_wordarray.h"
 #include "my_fs.h"
 #include "mysh.h"
 #include "mysh_struct.h"
@@ -64,29 +65,35 @@ static char *get_binary_path_str(const char *string, shell_t *shell)
     if (string == NULL) {
         return (NULL);
     }
-    if (my_strstartswith(string, "./") || check_if_builtins(string)) {
+    if (my_strcmp(string, "_") == 0) {
+        my_puterror("_", "Permission denied.\n");
+        return (NULL);
+    }
+    if (my_strstartswith(string, "./") || check_if_builtins(string) ||
+            my_strcmp(string, "") == 0) {
         return (my_strdup(string));
     }
     binary = get_binary_from_path(string, shell);
+    if (binary == NULL) {
+        my_puterror(string, "Command not found.\n");
+    }
     return (binary);
 }
 
 char *get_binary_path(char *string, shell_t *shell)
 {
-    list_t *list = NULL;
+    char **arr = NULL;
     char *binary = NULL;
 
     if (string == NULL) {
         return (NULL);
     }
-    list = my_strsplit(string, " ");
-    if (list == NULL) {
+    arr = get_arguments_array(string);
+    if (arr == NULL || my_wordarray_len(arr) <= 0) {
+        my_wordarray_free(arr);
         return (NULL);
     }
-    binary = get_binary_path_str(list->data, shell);
-    if (binary == NULL) {
-        my_puterror(list->data, "Command not found.\n");
-    }
-    list_t_destroy(list);
+    binary = get_binary_path_str(arr[0], shell);
+    my_wordarray_free(arr);
     return (binary);
 }

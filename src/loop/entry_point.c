@@ -22,6 +22,7 @@ shell_t *create_shell(dico_t *env)
     }
     shell->status_code = 0;
     shell->is_end = false;
+    shell->almost_the_end = false;
     shell->last_input = NULL;
     shell->command = NULL;
     shell->env = env;
