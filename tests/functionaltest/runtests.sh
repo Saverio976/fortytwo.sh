@@ -198,5 +198,5 @@ test_this_command 'cd\nls | cat -e | wc -c\necho test'
 
 rm $EXEC_BINARY
 
-echo -e "\n${GREEN}You pass $NB_SUCCESS tests"
-echo -e "\n${RED}You fail $NB_FAILED tests"
+echo -e "\n${GREEN}You pass $NB_SUCCESS tests${RESET}"
+echo -e "\n${RED}You fail $NB_FAILED tests${RESET}"
