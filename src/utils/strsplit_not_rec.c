@@ -72,6 +72,7 @@ static char *compute_str_to_add(char *str)
     }
     if (new[0] == '\0') {
         free(new);
+        free(str);
         return (NULL);
     }
     free(str);
