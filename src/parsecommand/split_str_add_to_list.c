@@ -9,6 +9,7 @@
 #include <unistd.h>
 #include "my_clear_str.h"
 #include "my_list.h"
+#include "my_puts.h"
 #include "mysh.h"
 #include "my_strings.h"
 
@@ -30,17 +31,16 @@ static char *compute_str_to_add(char *str)
     if (str == NULL) {
         return (NULL);
     }
+    my_printf("str : ''%s'' | ", str);
     new = clear_str(str);
+    my_printf("new : ''%s''\n", new);
     if (new == NULL) {
         return (str);
     }
     if (new[0] == '\0') {
         free(new);
+        free(str);
         return (NULL);
-    }
-    new = remove_quotes(new);
-    if (new == NULL) {
-        return (str);
     }
     free(str);
     return (new);
@@ -53,9 +53,11 @@ list_t *split_str_add_to_list(list_t *list, char *to_add, int *is_first)
     }
     if (to_add != NULL) {
         if (count_tokken(to_add, "'") % 2 != 0) {
+            my_printf("1 : %s | %d\n", to_add, count_tokken(to_add, "'"));
             return (free_all(list, "'"));
         }
         if (count_tokken(to_add, "\"") % 2 != 0) {
+            my_printf("2 : %s | %d\n", to_add, count_tokken(to_add, "\""));
             return (free_all(list, "\""));
         }
     }
