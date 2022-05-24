@@ -9,6 +9,7 @@
 #include <unistd.h>
 #include "my_clear_str.h"
 #include "my_list.h"
+#include "my_puts.h"
 #include "mysh.h"
 #include "my_strings.h"
 
@@ -36,11 +37,8 @@ static char *compute_str_to_add(char *str)
     }
     if (new[0] == '\0') {
         free(new);
+        free(str);
         return (NULL);
-    }
-    new = remove_quotes(new);
-    if (new == NULL) {
-        return (str);
     }
     free(str);
     return (new);

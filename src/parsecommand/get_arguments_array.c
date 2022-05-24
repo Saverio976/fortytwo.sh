@@ -79,6 +79,7 @@ char **get_arguments_array(char *input)
         return (NULL);
     }
     arr = create_array_list(list_args, len);
+    arr = remove_quotes_command(arr);
     list_t_destroy(list_args);
     return (arr);
 }
