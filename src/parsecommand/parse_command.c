@@ -4,7 +4,8 @@
 ** File description:
 ** parse char * to commands
 */
-
+#include "my_puts.h"
+#include <stdio.h>
 #include <stdlib.h>
 #include "my_strings.h"
 #include "my_clear_str.h"
@@ -60,10 +61,22 @@ list_t *ampersand_separator(list_t *list)
     return (new);
 }
 
-list_t *check_alias(list_t *cm, list_t *alias)
-{
-    return cm;
-}
+//list_t *check_alias(list_t *cm, list_t *alias)
+//{
+//    int test = 0;
+//
+//    if (cm == NULL) {
+//        return (NULL);
+//    }
+//    if (alias == NULL) {
+//        return (cm);
+//    }
+//    for (int i = 0; i < list_t_len(cm); i++, cm = cm->next) {
+//        for (int y = 0; y < list_t_len(alias); y++, alias = alias->next) {
+//        }
+//    }
+//    return cm;
+//}
 
 int parse_commands(char *string, shell_t *shell)
 {
@@ -72,6 +85,6 @@ int parse_commands(char *string, shell_t *shell)
     shell->command = ampersand_separator(shell->command);
     shell->command = or_separator(shell->command);
     shell->command = remove_empty_commands(shell->command);
-    shell->command = check_alias(shell->command, shell->alias);
+    //shell->command = check_alias(shell->command, shell->alias);
     return (0);
 }

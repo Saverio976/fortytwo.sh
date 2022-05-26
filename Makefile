@@ -33,7 +33,8 @@ SRC_BUILTINS		:=	cd.c							\
 						exec_builtins.c					\
 						exit.c							\
 						setenv.c						\
-						unsetenv.c
+						unsetenv.c						\
+						alias.c
 SRC_BUILTINS		:=	$(addprefix builtins/,$(SRC_BUILTINS))
 
 SRC_EXECOMMAND		:=	execute_all.c					\
@@ -119,7 +120,7 @@ TOBJ		:=	$(TSRC:%.c=%.o)
 
 # ----------------------------------------------------------------------------
 # FLAGS
-CFLAGS		+= 	-Iinclude/ -Ilib/include/ -Wall -Wextra -Wpedantic
+CFLAGS		+= 	-Iinclude/ -Ilib/include/ -Wall -Wextra -Wpedantic -g3
 
 TFLAGS		=	-fprofile-arcs -ftest-coverage
 
