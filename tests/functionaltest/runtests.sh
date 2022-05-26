@@ -113,6 +113,7 @@ test_this_command 'which salut'
 test_this_command 'which cd; which ls; which cat; which salut'
 test_this_command 'which cd; which ls; which cat; which clear'
 test_this_command 'which'
+test_this_command 'which ls cd cat'
 
 echo -e "${YELLOW_BOLD}SYNTAX ERROR TESTS${RESET}"
 
