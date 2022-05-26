@@ -32,15 +32,16 @@ static void execute_wich(shell_t *shell, char *command)
     char *path = NULL;
 
     path = get_binary_path(command, shell);
-    if (my_strcmp(path, command) != 0) {
-        my_putstr(path);
-        shell->status_code = 0;
-        free(path);
+    if (path == NULL) {
+        shell->status_code = 1;
         return;
     }
-    if (check_if_builtins(command) == true) {
+    if (my_strcmp(path, command) != 0) {
+        my_putstr(path);
+        my_putstr("\n");
+        return;
+    } else if (check_if_builtins(command) == true) {
         my_printf("%s: shell built-in command.\n", command);
-        shell->status_code = 0;
     }
     free(path);
 }
@@ -48,6 +49,7 @@ static void execute_wich(shell_t *shell, char *command)
 void which_builtins(shell_t *shell, command_t *command)
 {
     int nb_args = count_words(command->arguments);
+    shell->status_code = 0;
 
     if (nb_args < 2) {
         my_puterror("which", "Too few arguments.\n");
