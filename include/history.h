@@ -8,6 +8,8 @@
 #ifndef HISTORY_H
     #define HISTORY_H
 
+#include "my_dico.h"
+
 /**
 ** @brief return $HISTFILE or set and return default value
 **
