@@ -75,6 +75,7 @@ SRC_UTILS			:=	$(addprefix utils/,$(SRC_UTILS))
 SRC_PROMPT			:=	display_prompt.c				\
 						prompt_flags_char.c				\
 						prompt_flags_date.c				\
+						prompt_flags_history.c			\
 						prompt_flags_shell.c			\
 						prompt_flags_time.c				\
 						prompt_flags_user.c
