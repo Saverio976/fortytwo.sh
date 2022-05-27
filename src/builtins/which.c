@@ -12,6 +12,7 @@
 #include "my_puts.h"
 #include "my_wordarray.h"
 #include <stdbool.h>
+#include <stdlib.h>
 
 static void execute_wich(shell_t *shell, char *command)
 {
