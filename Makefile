@@ -34,6 +34,7 @@ SRC_BUILTINS		:=	cd.c							\
 						exit.c							\
 						setenv.c						\
 						unsetenv.c						\
+						alias.c							\
 						which.c
 SRC_BUILTINS		:=	$(addprefix builtins/,$(SRC_BUILTINS))
 

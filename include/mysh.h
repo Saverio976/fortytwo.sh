@@ -383,6 +383,8 @@ dico_t *correct_env(dico_t *env);
 **/
 void display_prompt(dico_t *env, const char *ps);
 
+void change_alias(list_t *cm, list_t *alias, int change, char **tmp);
+
 char **remove_quotes_command(char **arr);
 
 #endif

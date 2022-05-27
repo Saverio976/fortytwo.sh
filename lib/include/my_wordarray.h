@@ -56,4 +56,18 @@ void my_wordarray_showln(char *const *array);
 **/
 void my_wordarray_show(char *const *array);
 
+/**
+** @brief get cumulative size of all strings
+** @param array
+** @return 0 if array is null; else the size of the array
+**/
+int my_wordarray_size(char **wordarray);
+
+/**
+** @brief put each "word" in a string separate by spaces
+** @param array
+** @return NULL if array is null; else char *
+**/
+char *my_wordarray_to_str(char **wordarray);
+
 #endif

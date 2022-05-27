@@ -11,7 +11,7 @@
     #include "mysh_struct.h"
 
     #define MAX_LEN_BUILTIN_COMMAND 50
-    #define NB_BUILTINS_FUNC 6
+    #define NB_BUILTINS_FUNC 7
 
 struct builtins_info_s {
     char name[MAX_LEN_BUILTIN_COMMAND];
@@ -26,5 +26,6 @@ void exit_builtins(shell_t *shell, command_t *command);
 void which_builtins(shell_t *shell, command_t *command);
 void setenv_builtins(shell_t *shell, command_t *command);
 void unsetenv_builtins(shell_t *shell, command_t *command);
+void alias_builtins(shell_t *shell, command_t *command);
 
 #endif

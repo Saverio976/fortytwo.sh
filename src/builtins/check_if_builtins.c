@@ -16,6 +16,7 @@ const struct builtins_info_s builtins_arr[NB_BUILTINS_FUNC] = {
     {"exit", exit_builtins},
     {"setenv", setenv_builtins},
     {"unsetenv", unsetenv_builtins},
+    {"alias", alias_builtins},
     {"which", which_builtins}
 };
 
