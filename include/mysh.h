@@ -392,6 +392,7 @@ char **remove_quotes_command(char **arr);
 **
 ** @param env environment already parsed char **env
 ** @param str command line  
+** @return modified str with $env changed by its value
 **/
 char *replace_value_env(dico_t *dico, char *str);
 
