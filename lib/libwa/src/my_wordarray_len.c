@@ -7,16 +7,22 @@
 
 #include <stddef.h>
 
+/**
+** @brief get size of null terminated 2d array
+** @param array
+** @return 0 if array is null; else the size of the array
+**/
 int my_wordarray_size(char **wordarray)
 {
     int i = 0;
-    int y = 0;
+    int result = 0;
 
     if (wordarray == NULL)
         return (0);
     for (; wordarray[i] != NULL; i++)
-        for(; wordarray[i][y] != '\0'; y++);
-    return (y);
+        for(int y = 0; wordarray[i][y] != '\0'; y++)
+            result++;
+    return (result);
 }
 
 /**

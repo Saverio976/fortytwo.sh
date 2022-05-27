@@ -23,6 +23,9 @@ list_t *my_alias_add(list_t *alias, char *name, char *value) {
 
     new_name = my_strdup(name);
     new_value = my_strdup(value);
+    if (new_name == NULL || new_value == NULL) {
+        return (alias);
+    }
     alias = list_t_add(alias, 0, new_name, &free);
     alias = list_t_add(alias, 1, new_value, &free);
     return (alias);
@@ -32,9 +35,12 @@ void make_alias(shell_t *shell, char **arg)
 {
     char *alias = malloc(sizeof(char) * (my_wordarray_size(arg) + 1));
 
+    if (alias == NULL) {
+        return;
+    }
     alias = my_strcpy(alias, arg[2]);
     for (int i = 3; arg[i]; i++) {
-        alias = my_strcat(alias, " \0");
+        alias = my_strcat(alias, " ");
         alias = my_strcat(alias, arg[i]);
     }
     shell->alias = my_alias_add(shell->alias, arg[1], alias);
@@ -64,7 +70,6 @@ void print_alias(shell_t *shell)
     list_t *tmp = shell->alias;
 
     if (tmp == NULL) {
-        my_putstr("alias: no alias defined.\n");
         return;
     }
     do {
@@ -91,7 +96,6 @@ void alias_builtins(shell_t *shell, command_t *command)
         return;
     }
     if (test == 0) {
-        my_putstr("alias error");
         shell->status_code = 1;
         return;
     }

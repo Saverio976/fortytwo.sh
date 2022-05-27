@@ -4,7 +4,7 @@
 ** File description:
 ** parse char * to commands
 */
-#include "my_puts.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include "my_strings.h"
@@ -69,7 +69,7 @@ char *my_wordarray_to_str(char **wordarray)
     int max = my_wordarray_len(wordarray);
     char *str = my_calloc(len);
 
-    if (wordarray == NULL)
+    if (wordarray == NULL || str == NULL)
         return (NULL);
     while (i < max) {
         str = my_strcat(str, wordarray[i]);
@@ -77,7 +77,6 @@ char *my_wordarray_to_str(char **wordarray)
             str = my_strcat(str, " ");
         i++;
     }
-    str = my_strcat(str, "\0");
     return (str);
 }
 
