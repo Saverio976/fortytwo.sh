@@ -61,7 +61,8 @@ SRC_PARSECOMMAND	:=	get_arguments_array.c			\
 						split_str_add_to_list.c			\
 						clear_str.c						\
 						find_word_in_str.c				\
-						check_null_command.c
+						check_null_command.c			\
+						env_value.c
 SRC_PARSECOMMAND	:=	$(addprefix parsecommand/,$(SRC_PARSECOMMAND))
 
 SRC_UTILS			:=	count_tokken.c					\
