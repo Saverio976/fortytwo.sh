@@ -5,11 +5,13 @@
 ** env_value
 */
 
-#include "my_list.h"
-#include "mysh_struct.h"
 #include <string.h>
 #include <stdlib.h>
+#include "my_list.h"
+#include "mysh_struct.h"
+#include "my_strings.h"
 #include "mysh.h"
+#include "my_wordarray.h"
 
 int count_word(const char *str)
 {
@@ -60,8 +62,12 @@ char *tab_to_str(char **tab)
 {
     char *str = NULL;
     int i = 0;
+    int size = 0;
 
-    str = malloc(sizeof(char) * (TODO));
+    size = my_wordarray_size(tab) + my_wordarray_len(tab);
+    str = my_calloc(size + 2);
+    if (!str)
+        return (NULL);
     while (tab[i]) {
         str = strcat(str, tab[i]);
         str = strcat(str, " ");
@@ -72,23 +78,22 @@ char *tab_to_str(char **tab)
 
 char *replace_value_env(dico_t *dico, char *str)
 {   
-    char *tmp = NULL;
     char **tab = NULL;
     char *cmd = NULL;
 
-    cmd = malloc(sizeof(char) * (my_strlen(str) + 1));
     tab = my_str_to_word_array(str);
+    //free(str);
     for (int i = 0; tab[i] != NULL; i++) {
         for (int j = 0; tab[i][j] != '\0'; j++) {
             if (tab[i][j] == '$' && str[i + 1] != '\0') {
                 str = dico_t_get_value(dico, tab[i] + j + 1);
-                tmp = strdup(str);
                 //tab[i] = strdup(' ');
-                tab[i] = strdup(tmp);
+                free(tab[i]);
+                tab[i] = strdup(str);
             }
         }
     }
-    my_wordarray_showln(tab);
     cmd = tab_to_str(tab);
+    my_wordarray_free(tab);
     return cmd;
 }

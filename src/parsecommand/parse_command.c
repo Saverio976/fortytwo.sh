@@ -100,11 +100,12 @@ list_t *check_alias(list_t *cm, list_t *alias)
 int parse_commands(char *string, shell_t *shell)
 {
     list_t_destroy(shell->command);
-    string = replace_value_env(shell->env, string);
-    shell->command = my_strsplit(string, ";");
+    shell->last_input = replace_value_env(shell->env, string);
+    shell->command = my_strsplit(shell->last_input, ";");
     shell->command = ampersand_separator(shell->command);
     shell->command = or_separator(shell->command);
     shell->command = remove_empty_commands(shell->command);
     shell->command = check_alias(shell->command, shell->alias);
+    free(string);
     return (0);
 }

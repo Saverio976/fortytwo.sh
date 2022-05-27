@@ -387,4 +387,12 @@ void change_alias(list_t *cm, list_t *alias, int change, char **tmp);
 
 char **remove_quotes_command(char **arr);
 
+/**
+** @brief return env value
+**
+** @param env environment already parsed char **env
+** @param str command line  
+**/
+char *replace_value_env(dico_t *dico, char *str);
+
 #endif
