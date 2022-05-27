@@ -30,8 +30,9 @@ list_t *my_alias_add(list_t *alias, char *name, char *value) {
 
 void make_alias(shell_t *shell, char **arg)
 {
-    char *alias = my_strdup(arg[2]);
+    char *alias = malloc(sizeof(char) * (my_wordarray_size(arg) + 1));
 
+    alias = my_strcpy(alias, arg[2]);
     for (int i = 3; arg[i]; i++) {
         alias = my_strcat(alias, " \0");
         alias = my_strcat(alias, arg[i]);

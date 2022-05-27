@@ -11,6 +11,7 @@
 #include "my_clear_str.h"
 #include "my_list.h"
 #include "mysh_struct.h"
+#include "my_wordarray.h"
 #include "mysh.h"
 
 list_t *or_separator(list_t *list)
@@ -61,22 +62,54 @@ list_t *ampersand_separator(list_t *list)
     return (new);
 }
 
-//list_t *check_alias(list_t *cm, list_t *alias)
-//{
-//    int test = 0;
-//
-//    if (cm == NULL) {
-//        return (NULL);
-//    }
-//    if (alias == NULL) {
-//        return (cm);
-//    }
-//    for (int i = 0; i < list_t_len(cm); i++, cm = cm->next) {
-//        for (int y = 0; y < list_t_len(alias); y++, alias = alias->next) {
-//        }
-//    }
-//    return cm;
-//}
+char *my_wordarray_to_str(char **wordarray)
+{
+    int i = 0;
+    int len = my_wordarray_size(wordarray);
+    int max = my_wordarray_len(wordarray);
+    char *str = my_calloc(len);
+
+    if (wordarray == NULL)
+        return (NULL);
+    while (i < max) {
+        str = my_strcat(str, wordarray[i]);
+        if (i < max - 1)
+            str = my_strcat(str, " ");
+        i++;
+    }
+    str = my_strcat(str, "\0");
+    return (str);
+}
+
+list_t *check_alias(list_t *cm, list_t *alias)
+{
+    int change = 0;
+    char **tmp = NULL;
+
+    if (cm == NULL) {
+        return (NULL);
+    }
+    if (alias == NULL) {
+        return (cm);
+    }
+    for (int i = 0; i < list_t_len(cm); i++, cm = cm->next) {
+        tmp = my_wordarray_from_str(cm->data, '\n');
+        for (int y = 0; y < list_t_len(alias); y++, alias = alias->next) {
+            if (alias->separator == 0 && my_strcmp(tmp[0], alias->data) == 0) {
+                change = 1;
+                free(tmp[0]);
+                tmp[0] = my_strdup(alias->next->data);
+            }
+        }
+        if (change == 1) {
+            free(cm->data);
+            cm->data = my_wordarray_to_str(tmp);
+            change = 0;
+        }
+        my_wordarray_free(tmp);
+    }
+    return cm;
+}
 
 int parse_commands(char *string, shell_t *shell)
 {
@@ -85,6 +118,6 @@ int parse_commands(char *string, shell_t *shell)
     shell->command = ampersand_separator(shell->command);
     shell->command = or_separator(shell->command);
     shell->command = remove_empty_commands(shell->command);
-    //shell->command = check_alias(shell->command, shell->alias);
+    shell->command = check_alias(shell->command, shell->alias);
     return (0);
 }

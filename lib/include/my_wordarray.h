@@ -56,4 +56,6 @@ void my_wordarray_showln(char *const *array);
 **/
 void my_wordarray_show(char *const *array);
 
+int my_wordarray_size(char **wordarray);
+
 #endif
