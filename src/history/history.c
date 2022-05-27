@@ -5,17 +5,15 @@
 ** history
 */
 
-#include <limits.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
+#include "my_fs.h"
 #include "my_dico.h"
 
 char *get_history_file(dico_t *env)
 {
     const char *file = dico_t_get_value(env, "HISTFILE");
     const char *home = NULL;
-    size_t homelen = 0;
     char *buf = NULL;
     char filename[] = ".thrush_history";
 
@@ -23,11 +21,9 @@ char *get_history_file(dico_t *env)
         home = dico_t_get_value(env, "HOME");
         if (!home)
             return NULL;
-        homelen = strlen(home);
-        buf = malloc((homelen + sizeof filename + 2) * sizeof *buf);
-        strcpy(buf, home);
-        buf[homelen] = '/';
-        strcpy(buf + homelen + 1, filename);
+        buf = join_path('/', 2, home, filename);
+        if (!buf)
+            return NULL;
         dico_t_add_data(env, "HISTFILE", buf, &free);
     }
     return dico_t_get_value(env, "HISTFILE");
