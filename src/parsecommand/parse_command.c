@@ -93,20 +93,7 @@ list_t *check_alias(list_t *cm, list_t *alias)
         return (cm);
     }
     for (int i = 0; i < list_t_len(cm); i++, cm = cm->next) {
-        tmp = my_wordarray_from_str(cm->data, '\n');
-        for (int y = 0; y < list_t_len(alias); y++, alias = alias->next) {
-            if (alias->separator == 0 && my_strcmp(tmp[0], alias->data) == 0) {
-                change = 1;
-                free(tmp[0]);
-                tmp[0] = my_strdup(alias->next->data);
-            }
-        }
-        if (change == 1) {
-            free(cm->data);
-            cm->data = my_wordarray_to_str(tmp);
-            change = 0;
-        }
-        my_wordarray_free(tmp);
+        change_alias(cm, alias, change, tmp);
     }
     return cm;
 }

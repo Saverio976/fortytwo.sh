@@ -41,6 +41,24 @@ void make_alias(shell_t *shell, char **arg)
     free(alias);
 }
 
+void change_alias(list_t *cm, list_t *alias, int change, char **tmp)
+{
+    tmp = my_wordarray_from_str(cm->data, '\n');
+    for (int y = 0; y < list_t_len(alias); y++, alias = alias->next) {
+        if (alias->separator == 0 && my_strcmp(tmp[0], alias->data) == 0) {
+            change = 1;
+            free(tmp[0]);
+            tmp[0] = my_strdup(alias->next->data);
+        }
+    }
+    if (change == 1) {
+        free(cm->data);
+        cm->data = my_wordarray_to_str(tmp);
+        change = 0;
+    }
+    my_wordarray_free(tmp);
+}
+
 void print_alias(shell_t *shell)
 {
     list_t *tmp = shell->alias;

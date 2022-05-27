@@ -58,4 +58,6 @@ void my_wordarray_show(char *const *array);
 
 int my_wordarray_size(char **wordarray);
 
+char *my_wordarray_to_str(char **wordarray);
+
 #endif

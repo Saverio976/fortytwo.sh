@@ -33,6 +33,7 @@ SRC		:=	my_wordarray_free.c 		\
 			my_wordarray_from_wordarray.c	\
 			my_wordarray_index_startswith.c	\
 			my_wordarray_len.c		\
+			my_wordarray_to_str.c	\
 			my_wordarray_show.c
 SRC		:=	$(addprefix $(SRCDIR),$(SRC))
 
