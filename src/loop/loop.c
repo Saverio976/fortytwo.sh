@@ -38,7 +38,7 @@ int loop(shell_t *shell)
         print_prompt(shell);
     }
     if (get_line_input(shell) != true || shell->last_input == NULL) {
-        return (end_loop(1, shell));
+        return (end_loop(shell->status_code, shell));
     }
     // if (getline(&shell->last_input, &shell->last_input_len, stdin) <= 0) {
     //     shell->is_end = true;
