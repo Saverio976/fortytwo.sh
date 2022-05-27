@@ -8,6 +8,8 @@
 #ifndef HISTORY_H
     #define HISTORY_H
 
+    #include "my_dico.h"
+
 /**
 ** @brief return $HISTFILE or set and return default value
 **
@@ -37,13 +39,23 @@ int count_file_lines(const char *path);
 int inc_history_size(dico_t *env, int increment);
 
 /**
-** @brief add command to histfile
+** @brief get a line from histfile (must be free'd)
 **
 ** @param env environment already parsed char **env
-** @param command command to add at the end of histfile
+** @param line_nb number of the line to retrieve (starting at 1)
+**
+** @return line or NULL if not found
+**/
+char *get_history_line(dico_t *env, int line_nb);
+
+/**
+** @brief add line to histfile
+**
+** @param env environment already parsed char **env
+** @param line line to add at the end of histfile
 **
 ** @return 0 or a negative value in case of a error
 **/
-int add_to_hist(dico_t *env, char **command);
+int add_to_hist(dico_t *env, char *line);
 
 #endif /* history.h */
