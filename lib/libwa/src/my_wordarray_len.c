@@ -8,7 +8,7 @@
 #include <stddef.h>
 
 /**
-** @brief get size of null terminated 2d array
+** @brief get cumulative size of all strings
 ** @param array
 ** @return 0 if array is null; else the size of the array
 **/
