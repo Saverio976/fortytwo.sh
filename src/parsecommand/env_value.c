@@ -35,8 +35,13 @@ static void check_env_value(int pos[2], char *str, char **tab, dico_t *dico)
 {
     if (tab[pos[0]][pos[1]] == '$' && str[pos[0] + 1] != '\0') {
         str = dico_t_get_value(dico, tab[pos[0]] + pos[1] + 1);
-        free(tab[pos[0]]);
-        tab[pos[0]] = strdup(str);
+        if (str == NULL) {
+            free(tab[pos[0]]);
+            tab[pos[0]] = my_strdup(" ");
+        } else {
+            free(tab[pos[0]]);
+            tab[pos[0]] = strdup(str);
+        }
     }
 }
 
