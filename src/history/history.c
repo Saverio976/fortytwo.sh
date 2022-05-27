@@ -71,7 +71,7 @@ char *get_history_line(dico_t *env, int line_nb)
             return NULL;
         }
     }
-    if (getline(&line, (size_t[]){0}, file) < 0) {
+    if (getline(&line, (size_t[]) {0}, file) < 0) {
         free(line);
         line = NULL;
     }
