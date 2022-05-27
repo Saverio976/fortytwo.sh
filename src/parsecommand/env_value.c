@@ -13,51 +13,6 @@
 #include "mysh.h"
 #include "my_wordarray.h"
 
-int count_word(const char *str)
-{
-    int i = 0;
-    int count = 0;
-
-    while (str[i] != '\0') {
-        if (str[i] != ' ' && str[i] != '\t' && str[i] != '\0' &&
-        str[i + 1] != ' ' && str[i + 1] != '\t') {
-            count++;
-        }
-        i++;
-    }
-    return (count + 1);
-}
-
-int my_len_of_word(const char *str, int index)
-{
-    int i = index;
-
-    while (str[i] && str[i] != ' ' && str[i] != '\t')
-        i++;
-    return i - index;
-}
-
-char **my_str_to_word_array(char const *str)
-{
-    char **tab = NULL;
-    int k = 0;
-
-    tab = malloc(sizeof(char **) * (count_word(str) + 1));
-    if (!tab)
-        return (NULL);
-    for (int i = 0; str[i] != '\0'; i++) {
-        if (str[i] != ' ' && str[i] != '\t') {
-            tab[k] = malloc(sizeof(char) * my_len_of_word(str, i) + 1);
-            strncpy(tab[k], &str[i], my_len_of_word(str, i));
-            tab[k][my_len_of_word(str, i)] = '\0';
-            i += my_len_of_word(str, i) - 1;
-            k++;
-        }
-    }
-    tab[k] = NULL;
-    return tab;
-}
-
 char *tab_to_str(char **tab)
 {
     char *str = NULL;
@@ -76,21 +31,25 @@ char *tab_to_str(char **tab)
     return str;
 }
 
+static void check_env_value(int pos[2], char *str, char **tab, dico_t *dico)
+{
+    if (tab[pos[0]][pos[1]] == '$' && str[pos[0] + 1] != '\0') {
+        str = dico_t_get_value(dico, tab[pos[0]] + pos[1] + 1);
+        free(tab[pos[0]]);
+        tab[pos[0]] = strdup(str);
+    }
+}
+
 char *replace_value_env(dico_t *dico, char *str)
-{   
+{
     char **tab = NULL;
     char *cmd = NULL;
+    int pos[2] = {0};
 
-    tab = my_str_to_word_array(str);
-    //free(str);
-    for (int i = 0; tab[i] != NULL; i++) {
-        for (int j = 0; tab[i][j] != '\0'; j++) {
-            if (tab[i][j] == '$' && str[i + 1] != '\0') {
-                str = dico_t_get_value(dico, tab[i] + j + 1);
-                //tab[i] = strdup(' ');
-                free(tab[i]);
-                tab[i] = strdup(str);
-            }
+    tab = my_wordarray_from_str(str, ' ');
+    for (pos[0] = 0; tab[pos[0]] != NULL; pos[0]++) {
+        for (pos[1] = 0; tab[pos[0]][pos[1]] != '\0'; pos[1]++) {
+            check_env_value(pos, str, tab, dico);
         }
     }
     cmd = tab_to_str(tab);
