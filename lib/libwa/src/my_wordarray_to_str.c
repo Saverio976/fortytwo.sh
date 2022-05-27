@@ -31,6 +31,5 @@ char *my_wordarray_to_str(char **wordarray)
             str = my_strcat(str, " ");
         i++;
     }
-    str = my_strcat(str, "\0");
     return (str);
 }
