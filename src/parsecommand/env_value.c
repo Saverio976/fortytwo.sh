@@ -24,8 +24,8 @@ char *tab_to_str(char **tab)
     if (!str)
         return (NULL);
     while (tab[i]) {
-        str = strcat(str, tab[i]);
-        str = strcat(str, " ");
+        str = my_strcat(str, tab[i]);
+        str = my_strcat(str, " ");
         i++;
     }
     return str;
