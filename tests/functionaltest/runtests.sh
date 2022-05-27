@@ -60,6 +60,7 @@ test_this_command 'echo 	 	 test 	 	with	 	space 	 and 	 tab  	'
 test_this_command 'echo  	 	 test; echo with; echo 	 points; echo salut 	'
 test_this_command 'echo 	 	 test; echo  	 		with 	 	 	;  		 	echo 	 points 	 	;  	 	 echo salut  		'
 test_this_command 'echo test\n  echo 	other test 	  	 	\n 	 echo	 other 	 	 other 	 	 other 	 	 test 	 	 	\n 	 echo	 	with 	 	 backslashn 	 	 	 \n 	echo 	 test'
+test_this_command './tests/functionaltest/test_args abc "def def"'
 
 echo -e "${YELLOW_BOLD}REDIRECTIONS TESTS${RESET}"
 
