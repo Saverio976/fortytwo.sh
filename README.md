@@ -9,3 +9,7 @@ The thrush shell
 ```bash
 sudo bash -c "$(curl -fsSL https://raw.githubusercontent.com/Saverio976/https://github.com/Saverio976/fortytwo.sh/install.sh)"
 ```
+
+## Uninstall
+
+all you have to do is delete /bin/thrush
