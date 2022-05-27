@@ -15,11 +15,13 @@ typedef struct list_s list_t;
 struct list_s {
     list_t *next;
     list_t *last;
+    int separator;
     void *data;
     void (*destroy)(void *data);
 };
 
-list_t *list_t_add(list_t *list, void *data, void (*destroy)(void *data));
+list_t *list_t_add(list_t *list, int separator, void *data,
+    void (*destroy)(void *data));
 
 int list_t_destroy(list_t *list);
 

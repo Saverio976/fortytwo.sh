@@ -323,7 +323,7 @@ int ends_redirection(command_t *cm);
 ** @param shell shell structure
 ** @param cms list of commands
 **
-** @return status code of teh last command
+** @return status code of the last command
 **/
 int execute_command_parsed(shell_t *shell, list_t *cms);
 
@@ -342,5 +342,49 @@ int kill_inferior_commands(shell_t *shell, int wstatus, list_t *cms,
 ** }
 **/
 list_t *remove_empty_commands(list_t *list);
+
+/**
+** @brief check if there is null command in list
+**
+** @param pipes_str list of char *
+** @param shell shell structure
+**
+** @return false if there are some invalid null command; true otherwise
+**/
+bool check_null_command(list_t *pipes_str, shell_t *shell);
+
+/**
+** @brief check if there is missing name in redirect
+**
+** @param pipes_str list of char *
+** @param shell shell structure
+**
+** @return false if there are some missing name; true otherwise
+**/
+bool check_missing_name(list_t *pipes_str, shell_t *shell);
+
+/**
+** @brief correct env (if it is empty, add pwd and user)
+**
+** @param env environment already parsed char **env
+**
+** @return {
+** NULL : could not add user and pwd
+** dico_t *: env
+** }
+**/
+dico_t *correct_env(dico_t *env);
+
+/**
+** @brief display prompt
+**
+** @param env environment already parsed char **env
+** @param ps string to parse and display as prompt (usually env variable PS*)
+**/
+void display_prompt(dico_t *env, const char *ps);
+
+void change_alias(list_t *cm, list_t *alias, int change, char **tmp);
+
+char **remove_quotes_command(char **arr);
 
 #endif

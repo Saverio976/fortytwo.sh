@@ -33,6 +33,7 @@ SRC		:=	my_wordarray_free.c 		\
 			my_wordarray_from_wordarray.c	\
 			my_wordarray_index_startswith.c	\
 			my_wordarray_len.c		\
+			my_wordarray_to_str.c	\
 			my_wordarray_show.c
 SRC		:=	$(addprefix $(SRCDIR),$(SRC))
 
@@ -56,7 +57,10 @@ LIBS_DEP	=	../libstr/libstr.a \
 
 all: 	CURR_RULE = all
 all: 	init
+	@$(MAKE) COMPIL_FASTER -s -j2
 	@$(MAKE) $(NAME) -s
+
+COMPIL_FASTER: $(OBJ)
 
 $(NAME): CURR_RULE = $(NAME)
 $(NAME): init $(LIBS_DEP) $(OBJ)

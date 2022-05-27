@@ -36,9 +36,9 @@ dico_t *dico_t_create(char const *key, void *value,
 ** info : the key will be copied (and only the 254 first chars)
 **
 ** @param dico dico in which the new node will be added
-** @param key the key to access teh value
-** @param value teh value attached to the key
-** @param destroy function to destroy teh value
+** @param key the key to access the value
+** @param value the value attached to the key
+** @param destroy function to destroy the value
 **
 ** @return the dico (or the new "node" if dico == NULL)
 **/
@@ -69,7 +69,7 @@ void *dico_t_pop_value(dico_t *dico, char const *key);
 ** @brief remove a node from the dico and return it
 **
 ** @param dico the dico in which the node is
-** @param key key to reference teh node
+** @param key key to reference the node
 **
 ** @return the dico_t node
 **/
@@ -88,7 +88,7 @@ dico_t *dico_t_rem(dico_t *dico, char const *key);
 /**
 ** @brief delete the dico entirely
 **
-** @param dico teh dico to delete
+** @param dico the dico to delete
 **
 ** @return 1 if delete pass well; 0 if there is any error
 **/
@@ -107,8 +107,8 @@ void *dico_t_get_value(dico_t *dico, char const *key);
 /**
 ** @brief get the node from a dico
 **
-** @param dico the dico where teh node is
-** @param key the key to reference teh node
+** @param dico the dico where the node is
+** @param key the key to reference the node
 **
 ** @return the node; NULL if there is no key refer to node
 **/

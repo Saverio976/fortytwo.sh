@@ -10,6 +10,7 @@
 #include "my_dico.h"
 #include "my_strings.h"
 #include "my_macro.h"
+#include "mysh.h"
 
 static char *get_value_env(const char *string)
 {
@@ -49,30 +50,6 @@ static char *split_equal(const char *string)
     }
     key[MIN(i, 255)] = '\0';
     return (key);
-}
-
-dico_t *correct_env(dico_t *env)
-{
-    dico_t *shlvl = NULL;
-    char *tmp = NULL;
-    int nb = 0;
-
-    if (env == NULL) {
-        return (NULL);
-    }
-    shlvl = dico_t_get_elem(env, "SHLVL");
-    if (shlvl == NULL) {
-        tmp = my_strdup("1");
-        if (tmp == NULL) {
-            return (env);
-        }
-        env = dico_t_add_data(env, "SHLVL", tmp, &free);
-    } else {
-        nb = my_atoi(shlvl->value);
-        free(shlvl->value);
-        shlvl->value = my_itoa(nb + 1);
-    }
-    return (env);
 }
 
 dico_t *parse_env(char *const env[])

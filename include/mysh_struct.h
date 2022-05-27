@@ -38,8 +38,10 @@ struct shell_s {
     int status_code;
     char *last_input;
     list_t *command;
+    list_t *alias;
     dico_t *env;
     bool is_end;
+    bool almost_the_end;
     size_t last_input_len;
 };
 

@@ -27,51 +27,72 @@ CURR_RULE	=	all
 
 # ----------------------------------------------------------------------------
 # SRC
-SRC_BUILTINS		:=	./src/builtins/cd.c							\
-						./src/builtins/check_if_builtins.c			\
-						./src/builtins/env.c						\
-						./src/builtins/exec_builtins.c				\
-						./src/builtins/exit.c						\
-						./src/builtins/setenv.c						\
-						./src/builtins/unsetenv.c
+SRC_BUILTINS		:=	cd.c							\
+						check_if_builtins.c				\
+						env.c							\
+						exec_builtins.c					\
+						exit.c							\
+						setenv.c						\
+						unsetenv.c						\
+						alias.c							\
+						which.c
+SRC_BUILTINS		:=	$(addprefix builtins/,$(SRC_BUILTINS))
 
-SRC_EXECOMMAND		:=	./src/execommand/execute_all.c				\
-						./src/execommand/execute_command.c			\
-						./src/execommand/execute_command_child.c	\
-						./src/execommand/execute_command_genitor.c	\
-						./src/execommand/execute_command_parsed.c
+SRC_EXECOMMAND		:=	execute_all.c					\
+						execute_command.c				\
+						execute_command_child.c			\
+						execute_command_genitor.c		\
+						execute_command_parsed.c
+SRC_EXECOMMAND		:=	$(addprefix execommand/,$(SRC_EXECOMMAND))
 
-SRC_LOOP			:=	./src/loop/entry_point.c					\
-						./src/loop/loop.c							\
-						./src/loop/print_prompt.c
+SRC_LOOP			:=	entry_point.c					\
+						loop.c							\
+						print_prompt.c
+SRC_LOOP			:=	$(addprefix loop/,$(SRC_LOOP))
 
-SRC_PARSECOMMAND	:=	./src/parsecommand/get_arguments_array.c	\
-						./src/parsecommand/get_binary_path.c		\
-						./src/parsecommand/get_file_to_input.c		\
-						./src/parsecommand/get_redirect_to_file.c	\
-						./src/parsecommand/parse_command.c			\
-						./src/parsecommand/parse_pipe.c				\
-						./src/parsecommand/parse_single_command.c	\
-						./src/parsecommand/split_str.c				\
-						./src/parsecommand/split_str_add_to_list.c  \
-						./src/parsecommand/env_value.c 
+SRC_PARSECOMMAND	:=	get_arguments_array.c			\
+						get_binary_path.c				\
+						get_file_to_input.c				\
+						get_redirect_to_file.c			\
+						parse_command.c					\
+						parse_pipe.c					\
+						parse_single_command.c			\
+						split_str.c						\
+						split_str_add_to_list.c			\
+						clear_str.c						\
+						find_word_in_str.c				\
+						check_null_command.c			\
+						env_value.c
+SRC_PARSECOMMAND	:=	$(addprefix parsecommand/,$(SRC_PARSECOMMAND))
 
-SRC_UTILS			:=	./src/utils/count_tokken.c					\
-						./src/utils/get_colors.c					\
-						./src/utils/get_env_from_dico.c				\
-						./src/utils/my_puterror.c					\
-						./src/utils/remove_empty_command.c			\
-						./src/utils/remove_quote.c					\
-						./src/utils/strsplit_not_rec.c
+SRC_UTILS			:=	count_tokken.c					\
+						get_colors.c					\
+						get_env_from_dico.c				\
+						my_puterror.c					\
+						remove_empty_command.c			\
+						remove_quote.c					\
+						strsplit_not_rec.c				\
+						correct_env.c
+SRC_UTILS			:=	$(addprefix utils/,$(SRC_UTILS))
 
-SRC					:=	./src/create_dict.c							\
-						./src/main.c								\
-						./src/help.c								\
-						$(SRC_LOOP)									\
-						$(SRC_PARSECOMMAND)							\
-						$(SRC_UTILS)								\
-						$(SRC_EXECOMMAND)							\
-						$(SRC_BUILTINS)
+SRC_PROMPT			:=	display_prompt.c				\
+						prompt_flags_char.c				\
+						prompt_flags_date.c				\
+						prompt_flags_shell.c			\
+						prompt_flags_time.c				\
+						prompt_flags_user.c
+SRC_PROMPT			:=	$(addprefix prompt/,$(SRC_PROMPT))
+
+SRC					:=	create_dict.c					\
+						main.c							\
+						help.c							\
+						$(SRC_LOOP)						\
+						$(SRC_PARSECOMMAND)				\
+						$(SRC_UTILS)					\
+						$(SRC_EXECOMMAND)				\
+						$(SRC_BUILTINS)					\
+						$(SRC_PROMPT)
+SRC					:=	$(addprefix src/,$(SRC))
 
 OBJ					:=	$(SRC:%.c=%.o)
 # ----------------------------------------------------------------------------
@@ -91,9 +112,10 @@ TSRCDIR		:=	tests/unitest/
 
 TSRC		:=	test_basic.c	\
 				env.c			\
-				help.c
+				help.c			\
+				my_strstrip.c
 TSRC		:=	$(addprefix $(TSRCDIR),$(TSRC))
-TSRC		:= 	$(filter-out ./src/main.c,$(SRC)) $(TSRC)
+TSRC		:= 	$(filter-out src/main.c,$(SRC)) $(TSRC)
 
 TOBJ		:=	$(TSRC:%.c=%.o)
 # ----------------------------------------------------------------------------
@@ -111,15 +133,22 @@ FN_TEST_LDFLAGS	=	-lgcov
 
 %.o: %.c
 	@$(CC) $(CFLAGS) $^ -c -o $@
-	@echo -e $(BLUE)'compil : $(notdir $^) -> $(notdir $@)'$(RESET)
+	@echo -e $(BLUE)'compil :'$(RESET)' $(notdir $^) -> $(notdir $@)'
 
 # ----------------------------------------------------------------------------
 # Make the mysh
 .PHONY: 	all
 all:		CURR_RULE = all
 all:		init $(LIB_TARGET)
+	@$(MAKE) COMPIL_FASTER -s -j2
+ifeq ("$(wildcard $(NAME))","")
 	@$(MAKE) $(NAME) -s
 	@echo -e $(GREEN)'-> [finished]: $(NAME): all'$(RESET)
+else
+	@echo "nothing to be done"
+endif
+
+COMPIL_FASTER: $(OBJ)
 
 $(NAME):	CURR_RULE = $(NAME)
 $(NAME): 	init $(OBJ)

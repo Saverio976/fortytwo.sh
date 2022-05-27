@@ -27,19 +27,20 @@ static int get_len(list_t *list)
 static char *create_new_str(list_t *list, int len)
 {
     char *new = NULL;
-    int index = 0;
+    char *tmp = NULL;
 
     if (list == NULL) {
         return (NULL);
     }
-    new = malloc(sizeof(char) * (len + 1));
+    new = my_calloc(len + 1);
     if (new == NULL) {
         return (NULL);
     }
-    new[len] = '\0';
     for (int i = 0; i < list_t_len(list); i++, list = list->next) {
-        for (int in = 0; ((char *) list->data)[in] != '\0'; in++) {
-            new[index++] = ((char *) list->data)[in];
+        tmp = my_strstrip(list->data, "'\"");
+        my_strcat(new, tmp);
+        if (tmp != NULL) {
+            free(tmp);
         }
     }
     return (new);
@@ -75,4 +76,15 @@ char *remove_quotes(char *str)
     new = remove_quote_delim(str, "\"");
     new = remove_quote_delim(new, "\'");
     return (new);
+}
+
+char **remove_quotes_command(char **arr)
+{
+    if (arr == NULL) {
+        return (NULL);
+    }
+    for (int i = 0; arr[i] != NULL; i++) {
+        arr[i] = remove_quotes(arr[i]);
+    }
+    return (arr);
 }

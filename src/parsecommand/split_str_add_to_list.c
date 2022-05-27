@@ -7,7 +7,9 @@
 
 #include <stdlib.h>
 #include <unistd.h>
+#include "my_clear_str.h"
 #include "my_list.h"
+#include "my_puts.h"
 #include "mysh.h"
 #include "my_strings.h"
 
@@ -29,15 +31,15 @@ static char *compute_str_to_add(char *str)
     if (str == NULL) {
         return (NULL);
     }
-    new = my_strstrip(str, " \t");
+    new = clear_str(str);
     if (new == NULL) {
         return (str);
     }
     if (new[0] == '\0') {
         free(new);
+        free(str);
         return (NULL);
     }
-    new = remove_quotes(new);
     free(str);
     return (new);
 }
@@ -57,5 +59,5 @@ list_t *split_str_add_to_list(list_t *list, char *to_add, int *is_first)
     }
     to_add = compute_str_to_add(to_add);
     *is_first += 1;
-    return (list_t_add(list, to_add, &free));
+    return (list_t_add(list, 0, to_add, &free));
 }

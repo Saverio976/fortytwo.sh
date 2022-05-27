@@ -5,6 +5,7 @@
 ** split str with shell def
 */
 
+#include <stdbool.h>
 #include <stdlib.h>
 #include "my_puts.h"
 #include "my_list.h"
@@ -29,46 +30,33 @@ static char *my_strfdcut(char *str, int start, int end)
     return (new);
 }
 
-// check if something is the end of the new field
-// very confusing function
-//
-// basically:
-// 1/
-// check if is in signle quote or double quote
-// and check if the quote that started this is the current quote
-// 2/
-// if current position is not the delim or we are in quote
-// -> if we are at the end of the string
-// 3/
-// if we are at the start of the string (and if we rare so far, current
-// ... position is the delim)
-// 4/
-// if last position is not a '\'
-// else if we can check the last last position and is not '\' that '\' the '\'
-// else we return 1
+int check_if_delim(int i, char *str, const char *delim)
+{
+    if (my_strstartswith(str + i, delim) == 0 || str[i] == 0) {
+        return ((str[i] == 0) ? true : false);
+    }
+    if (i == 0) {
+        return (true);
+    }
+    if (str[i - 1] != '\\') {
+        return (true);
+    } else if (i > 1 && str[i - 2] == '\\') {
+        return (false);
+    }
+    return (true);
+}
+
 int check_if_field(int i, char *str, const char *delim,
     int *is)
 {
     if (my_strcontainc("\"'", str[i]) == 1 && ((str[i] == '"' && *is == '"') ||
-            (str[i] == '\'' && *is == '\''))) {
+            (str[i] == '\'' && *is == '\'') || *is == 0)) {
         *is = (*is == 0) ? str[i] : 0;
     }
-    if (my_strstartswith(str + i, delim) == 0 || *is != 0) {
-        if (str[i] == '\0') {
-            return (1);
-        } else {
-            return (0);
-        }
+    if (*is != 0) {
+        return (false);
     }
-    if (i == 0) {
-        return (1);
-    }
-    if (str[i - 1] != '\\') {
-        return (1);
-    } else if (i > 1 && str[i - 2] == '\\') {
-        return (0);
-    }
-    return (1);
+    return (check_if_delim(i, str, delim));
 }
 
 static char *compute_str_to_add(char *str)
@@ -84,6 +72,7 @@ static char *compute_str_to_add(char *str)
     }
     if (new[0] == '\0') {
         free(new);
+        free(str);
         return (NULL);
     }
     free(str);
@@ -106,7 +95,7 @@ list_t *strsplit_not_rec(char *str, const char *delim)
         }
         if (to_add != NULL) {
             last_index = i + my_strlen(delim);
-            list = list_t_add(list, compute_str_to_add(to_add), &free);
+            list = list_t_add(list, 0, compute_str_to_add(to_add), &free);
             to_add = NULL;
         }
     }

@@ -38,7 +38,8 @@ SRC			:=	my_calloc.c 		\
 				my_strdup.c			\
 				my_strlen.c			\
 				my_strstartswith.c	\
-				my_strstrip.c
+				my_strstrip.c		\
+				my_strndup.c
 SRC 		:=	$(addprefix $(SRCDIR),$(SRC))
 
 OBJ			=	$(SRC:%.c=%.o)
@@ -60,7 +61,10 @@ LIBS_DEP	=
 
 all: 	CURR_RULE = all
 all: 	init
+	@$(MAKE) COMPIL_FASTER -s -j2
 	@$(MAKE) $(NAME) -s
+
+COMPIL_FASTER: $(OBJ)
 
 $(NAME): CURR_RULE = $(NAME)
 $(NAME): init $(LIBS_DEP) $(OBJ)
