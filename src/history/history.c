@@ -51,11 +51,14 @@ int count_file_lines(const char *path)
 int inc_history_size(dico_t *env, int increment)
 {
     static int cmd_number = 0;
+    int histfile_size = 0;
 
     cmd_number += increment;
     if (cmd_number > increment)
         return cmd_number;
-    cmd_number += count_file_lines(get_history_file(env));
+    histfile_size = count_file_lines(get_history_file(env));
+    if (histfile_size > 0)
+        cmd_number += histfile_size;
     return cmd_number;
 }
 
