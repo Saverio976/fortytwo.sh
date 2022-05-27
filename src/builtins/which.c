@@ -5,13 +5,14 @@
 ** exec a builtins function
 */
 
+#include <stdbool.h>
+#include <stdlib.h>
 #include "builtins.h"
 #include "mysh_struct.h"
 #include "mysh.h"
 #include "my_strings.h"
 #include "my_puts.h"
 #include "my_wordarray.h"
-#include <stdbool.h>
 
 static void execute_wich(shell_t *shell, char *command)
 {
