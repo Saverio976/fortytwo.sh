@@ -45,6 +45,7 @@ SRC_EXECOMMAND		:=	$(addprefix execommand/,$(SRC_EXECOMMAND))
 
 SRC_LOOP			:=	entry_point.c					\
 						action_key.c					\
+						action_key_arrow.c				\
 						get_line_input.c				\
 						loop.c							\
 						print_prompt.c
