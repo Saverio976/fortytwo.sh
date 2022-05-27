@@ -7,3 +7,4 @@ compile_flags.txt
 42sh
 bin_test
 a.out
+vgcore*

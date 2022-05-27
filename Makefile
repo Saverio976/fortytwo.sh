@@ -33,7 +33,9 @@ SRC_BUILTINS		:=	cd.c							\
 						exec_builtins.c					\
 						exit.c							\
 						setenv.c						\
-						unsetenv.c
+						unsetenv.c						\
+						alias.c							\
+						which.c
 SRC_BUILTINS		:=	$(addprefix builtins/,$(SRC_BUILTINS))
 
 SRC_EXECOMMAND		:=	execute_all.c					\
@@ -62,7 +64,8 @@ SRC_PARSECOMMAND	:=	get_arguments_array.c			\
 						split_str_add_to_list.c			\
 						clear_str.c						\
 						find_word_in_str.c				\
-						check_null_command.c
+						check_null_command.c			\
+						env_value.c
 SRC_PARSECOMMAND	:=	$(addprefix parsecommand/,$(SRC_PARSECOMMAND))
 
 SRC_UTILS			:=	count_tokken.c					\

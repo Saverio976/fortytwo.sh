@@ -26,6 +26,7 @@ shell_t *create_shell(dico_t *env)
     shell->last_input = NULL;
     shell->last_input_len = 0;
     shell->command = NULL;
+    shell->alias = NULL;
     shell->env = env;
     return (shell);
 }
@@ -40,6 +41,9 @@ void destroy_shell(shell_t *shell)
     }
     if (shell->command != NULL) {
         list_t_destroy(shell->command);
+    }
+    if (shell->alias != NULL) {
+        list_t_destroy(shell->alias);
     }
     if (shell->last_input != NULL) {
         free(shell->last_input);
