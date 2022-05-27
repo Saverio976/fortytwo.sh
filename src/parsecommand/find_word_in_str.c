@@ -24,18 +24,41 @@ char *find_word(char *str, int *size)
     return (word);
 }
 
+static int find_index_of_d_quotes(char *str)
+{
+    int index = my_strlen(str);
+
+    while (str[index] != '\"' && index > 0) {
+        index -= 1;
+    }
+    index += 1;
+    return (index);
+}
+
+static int find_index_of_s_quotes(char *str)
+{
+    int index = my_strlen(str);
+
+    while (str[index] != '\'' && index > 0) {
+        index -= 1;
+    }
+    index += 1;
+    return (index);
+}
+
 char *find_word_quotes(char *str, int *size)
 {
-    int index = 1;
+    int index = 0;
     char *word = NULL;
 
     if (str == NULL || size == NULL)
         return (NULL);
-    while (str[index] != '"' && str[index] != '\0'
-    && str[index] != '\'') {
-        index += 1;
+    if (str[0] == '\"') {
+        index = find_index_of_d_quotes(str);
+    } else {
+        index = find_index_of_s_quotes(str);
     }
-    word = my_strndup(&str[1], index - 1);
-    *size = index + 1;
+    word = my_strndup(str, index);
+    *size = index;
     return (word);
 }

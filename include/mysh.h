@@ -323,7 +323,7 @@ int ends_redirection(command_t *cm);
 ** @param shell shell structure
 ** @param cms list of commands
 **
-** @return status code of teh last command
+** @return status code of the last command
 **/
 int execute_command_parsed(shell_t *shell, list_t *cms);
 
@@ -384,5 +384,7 @@ dico_t *correct_env(dico_t *env);
 void display_prompt(dico_t *env, const char *ps);
 
 void change_alias(list_t *cm, list_t *alias, int change, char **tmp);
+
+char **remove_quotes_command(char **arr);
 
 #endif

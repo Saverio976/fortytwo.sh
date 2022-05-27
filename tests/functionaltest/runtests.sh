@@ -107,6 +107,14 @@ test_this_command 'echo $PATH'
 test_this_command 'echo $PATH || echo salut'
 test_this_command 'echo $PATH && echo salut'
 
+echo -e "${YELLOW_BOLD}WHICH TEST${RESET}"
+test_this_command 'which cd'
+test_this_command 'which salut'
+test_this_command 'which cd; which ls; which cat; which salut'
+test_this_command 'which cd; which ls; which cat; which clear'
+test_this_command 'which'
+test_this_command 'which ls cd cat'
+
 echo -e "${YELLOW_BOLD}SYNTAX ERROR TESTS${RESET}"
 
 test_this_command '> test'
@@ -198,5 +206,5 @@ test_this_command 'cd\nls | cat -e | wc -c\necho test'
 
 rm $EXEC_BINARY
 
-echo -e "\n${GREEN}You pass $NB_SUCCESS tests"
-echo -e "\n${RED}You fail $NB_FAILED tests"
+echo -e "\n${GREEN}You pass $NB_SUCCESS tests${RESET}"
+echo -e "\n${RED}You fail $NB_FAILED tests${RESET}"
