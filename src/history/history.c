@@ -15,16 +15,19 @@ char *get_history_file(dico_t *env)
 {
     const char *file = dico_t_get_value(env, "HISTFILE");
     const char *home = NULL;
-    char buf[PATH_MAX] = {0};
+    size_t homelen = 0;
+    char *buf = NULL;
     char filename[] = ".thrush_history";
 
     if (!file) {
         home = dico_t_get_value(env, "HOME");
-        if (!home || strlen(home) > sizeof buf - sizeof filename)
+        if (!home)
             return NULL;
-        strncpy(buf, home, sizeof buf);
-        strcat(buf, "/");
-        strcat(buf, filename);
+        homelen = strlen(home);
+        buf = malloc((homelen + sizeof filename + 2) * sizeof *buf);
+        strcpy(buf, home);
+        buf[homelen] = '/';
+        strcpy(buf + homelen + 1, filename);
         dico_t_add_data(env, "HISTFILE", buf, &free);
     }
     return dico_t_get_value(env, "HISTFILE");
@@ -48,11 +51,14 @@ int count_file_lines(const char *path)
 int inc_history_size(dico_t *env, int increment)
 {
     static int cmd_number = 0;
+    int histfile_size = 0;
 
     cmd_number += increment;
     if (cmd_number > increment)
         return cmd_number;
-    cmd_number += count_file_lines(get_history_file(env));
+    histfile_size = count_file_lines(get_history_file(env));
+    if (histfile_size > 0)
+        cmd_number += histfile_size;
     return cmd_number;
 }
 
