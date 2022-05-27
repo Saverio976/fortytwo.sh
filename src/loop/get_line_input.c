@@ -44,7 +44,6 @@ static bool (*value_action_arrow[])(shell_t *shell, int *current_pos) = {
     use_key_left
 };
 
-
 void free_secure(void *data)
 {
     if (data == NULL) {
