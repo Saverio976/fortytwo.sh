@@ -15,7 +15,8 @@ const struct builtins_info_s builtins_arr[NB_BUILTINS_FUNC] = {
     {"env", env_builtins},
     {"exit", exit_builtins},
     {"setenv", setenv_builtins},
-    {"unsetenv", unsetenv_builtins}
+    {"unsetenv", unsetenv_builtins},
+    {"which", which_builtins}
 };
 
 bool check_if_builtins(const char *string)

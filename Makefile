@@ -33,7 +33,8 @@ SRC_BUILTINS		:=	cd.c							\
 						exec_builtins.c					\
 						exit.c							\
 						setenv.c						\
-						unsetenv.c
+						unsetenv.c						\
+						which.c
 SRC_BUILTINS		:=	$(addprefix builtins/,$(SRC_BUILTINS))
 
 SRC_EXECOMMAND		:=	execute_all.c					\
