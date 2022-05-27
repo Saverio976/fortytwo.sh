@@ -134,4 +134,25 @@ int my_strstartswith(char const *str, char const *substr);
 **/
 char *my_strstrip(const char *str, const char *strips);
 
+/**
+** @brief insert a char in a str without malloc it
+**
+** @param str string in which the char will eb inserted
+** @param c char to insert
+** @param index index where the char will be (could not be > str len + 1)
+**
+** @return NULL if index > str len + 1; str if ok
+**/
+char *my_strinsert(char *str, char c, int index);
+
+/**
+** @brief remove char at index and move all the rest
+**
+** @param str string to modify
+** @param index index of char to remove
+**
+** @return NULL if index > str len; str if ok
+**/
+char *my_strreminsert(char *str, int index);
+
 #endif
