@@ -122,7 +122,7 @@ TOBJ		:=	$(TSRC:%.c=%.o)
 
 # ----------------------------------------------------------------------------
 # FLAGS
-CFLAGS		= 	-Iinclude/ -Ilib/include/ -Wall -Wextra -Wpedantic
+CFLAGS		+= 	-Iinclude/ -Ilib/include/ -Wall -Wextra -Wpedantic
 
 TFLAGS		=	-fprofile-arcs -ftest-coverage
 
