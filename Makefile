@@ -53,7 +53,8 @@ SRC_PARSECOMMAND	:=	./src/parsecommand/get_arguments_array.c	\
 						./src/parsecommand/parse_pipe.c				\
 						./src/parsecommand/parse_single_command.c	\
 						./src/parsecommand/split_str.c				\
-						./src/parsecommand/split_str_add_to_list.c
+						./src/parsecommand/split_str_add_to_list.c  \
+						./src/parsecommand/env_value.c 
 
 SRC_UTILS			:=	./src/utils/count_tokken.c					\
 						./src/utils/get_colors.c					\
@@ -99,7 +100,7 @@ TOBJ		:=	$(TSRC:%.c=%.o)
 
 # ----------------------------------------------------------------------------
 # FLAGS
-CFLAGS		= 	-Iinclude/ -Ilib/include/ -Wall -Wextra -Wpedantic
+CFLAGS		= 	-Iinclude/ -Ilib/include/ -Wall -Wextra -Wpedantic -g3
 
 TFLAGS		=	-fprofile-arcs -ftest-coverage
 
