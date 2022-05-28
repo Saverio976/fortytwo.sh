@@ -15,7 +15,7 @@
 
 void display_input(shell_t *shell, int *current_pos)
 {
-    clear_input(shell, current_pos);
+    clear_input(shell, current_pos, *current_pos);
     for (int i = 0; i < *current_pos - 1; i++) {
         my_putchar('\b');
         my_putchar(' ');
@@ -27,7 +27,7 @@ void display_input(shell_t *shell, int *current_pos)
     }
 }
 
-void clear_input(shell_t *shell, int *current_pos)
+void clear_input(shell_t *shell, int *current_pos, int to_go)
 {
     for (int i = *current_pos; i < my_strlen(shell->last_input); i++) {
         my_putchar(' ');
@@ -37,8 +37,10 @@ void clear_input(shell_t *shell, int *current_pos)
         my_putchar(' ');
         my_putchar('\b');
     }
-    for (int i = 0; i < *current_pos; i++) {
+    *current_pos = 0;
+    for (int i = 0; i < to_go; i++) {
         my_putchar(' ');
+        *current_pos += 1;
     }
 }
 
@@ -77,8 +79,7 @@ bool use_key_backspace(shell_t *shell, int *cur_pos)
     if (tmp_len <= 0 || *cur_pos <= 0) {
         return (false);
     }
-    clear_input(shell, cur_pos);
-    *cur_pos -= 1;
+    clear_input(shell, cur_pos, *cur_pos - 1);
     my_putchar('\b');
     if (*cur_pos > 0) {
         my_putchar('\b');
