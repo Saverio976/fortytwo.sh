@@ -18,17 +18,6 @@
 static const char history_backward[] = "No more history backward";
 static const char history_forward[] = "No more history forward";
 
-bool reset_prompt_input(shell_t *shell, const char *to_print, int *cur_pos)
-{
-    my_printf("\n%s\n", to_print);
-    if (isatty(0)) {
-        print_prompt(shell);
-        my_putstr(shell->last_input);
-        *cur_pos = my_strlen(shell->last_input);
-    }
-    return (false);
-}
-
 //TODO: itter through history
 bool use_key_up(shell_t *shell, __attribute__((unused)) int *cur_pos,
     int *cur_nb_hist)
