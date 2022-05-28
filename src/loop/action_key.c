@@ -7,11 +7,13 @@
 
 #include <stdbool.h>
 #include <unistd.h>
+#include "my_list.h"
 #include "my_puts.h"
 #include "my_strings.h"
 #include "mysh.h"
 #include "mysh_struct.h"
 #include "loop.h"
+#include "complete.h"
 
 void display_input(shell_t *shell, int *current_pos)
 {
@@ -47,11 +49,18 @@ void clear_input(shell_t *shell, int *current_pos, int to_go)
 //TODO: complete binary/path
 bool use_key_tab(shell_t *shell, __attribute__((unused)) int *cur_pos)
 {
+    list_t *all = NULL;
+
     if (my_strlen(shell->last_input) <= 0) {
         return (false);
     }
-    my_printf("\nCompletion not inplemented...\n");
-    if (isatty(0)) {
+    all = complete_this(shell->last_input, shell->env);
+    if (list_t_len(all) <= 1) {
+        //TODO: modif here the position
+        return (false);
+    }
+    //TODO: print all possibilities
+    if (isatty(0) != 0) {
         print_prompt(shell);
         my_putstr(shell->last_input);
     }
