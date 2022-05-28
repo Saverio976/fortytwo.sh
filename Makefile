@@ -82,10 +82,15 @@ SRC_UTILS			:=	$(addprefix utils/,$(SRC_UTILS))
 SRC_PROMPT			:=	display_prompt.c				\
 						prompt_flags_char.c				\
 						prompt_flags_date.c				\
+						prompt_flags_history.c			\
 						prompt_flags_shell.c			\
 						prompt_flags_time.c				\
 						prompt_flags_user.c
 SRC_PROMPT			:=	$(addprefix prompt/,$(SRC_PROMPT))
+
+SRC_HISTORY			:=	history.c						\
+						get_hist_startswith.c
+SRC_HISTORY			:=	$(addprefix history/,$(SRC_HISTORY))
 
 SRC					:=	create_dict.c					\
 						main.c							\
@@ -95,7 +100,8 @@ SRC					:=	create_dict.c					\
 						$(SRC_UTILS)					\
 						$(SRC_EXECOMMAND)				\
 						$(SRC_BUILTINS)					\
-						$(SRC_PROMPT)
+						$(SRC_PROMPT)					\
+						$(SRC_HISTORY)
 SRC					:=	$(addprefix src/,$(SRC))
 
 OBJ					:=	$(SRC:%.c=%.o)
