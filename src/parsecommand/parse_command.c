@@ -104,7 +104,8 @@ int parse_commands(char *string, shell_t *shell)
 
     arr = my_wordarray_from_str(string, ' ');
     if (arr == NULL) {
-        return (0);
+        shell->status_code = 0;
+        return (1);
     }
     my_wordarray_free(arr);
     list_t_destroy(shell->command);
