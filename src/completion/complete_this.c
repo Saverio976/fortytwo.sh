@@ -16,6 +16,7 @@
 #include "my_wordarray.h"
 #include "loop.h"
 #include "complete.h"
+#include "my_macro.h"
 
 list_t *get_all_exe_in(const char *path, bool is_exec)
 {
@@ -107,9 +108,9 @@ list_t *complete_this(char *string, dico_t *env)
         return (NULL);
     }
     if (my_wordarray_len(arr) == 1) {
-        ret = complete_exe(string, env);
+        ret = complete_exe(arr[0], env);
     } else {
-        ret = complete_path(string, env, false);
+        ret = complete_path(arr[MAX(my_wordarray_len(arr) - 1, 0)], env, false);
     }
     ret = remove_same(ret);
     my_wordarray_free(arr);
