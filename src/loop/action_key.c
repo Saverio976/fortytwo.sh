@@ -34,7 +34,7 @@ static void modif_completion_str(shell_t *shell, int *cur_pos, list_t *comp)
     }
     len = my_wordarray_len(arr);
     free_secure(arr[len - 1]);
-    arr[MAX(len  - 1, 0)] = my_strdup(comp->data);
+    arr[MAX(len - 1, 0)] = my_strdup(comp->data);
     tmp = tab_to_str(arr);
     free_secure(shell->last_input);
     shell->last_input = my_strstrip(tmp, " ");
