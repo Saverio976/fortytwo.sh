@@ -44,6 +44,7 @@ enum PROMPT_OPT {
     PROMPT_U,
     PROMPT_W,
     PROMPT_CAP_W,
+    PROMPT_EXCLAMATION,
     PROMPT_DOLLAR,
     PROMPT_BACKSLASH,
     PROMPT_OCTAL,
@@ -68,6 +69,7 @@ PROMPT_FUN(display_prompt_cap_a);
 PROMPT_FUN(display_prompt_u);
 PROMPT_FUN(display_prompt_w);
 PROMPT_FUN(display_prompt_cap_w);
+PROMPT_FUN(display_prompt_exclamation);
 PROMPT_FUN(display_prompt_dollar);
 PROMPT_FUN(display_prompt_backslash);
 PROMPT_FUN(display_prompt_octal);
