@@ -18,12 +18,13 @@
 static const char history_backward[] = "No more history backward";
 static const char history_forward[] = "No more history forward";
 
-bool reset_prompt_input(shell_t *shell, const char *to_print)
+bool reset_prompt_input(shell_t *shell, const char *to_print, int *cur_pos)
 {
     my_printf("\n%s\n", to_print);
     if (isatty(0)) {
         print_prompt(shell);
         my_putstr(shell->last_input);
+        *cur_pos = my_strlen(shell->last_input);
     }
     return (false);
 }
@@ -36,7 +37,7 @@ bool use_key_up(shell_t *shell, __attribute__((unused)) int *cur_pos,
     char *hist_line = get_history_line(shell->env, nb_hist);
 
     if (hist_line == NULL) {
-        return (reset_prompt_input(shell, history_backward));
+        return (reset_prompt_input(shell, history_backward, cur_pos));
     }
     clear_input(shell, cur_pos, 0);
     free_secure(shell->last_input);
@@ -55,7 +56,7 @@ bool use_key_down(shell_t *shell, __attribute__((unused)) int *cur_pos,
     char *hist_line = get_history_line(shell->env, nb_hist);
 
     if (hist_line == NULL) {
-        return (reset_prompt_input(shell, history_forward));
+        return (reset_prompt_input(shell, history_forward, cur_pos));
     }
     clear_input(shell, cur_pos, 0);
     free_secure(shell->last_input);
