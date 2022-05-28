@@ -13,6 +13,7 @@
 #include "mysh_struct.h"
 #include "my_wordarray.h"
 #include "mysh.h"
+#include "history.h"
 
 list_t *or_separator(list_t *list)
 {
@@ -99,7 +100,15 @@ list_t *check_alias(list_t *cm, list_t *alias)
 
 int parse_commands(char *string, shell_t *shell)
 {
+    char **arr = NULL;
+
+    arr = my_wordarray_from_str(string, ' ');
+    if (arr == NULL) {
+        return (0);
+    }
+    my_wordarray_free(arr);
     list_t_destroy(shell->command);
+    add_to_hist(shell->env, string);
     shell->last_input = replace_value_env(shell->env, string);
     shell->command = my_strsplit(shell->last_input, ";");
     shell->command = ampersand_separator(shell->command);
