@@ -80,7 +80,6 @@ bool use_key_backspace(shell_t *shell, int *cur_pos)
         return (false);
     }
     clear_input(shell, cur_pos, *cur_pos - 1);
-    my_putchar('\b');
     if (*cur_pos > 0) {
         my_putchar('\b');
     }
