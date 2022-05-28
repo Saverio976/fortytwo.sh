@@ -18,7 +18,6 @@
 static const char history_backward[] = "No more history backward";
 static const char history_forward[] = "No more history forward";
 
-//TODO: itter through history
 bool use_key_up(shell_t *shell, __attribute__((unused)) int *cur_pos,
     int *cur_nb_hist)
 {

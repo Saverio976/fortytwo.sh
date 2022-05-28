@@ -36,11 +36,11 @@ static void modif_completion_str(shell_t *shell, int *cur_pos, list_t *comp)
     free_secure(arr[len - 1]);
     arr[MAX(len  - 1, 0)] = my_strdup(comp->data);
     tmp = tab_to_str(arr);
-    clear_input(shell, cur_pos, 0);
     free_secure(shell->last_input);
     shell->last_input = my_strstrip(tmp, " ");
+    shell->last_input_len = my_strlen(shell->last_input);
     free_secure(tmp);
-    display_input(shell, cur_pos);
+    my_wordarray_free(arr);
 }
 
 bool use_key_tab(shell_t *shell, __attribute__((unused)) int *cur_pos)
@@ -55,7 +55,9 @@ bool use_key_tab(shell_t *shell, __attribute__((unused)) int *cur_pos)
         return (false);
     }
     if (list_t_len(all) == 1) {
+        clear_input(shell, cur_pos, 0);
         modif_completion_str(shell, cur_pos, all);
+        display_input(shell, cur_pos);
         list_t_destroy(all);
         return (false);
     }
