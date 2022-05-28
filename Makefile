@@ -87,7 +87,8 @@ SRC_PROMPT			:=	display_prompt.c				\
 						prompt_flags_user.c
 SRC_PROMPT			:=	$(addprefix prompt/,$(SRC_PROMPT))
 
-SRC_HISTORY			:=	history.c
+SRC_HISTORY			:=	history.c						\
+						get_hist_startswith.c
 SRC_HISTORY			:=	$(addprefix history/,$(SRC_HISTORY))
 
 SRC					:=	create_dict.c					\
