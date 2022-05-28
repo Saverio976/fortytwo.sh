@@ -15,6 +15,7 @@
 #include "my_strings.h"
 #include "my_wordarray.h"
 #include "loop.h"
+#include "complete.h"
 
 list_t *get_all_exe_in(const char *path, bool is_exec)
 {
@@ -29,14 +30,12 @@ list_t *get_all_exe_in(const char *path, bool is_exec)
     }
     for (name = readdir(dir); name != NULL; name = readdir(dir)) {
         tmp = join_path('/', 2, path, name->d_name);
-        if (tmp == NULL) {
-            continue;
-        }
-        if (is_exec == false || access(tmp, X_OK) == 0) {
+        if (tmp != NULL && (is_exec == false || access(tmp, X_OK) == 0)) {
             list = list_t_add(list, 0, my_strdup(name->d_name), free_secure);
         }
         free_secure(tmp);
     }
+    closedir(dir);
     return (list);
 }
 
@@ -112,5 +111,7 @@ list_t *complete_this(char *string, dico_t *env)
     } else {
         ret = complete_path(string, env, false);
     }
+    ret = remove_same(ret);
+    my_wordarray_free(arr);
     return (ret);
 }

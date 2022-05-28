@@ -13,4 +13,6 @@
 
 list_t *complete_this(char *string, dico_t *env);
 
+list_t *remove_same(list_t *all);
+
 #endif
