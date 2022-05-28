@@ -5,17 +5,18 @@
 ** where
 */
 
+#include <stdio.h>
+#include <string.h>
 #include <unistd.h>
 #include <stdbool.h>
 #include <stdlib.h>
 #include "builtins.h"
 #include "mysh_struct.h"
 #include "mysh.h"
+#include "my_fs.h"
 #include "my_strings.h"
 #include "my_puts.h"
 #include "my_wordarray.h"
-#include <stdio.h>
-#include <string.h>
 
 static char **my_split_command(char *command, char *limit)
 {
@@ -41,18 +42,15 @@ static char **my_split_command(char *command, char *limit)
 
 static int print_path(char *cmd, char *path)
 {
-    int size = 0, return_value = 1;
+    int size = 0;
+    int return_value = 1;
     char **path_array = NULL;
 
     path_array = my_split_command(path, ":");
     for (int i = 0; path_array[i] != NULL; i += 1) {
-        size = (my_strlen(path_array[i]) + my_strlen(cmd) + 2);
-        path = malloc(sizeof(char) * size);
+        path = join_path('/', 2, path_array[i], cmd);
         if (path == NULL)
             continue;
-        my_strcpy(path, path_array[i]);
-        my_strcat(path, "/");
-        my_strcat(path, cmd);
         if (access(path, F_OK) == 0) {
             printf("%s\n", path);
             return_value = 0;
@@ -84,20 +82,29 @@ static int execute_where(shell_t *shell, char *command)
     return (0);
 }
 
+static int make_no_sense(char *str)
+{
+    if (str == NULL)
+        return (false);
+    if (strncmp(str, "./", 2) == 0 || strncmp(str, "/", 1) == 0 ||
+        strncmp(str, "../", 3) == 0)
+        return (true);
+    return (false);
+}
+
 void where_builtins(shell_t *shell, command_t *command)
 {
     int return_value = 0;
     int nb_args = my_wordarray_len(command->arguments);
     shell->status_code = 0;
+
     if (nb_args < 2) {
         my_puterror("where", "Too few arguments.\n");
         shell->status_code = 1;
         return;
     }
     for (int i = 1; command->arguments[i] != NULL; i++) {
-        if (strncmp(command->arguments[i], "./", 2) == 0 ||
-        strncmp(command->arguments[i], "/", 1) == 0 ||
-        strncmp(command->arguments[i], "../", 3) == 0) {
+        if (make_no_sense(command->arguments[i]) == true) {
             puts("where: / in command makes no sense");
             return_value = 1;
             continue;
