@@ -41,8 +41,7 @@ static char **my_split_command(char *command, char *limit)
 
 static int print_path(char *cmd, char *path)
 {
-    int size = 0;
-    int return_value = 1;
+    int size = 0, return_value = 1;
     char **path_array = NULL;
 
     path_array = my_split_command(path, ":");
@@ -89,7 +88,6 @@ void where_builtins(shell_t *shell, command_t *command)
 {
     int return_value = 0;
     int nb_args = my_wordarray_len(command->arguments);
-
     shell->status_code = 0;
     if (nb_args < 2) {
         my_puterror("where", "Too few arguments.\n");
