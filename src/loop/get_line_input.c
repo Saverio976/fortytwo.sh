@@ -10,6 +10,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <termios.h>
+#include "history.h"
 #include "my_puts.h"
 #include "my_macro.h"
 #include "my_strings.h"
@@ -37,7 +38,8 @@ static const int key_action_arrow[] = {
     'C',
     'D'
 };
-static bool (*value_action_arrow[])(shell_t *shell, int *current_pos) = {
+static bool (*value_action_arrow[])(shell_t *shell, int *current_pos,
+        int *cur_nb_hist) = {
     use_key_up,
     use_key_down,
     use_key_right,
@@ -74,7 +76,7 @@ static bool add_char_to_input(shell_t *shell, char c, int *current_pos)
     return (false);
 }
 
-static bool handle_input(shell_t *shell, int *current_pos)
+static bool handle_input(shell_t *shell, int *curpos, int *cur_nb_hist)
 {
     int ch[3] = {0};
 
@@ -86,12 +88,12 @@ static bool handle_input(shell_t *shell, int *current_pos)
     ch[1] = (ch[0] == '\033') ? getchar() : 0;
     for (int i = 0; i < MAX(number_action_key, number_action_arrow); i++) {
         if (i < number_action_key && ch[0] == key_action_key[i]) {
-            return (value_action_key[i](shell, current_pos));
+            return (value_action_key[i](shell, curpos));
         } else if (i < number_action_arrow && ch[1] == key_action_arrow[i]) {
-            return (value_action_arrow[i](shell, current_pos));
+            return (value_action_arrow[i](shell, curpos, cur_nb_hist));
         }
     }
-    return (add_char_to_input(shell, ch[0], current_pos));
+    return (add_char_to_input(shell, ch[0], curpos));
 }
 
 // inspiration from :
@@ -118,6 +120,7 @@ bool get_line_input(shell_t *shell)
     struct termios terms[2] = {0};
     int saved_input = 0;
     int current_pos = 0;
+    int cur_nb_hist = inc_history_size(shell->env, 0);
 
     if (isatty(0) == 0) {
         if (getline(&shell->last_input, &shell->last_input_len, stdin) <= 0) {
@@ -127,7 +130,7 @@ bool get_line_input(shell_t *shell)
         return (true);
     }
     setup_input_not_buffer(terms, &saved_input, true);
-    while (handle_input(shell, &current_pos) != true);
+    while (handle_input(shell, &current_pos, &cur_nb_hist) != true);
     setup_input_not_buffer(terms, &saved_input, false);
     return (true);
 }
