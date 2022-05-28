@@ -33,7 +33,9 @@ SRC_BUILTINS		:=	cd.c							\
 						exec_builtins.c					\
 						exit.c							\
 						setenv.c						\
-						unsetenv.c
+						unsetenv.c						\
+						alias.c							\
+						which.c
 SRC_BUILTINS		:=	$(addprefix builtins/,$(SRC_BUILTINS))
 
 SRC_EXECOMMAND		:=	execute_all.c					\
@@ -44,6 +46,9 @@ SRC_EXECOMMAND		:=	execute_all.c					\
 SRC_EXECOMMAND		:=	$(addprefix execommand/,$(SRC_EXECOMMAND))
 
 SRC_LOOP			:=	entry_point.c					\
+						action_key.c					\
+						action_key_arrow.c				\
+						get_line_input.c				\
 						loop.c							\
 						print_prompt.c
 SRC_LOOP			:=	$(addprefix loop/,$(SRC_LOOP))
@@ -59,7 +64,8 @@ SRC_PARSECOMMAND	:=	get_arguments_array.c			\
 						split_str_add_to_list.c			\
 						clear_str.c						\
 						find_word_in_str.c				\
-						check_null_command.c
+						check_null_command.c			\
+						env_value.c
 SRC_PARSECOMMAND	:=	$(addprefix parsecommand/,$(SRC_PARSECOMMAND))
 
 SRC_UTILS			:=	count_tokken.c					\
@@ -75,10 +81,15 @@ SRC_UTILS			:=	$(addprefix utils/,$(SRC_UTILS))
 SRC_PROMPT			:=	display_prompt.c				\
 						prompt_flags_char.c				\
 						prompt_flags_date.c				\
+						prompt_flags_history.c			\
 						prompt_flags_shell.c			\
 						prompt_flags_time.c				\
 						prompt_flags_user.c
 SRC_PROMPT			:=	$(addprefix prompt/,$(SRC_PROMPT))
+
+SRC_HISTORY			:=	history.c						\
+						get_hist_startswith.c
+SRC_HISTORY			:=	$(addprefix history/,$(SRC_HISTORY))
 
 SRC					:=	create_dict.c					\
 						main.c							\
@@ -88,7 +99,8 @@ SRC					:=	create_dict.c					\
 						$(SRC_UTILS)					\
 						$(SRC_EXECOMMAND)				\
 						$(SRC_BUILTINS)					\
-						$(SRC_PROMPT)
+						$(SRC_PROMPT)					\
+						$(SRC_HISTORY)
 SRC					:=	$(addprefix src/,$(SRC))
 
 OBJ					:=	$(SRC:%.c=%.o)
@@ -98,7 +110,7 @@ OBJ					:=	$(SRC:%.c=%.o)
 # LIB
 LIB_TARGET	=	lib/libmy.a
 
-LDFLAGS		=	-L$(dir $(LIB_TARGET)) -lmy
+LDFLAGS		=	-L$(dir $(LIB_TARGET)) -lmy -lcurses
 # ----------------------------------------------------------------------------
 
 # ----------------------------------------------------------------------------

@@ -31,6 +31,7 @@ const fun_t PROMPT_FUNCTIONS[PROMPT_NB + 1] = {
     {'u', &display_prompt_u},
     {'w', &display_prompt_w},
     {'W', &display_prompt_cap_w},
+    {'!', &display_prompt_exclamation},
     {'$', &display_prompt_dollar},
     {'\\', &display_prompt_backslash},
     {'\0', &display_prompt_octal},

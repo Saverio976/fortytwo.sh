@@ -6,3 +6,5 @@ compile_flags.txt
 *.gcda
 42sh
 bin_test
+a.out
+vgcore*
