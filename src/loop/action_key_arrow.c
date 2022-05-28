@@ -28,12 +28,12 @@ bool use_key_up(shell_t *shell, __attribute__((unused)) int *cur_pos,
         }
         return (false);
     }
+    clear_input(shell, cur_pos);
     free_secure(shell->last_input);
     *cur_nb_hist -= 1;
     *cur_pos = 0;
     shell->last_input = my_strstrip(hist_line, "\n ");
     shell->last_input_len = my_strlen(shell->last_input);
-    clear_input(shell, cur_pos);
     display_input(shell, cur_pos);
     return (false);
 }
@@ -51,12 +51,12 @@ bool use_key_down(shell_t *shell, __attribute__((unused)) int *cur_pos,
         }
         return (false);
     }
+    clear_input(shell, cur_pos);
     free_secure(shell->last_input);
     *cur_nb_hist += 1;
-    *cur_pos = 1;
+    *cur_pos = 0;
     shell->last_input = my_strstrip(hist_line, "\n ");
     shell->last_input_len = my_strlen(shell->last_input);
-    clear_input(shell, cur_pos);
     display_input(shell, cur_pos);
     return (false);
 }
