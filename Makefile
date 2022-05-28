@@ -53,6 +53,9 @@ SRC_LOOP			:=	entry_point.c					\
 						print_prompt.c
 SRC_LOOP			:=	$(addprefix loop/,$(SRC_LOOP))
 
+SRC_COMPLETE		:=	complete_this.c
+SRC_COMPLETE		:=	$(addprefix completion/,$(SRC_COMPLETE))
+
 SRC_PARSECOMMAND	:=	get_arguments_array.c			\
 						get_binary_path.c				\
 						get_file_to_input.c				\
@@ -100,7 +103,8 @@ SRC					:=	create_dict.c					\
 						$(SRC_EXECOMMAND)				\
 						$(SRC_BUILTINS)					\
 						$(SRC_PROMPT)					\
-						$(SRC_HISTORY)
+						$(SRC_HISTORY)					\
+						$(SRC_COMPLETE)
 SRC					:=	$(addprefix src/,$(SRC))
 
 OBJ					:=	$(SRC:%.c=%.o)
