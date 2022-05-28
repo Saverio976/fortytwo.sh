@@ -11,9 +11,11 @@
 #include "my_strings.h"
 #include "mysh.h"
 #include "mysh_struct.h"
+#include "loop.h"
 
 void display_input(shell_t *shell, int *current_pos)
 {
+    clear_input(shell, current_pos);
     for (int i = 0; i < *current_pos - 1; i++) {
         my_putchar('\b');
         my_putchar(' ');
@@ -22,6 +24,21 @@ void display_input(shell_t *shell, int *current_pos)
     my_putstr(shell->last_input);
     for (int i = my_strlen(shell->last_input); i > *current_pos; i--) {
         my_putchar('\b');
+    }
+}
+
+void clear_input(shell_t *shell, int *current_pos)
+{
+    for (int i = *current_pos; i < my_strlen(shell->last_input); i++) {
+        my_putchar(' ');
+    }
+    for (int i = 0; i < my_strlen(shell->last_input); i++) {
+        my_putchar('\b');
+        my_putchar(' ');
+        my_putchar('\b');
+    }
+    for (int i = 0; i < *current_pos; i++) {
+        my_putchar(' ');
     }
 }
 
@@ -60,14 +77,11 @@ bool use_key_backspace(shell_t *shell, int *cur_pos)
     if (tmp_len <= 0 || *cur_pos <= 0) {
         return (false);
     }
-    for (int i = 0; i < tmp_len; i++) {
-        my_putchar('\b');
-        my_putchar(' ');
-        my_putchar('\b');
-    }
+    clear_input(shell, cur_pos);
     *cur_pos -= 1;
-    for (int i = 0; i < tmp_len - 2; i++) {
-        my_putchar(' ');
+    my_putchar('\b');
+    if (*cur_pos > 0) {
+        my_putchar('\b');
     }
     my_strreminsert(shell->last_input, *cur_pos);
     display_input(shell, cur_pos);
