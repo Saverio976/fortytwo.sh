@@ -58,4 +58,26 @@ char *get_history_line(dico_t *env, int line_nb);
 **/
 int add_to_hist(dico_t *env, char *line);
 
+/**
+** @brief find the most accurate history forward
+**
+** @param env environment variables
+** @param input the start of input from user
+** @param start where to start the search
+**
+** @return the number of teh command; -1 if not found
+**/
+int find_history_forward(dico_t *env, char *input, int start);
+
+/**
+** @brief find the most accurate history backward
+**
+** @param env environment variables
+** @param input the start of input from user
+** @param start where to start the search
+**
+** @return the number of teh command; -1 if not found
+**/
+int find_history_backward(dico_t *env, char *input, int start);
+
 #endif /* history.h */
