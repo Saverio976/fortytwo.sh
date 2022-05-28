@@ -118,7 +118,9 @@ int parse_commands(char *string, shell_t *shell)
     my_wordarray_free(arr);
     list_t_destroy(shell->command);
     add_to_hist(shell->env, shell->last_input);
-    shell->last_input = replace_value_env(shell->env, shell->last_input);
+    arr = (char **) replace_value_env(shell->env, shell->last_input);
+    free_secure(shell->last_input);
+    shell->last_input = (char *) arr;
     shell->command = my_strsplit(shell->last_input, ";");
     shell->command = ampersand_separator(shell->command);
     shell->command = or_separator(shell->command);
