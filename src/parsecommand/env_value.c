@@ -14,7 +14,7 @@
 #include "mysh.h"
 #include "my_wordarray.h"
 
-char *tab_to_str(char **tab)
+static char *tab_to_str(char **tab)
 {
     char *str = NULL;
     int i = 0;
@@ -29,6 +29,7 @@ char *tab_to_str(char **tab)
         str = my_strcat(str, " ");
         i++;
     }
+    my_wordarray_free(tab);
     return str;
 }
 
@@ -66,8 +67,8 @@ char *replace_value_env(dico_t *dico, char *str, shell_t *shell)
             tmp = check_env_value(pos, str, tab, dico);
         }
     }
-    my_wordarray_free(tab);
     if (tmp == NULL) {
+        my_wordarray_free(tab);
         shell->status_code = 1;
         return NULL;
     }
