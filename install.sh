@@ -121,7 +121,7 @@ echo -e "$GREEN""Thanks for the installation of Thrushell $RESET"
 echo "Do you want to customize it [y/n]?"
 read CUSTOM_C
 echo "" > $HOME/.thrushrc
-if [[ "$IS_DEFAULT" != "y" && "$IS_DEFAULT" != "Y" ]]; then
+if [[ "$CUSTOM_C" != "y" && "$CUSTOM_C" != "Y" ]]; then
     exit 0
 fi
 
