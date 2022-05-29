@@ -14,9 +14,6 @@
 #include "mysh.h"
 #include "loop.h"
 
-int redirect_input(const char *file);
-int ends_redirect_input(int saved_input);
-
 shell_t *add_config(shell_t *shell)
 {
     const char to_add[] = ".thrushrc";

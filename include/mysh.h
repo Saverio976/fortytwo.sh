@@ -398,4 +398,8 @@ char **remove_quotes_command(char **arr);
 **/
 char *replace_value_env(dico_t *dico, char *str, shell_t *shell);
 
+int redirect_input(const char *file);
+
+int ends_redirect_input(int saved_input);
+
 #endif
