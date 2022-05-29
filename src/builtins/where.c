@@ -63,7 +63,7 @@ static int print_path(char *cmd, char *path)
     return (return_value);
 }
 
-static int execute_where(char *command)
+static int execute_where(shell_t *shell, char *command)
 {
     char *path = NULL;
     int return_value = 1;
@@ -111,7 +111,7 @@ void where_builtins(shell_t *shell, command_t *command)
             return_value = 1;
             continue;
         }
-        return_value += execute_where(command->arguments[i]);
+        return_value += execute_where(shell, command->arguments[i]);
     }
     shell->status_code = (return_value >= 1) ? 1 : shell->status_code;
 }
