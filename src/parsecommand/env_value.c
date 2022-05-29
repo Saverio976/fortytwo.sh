@@ -61,7 +61,7 @@ char *replace_value_env(dico_t *dico, char *str, shell_t *shell)
     tab = my_wordarray_from_str(str, ' ');
     if (tab == NULL)
         return (NULL);
-    for (pos[0] = 0; tab[pos[0]] != NULL && tmp; pos[0]++) {      
+    for (pos[0] = 0; tab[pos[0]] != NULL && tmp; pos[0]++) {
         for (pos[1] = 0; tab[pos[0]][pos[1]] != '\0' && tmp; pos[1]++) {
             tmp = check_env_value(pos, str, tab, dico);
         }
