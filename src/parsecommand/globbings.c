@@ -57,43 +57,14 @@ static int is_globbing(char *str)
     return (false);
 }
 
-static void globbing(my_files_t **my_files, char *str)
-{
-    check_size(my_files, str);
-    if ((*my_files) == NULL)
-        printf("No match with %s\n", str);
-    check_letters(my_files, str);
-    check_brakets(my_files, str);
-}
-
-
-char *tab_to_str2(char **tab)
-{
-    char *str = NULL;
-    int i = 0;
-    int size = 0;
-
-    size = my_wordarray_size(tab) + my_wordarray_len(tab);
-    str = my_calloc(size + 2);
-    if (!str)
-        return (NULL);
-    while (tab[i]) {
-        str = my_strcat(str, tab[i]);
-        str = my_strcat(str, " ");
-        i++;
-    }
-    return str;
-}
-
 static char *globbing_to_str(my_files_t *my_files, char *str)
 {
-    int size = 1;
+    int size = 0;
     int index = 0;
     char **tab = NULL;
 
-    for (my_files_t *tmp = my_files; tmp != NULL; tmp = tmp->next) {
+    for (my_files_t *tmp = my_files; tmp != NULL; tmp = tmp->next)
         size += 1;
-    }
     tab = malloc(sizeof(char *) * (size + 1));
     if (tab == NULL)
         return (NULL);
@@ -103,8 +74,20 @@ static char *globbing_to_str(my_files_t *my_files, char *str)
     }
     tab[index] = NULL;
     free(str);
-    str = tab_to_str2(tab);
-    
+    str = tab_to_str(tab);
+    my_wordarray_free(tab);
+    return (str);
+}
+
+static void globbing_loop(my_files_t **my_files, char *str, DIR *folder)
+{
+    struct dirent *files = NULL;
+
+    while ((files = readdir(folder)) != NULL) {
+        if (files->d_type == DT_REG)
+            add_files(my_files, files->d_name);
+    }
+    closedir(folder);
 }
 
 char *globbing_entry(char *str)
@@ -112,26 +95,17 @@ char *globbing_entry(char *str)
     DIR *folder = NULL;
     my_files_t *my_files = NULL;
 
-    if (str == NULL || is_globbing(str) == false) {
+    if (str == NULL || is_globbing(str) == false)
         return (str);
-    }
     folder = opendir("./");
-    if (folder == NULL) {
+    if (folder == NULL)
         return;
-    }
-    struct dirent *files = NULL;
-    while ((files = readdir(folder)) != NULL) {
-        if (strncmp(files->d_name, ".", 1) == 0 ||
-        strncmp(files->d_name, "..", 2) == 0)
-            continue;
-        add_files(&my_files, files->d_name);
-    }
+    globbing_loop(&my_files, str, folder);
     globbing(&my_files, str);
     str = globbing_to_str(my_files, str);
     if (str[0] == '\0') {
         printf("No match\n");
     }
-    return (str);
     free_list(my_files);
-    closedir(folder);
+    return (str);
 }

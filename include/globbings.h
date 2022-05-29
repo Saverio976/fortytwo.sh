@@ -14,8 +14,10 @@ typedef struct my_files_s {
     struct my_files_s *prev;
 } my_files_t;
 
+char *tab_to_str(char **tab);
 char *globbing_entry(char *str);
 void free_list(my_files_t *files);
+void globbing(my_files_t **my_files, char *str);
 void check_size(my_files_t **files, char *str);
 void check_letters(my_files_t **my_files, char *str);
 void check_brakets(my_files_t **my_files, char *str);

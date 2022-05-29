@@ -9,6 +9,15 @@
 #include <stdio.h>
 #include "globbings.h"
 
+void globbing(my_files_t **my_files, char *str)
+{
+    check_size(my_files, str);
+    if ((*my_files) == NULL)
+        return;
+    check_letters(my_files, str);
+    check_brakets(my_files, str);
+}
+
 void free_list(my_files_t *files)
 {
     for (my_files_t *tmp = files; tmp != NULL; tmp = files) {
