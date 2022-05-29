@@ -151,6 +151,16 @@ test_this_command 'where'
 test_this_command 'where cd ls guhriehgeuihgse giesh cat'
 test_this_command 'where ls cd cat'
 
+echo -e "${YELLOW_BOLD}GLOBBINS TEST${RESET}"
+test_this_command 'ls *'
+test_this_command 'ls *e'
+test_this_command 'ls .*'
+test_this_command 'ls .git*'
+test_this_command 'ls [a-z]*'
+test_this_command 'ls *[c-g]'
+test_this_command 'ls [a-z]akefile'
+test_this_command 'ls ????????'
+
 echo -e "${YELLOW_BOLD}SYNTAX ERROR TESTS${RESET}"
 
 test_this_command '> test'
