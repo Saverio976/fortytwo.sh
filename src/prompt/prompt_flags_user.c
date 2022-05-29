@@ -23,7 +23,7 @@ PROMPT_FUN(display_prompt_h)
     if (dot) {
         *dot = '\0';
     }
-    puts(buf);
+    printf("%s", buf);
     return 0;
 }
 
@@ -33,14 +33,14 @@ PROMPT_FUN(display_prompt_cap_h)
     char buf[256] = {0};
 
     gethostname(buf, sizeof buf);
-    puts(buf);
+    printf("%s", buf);
     return 0;
 }
 
 // \u     the username of the current user
 PROMPT_FUN(display_prompt_u)
 {
-    puts(getlogin());
+    printf("%s", getlogin());
     return 0;
 }
 
@@ -56,7 +56,7 @@ PROMPT_FUN(display_prompt_w)
     if (home && strncmp(home, cwd, homelen) == 0) {
         printf("~%s", cwd + homelen);
     } else
-        puts(cwd);
+        printf("%s", cwd);
     return 0;
 }
 
@@ -69,8 +69,8 @@ PROMPT_FUN(display_prompt_cap_w)
 
     getcwd(cwd, sizeof cwd);
     if (home && strcmp(home, cwd) == 0) {
-        puts("~");
+        printf("%s", "~");
     } else
-        puts(basename(cwd));
+        printf("%s", basename(cwd));
     return 0;
 }
