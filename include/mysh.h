@@ -67,7 +67,7 @@ int loop(shell_t *shell);
 **
 ** @return status code to return
 **/
-int entry_point(dico_t *env);
+int entry_point(dico_t *env, bool is_file);
 
 /**
 ** @brief split in list with delim but take quote escape

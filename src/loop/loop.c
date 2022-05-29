@@ -28,6 +28,9 @@ static int end_loop(int ret_code, shell_t *shell)
     if (shell->almost_the_end == true) {
         shell->is_end = true;
     }
+    if (shell->is_file == true && shell->status_code != 0) {
+        shell->is_end = true;
+    }
     return (ret_code);
 }
 

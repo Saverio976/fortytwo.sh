@@ -6,6 +6,7 @@
 */
 
 #include <fcntl.h>
+#include <stdbool.h>
 #include <stddef.h>
 #include <unistd.h>
 #include "my_dico.h"
@@ -76,7 +77,7 @@ int main(int ac, char *const av[], char *const env[])
     if (handle_batch_file(ac, av, dict, &saved_input) == 1) {
         return (1);
     }
-    status_code = entry_point(dict);
+    status_code = entry_point(dict, (saved_input == -1) ? false : true);
     ends_redirect_input(saved_input);
     return (status_code);
 }
