@@ -12,6 +12,7 @@
 #include "my_strings.h"
 #include "mysh.h"
 #include "my_wordarray.h"
+#include "globbings.h"
 
 char *tab_to_str(char **tab)
 {
@@ -53,6 +54,7 @@ char *replace_value_env(dico_t *dico, char *str)
 
     tab = my_wordarray_from_str(str, ' ');
     for (pos[0] = 0; tab[pos[0]] != NULL; pos[0]++) {
+        globbing_entry(tab[pos[0]]);
         for (pos[1] = 0; tab[pos[0]][pos[1]] != '\0'; pos[1]++) {
             check_env_value(pos, str, tab, dico);
         }
