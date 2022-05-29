@@ -60,6 +60,7 @@ test_this_command 'echo 	 	 test 	 	with	 	space 	 and 	 tab  	'
 test_this_command 'echo  	 	 test; echo with; echo 	 points; echo salut 	'
 test_this_command 'echo 	 	 test; echo  	 		with 	 	 	;  		 	echo 	 points 	 	;  	 	 echo salut  		'
 test_this_command 'echo test\n  echo 	other test 	  	 	\n 	 echo	 other 	 	 other 	 	 other 	 	 test 	 	 	\n 	 echo	 	with 	 	 backslashn 	 	 	 \n 	echo 	 test'
+test_this_command './tests/functionaltest/test_args abc "def def"'
 
 echo -e "${YELLOW_BOLD}REDIRECTIONS TESTS${RESET}"
 
@@ -114,6 +115,15 @@ test_this_command 'which cd; which ls; which cat; which salut'
 test_this_command 'which cd; which ls; which cat; which clear'
 test_this_command 'which'
 test_this_command 'which ls cd cat'
+
+echo -e "${YELLOW_BOLD}WHERE TEST${RESET}"
+test_this_command 'where cd'
+test_this_command 'where salut'
+test_this_command 'where cd; where ls; where cat; where salut'
+test_this_command 'where cd; where ls; where cat; where clear'
+test_this_command 'where'
+test_this_command 'where cd ls guhriehgeuihgse giesh cat'
+test_this_command 'where ls cd cat'
 
 echo -e "${YELLOW_BOLD}SYNTAX ERROR TESTS${RESET}"
 
