@@ -67,7 +67,7 @@ int loop(shell_t *shell);
 **
 ** @return status code to return
 **/
-int entry_point(dico_t *env);
+int entry_point(dico_t *env, bool is_file);
 
 /**
 ** @brief split in list with delim but take quote escape
@@ -392,9 +392,10 @@ char **remove_quotes_command(char **arr);
 **
 ** @param env environment already parsed char **env
 ** @param str command line
+** @param shell shell structure
 **
 ** @return modified str with $env changed by its value
 **/
-char *replace_value_env(dico_t *dico, char *str);
+char *replace_value_env(dico_t *dico, char *str, shell_t *shell);
 
 #endif

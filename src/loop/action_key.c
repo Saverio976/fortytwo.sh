@@ -17,7 +17,7 @@
 #include "loop.h"
 #include "complete.h"
 
-char *tab_to_str(char **tab);
+char *tab_to_str(char **tab, bool need_free);
 
 static void modif_completion_str(shell_t *shell, list_t *comp)
 {
@@ -35,12 +35,11 @@ static void modif_completion_str(shell_t *shell, list_t *comp)
     len = my_wordarray_len(arr);
     free_secure(arr[len - 1]);
     arr[MAX(len - 1, 0)] = my_strdup(comp->data);
-    tmp = tab_to_str(arr);
+    tmp = tab_to_str(arr, true);
     free_secure(shell->last_input);
     shell->last_input = my_strstrip(tmp, " ");
     shell->last_input_len = my_strlen(shell->last_input);
     free_secure(tmp);
-    my_wordarray_free(arr);
 }
 
 bool use_key_tab(shell_t *shell, __attribute__((unused)) int *cur_pos)

@@ -45,7 +45,7 @@ void print_time(const char *format)
 
     tm = localtime((time_t[]) {time(NULL)});
     strftime(buf, sizeof buf, format, tm);
-    printf(buf);
+    puts(buf);
 }
 
 char *get_substr(char *buf, size_t size, const char *str, char *const delim[2])

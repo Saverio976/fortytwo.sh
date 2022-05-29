@@ -14,11 +14,15 @@
 #include "mysh.h"
 #include "loop.h"
 
+int redirect_input(const char *file);
+int ends_redirect_input(int saved_input);
+
 shell_t *add_config(shell_t *shell)
 {
     const char to_add[] = ".thrushrc";
     const char *home = dico_t_get_value(shell->env, "HOME");
     char *tmp = NULL;
+    int saved_input = 0;
 
     if (home == NULL) {
         return (shell);
@@ -28,16 +32,14 @@ shell_t *add_config(shell_t *shell)
         free_secure(tmp);
         return (shell);
     }
-    //TODO: call redirect to file
+    saved_input = redirect_input(tmp);
     free(tmp);
-    while (shell->is_end != true) {
-        loop(shell);
-    }
-    //TODO: call end redirection
+    for (shell->is_end = false; shell->is_end != true; loop(shell));
+    ends_redirect_input(saved_input);
     return (shell);
 }
 
-shell_t *create_shell(dico_t *env)
+shell_t *create_shell(dico_t *env, bool is_file)
 {
     shell_t *shell = NULL;
 
@@ -54,6 +56,10 @@ shell_t *create_shell(dico_t *env)
     shell->alias = NULL;
     shell->env = env;
     add_config(shell);
+    shell->status_code = 0;
+    shell->almost_the_end = false;
+    shell->is_end = false;
+    shell->is_file = is_file;
     return (shell);
 }
 
@@ -77,12 +83,12 @@ void destroy_shell(shell_t *shell)
     free(shell);
 }
 
-int entry_point(dico_t *env)
+int entry_point(dico_t *env, bool is_file)
 {
     shell_t *shell = NULL;
     int ret_code = 0;
 
-    shell = create_shell(env);
+    shell = create_shell(env, is_file);
     if (shell == NULL) {
         return (84);
     }
