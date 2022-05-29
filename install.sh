@@ -14,6 +14,7 @@ THRUSH_TARGET="/bin/thrush"
 THRUSH_TARGET_DIRECTORY="thrushell"
 THRUSH_SOURCE="https://github.com/Saverio976/fortytwo.sh.git"
 THRUSH_SOURCE_INSTALL="https://raw.githubusercontent.com/Saverio976/fortytwo.sh/install.sh"
+THRUSH_SOURCE_BASE_ASSETS="https://raw.githubusercontent.com/Saverio976/https://github.com/Saverio976/fortytwo.sh/assets/"
 
 echo -n -e $BLEU_BOLD
 echo "
@@ -115,4 +116,31 @@ else
     echo "chsh -s $THRUSH_TARGET"
 fi
 
-echo -e "$GREEN Thanks for the installation of Thrushell $RESET"
+echo -e "$GREEN""Thanks for the installation of Thrushell $RESET"
+
+echo "Do you want to customize it [y/n]?"
+read CUSTOM_C
+echo "" > $HOME/.thrushrc
+if [[ "$IS_DEFAULT" != "y" && "$IS_DEFAULT" != "Y" ]]; then
+    exit 0
+fi
+
+if command -v curl &>/dev/null; then
+    echo "First : Do you want Nicolas (n), Clément (c), or the Void (v) ?"
+    read CHOICE_C
+    if [[ "$CHOICE_C" == "n" ]]; then
+        echo "curl -fsSL ${THRUSH_SOURCE_BASE_ASSETS}nico.txt" >> $HOME/.thrushrc
+    elif [[ "$CHOICE_C" == "c" ]]; then
+        echo "curl -fsSL ${THRUSH_SOURCE_BASE_ASSETS}clem.txt" >> $HOME/.thrushrc
+    fi
+fi
+
+echo "Do you want a custom message when you lanch this shell ?"
+echo "(write nothing for no message)"
+read CHOICE_C
+if [[ "$CHOICE_C" != "" ]]; then
+    echo "echo -e $CHOICE_C" >> $HOME/.thrushrc
+fi
+
+echo "You can always customize the startup script"
+echo "You just have to modify $HOME/.thrushrc file"

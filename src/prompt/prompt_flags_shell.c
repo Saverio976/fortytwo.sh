@@ -16,14 +16,14 @@
 // \j     the number of jobs currently managed by the shell
 PROMPT_FUN(display_prompt_j)
 {
-    printf("TODO: '\\j'");
+    printf("%s", "TODO: '\\j'");
     return 0;
 }
 
 // \l     the basename of the shell's terminal device name
 PROMPT_FUN(display_prompt_l)
 {
-    printf(basename(ttyname(STDOUT_FILENO)));
+    printf("%s", basename(ttyname(STDOUT_FILENO)));
     return 0;
 }
 
@@ -34,7 +34,7 @@ PROMPT_FUN(display_prompt_s)
     char buf[256] = {0};
 
     strncpy(buf, program_invocation_name, sizeof buf - 1);
-    printf(basename(buf));
+    printf("%s", basename(buf));
     return 0;
 }
 
@@ -42,9 +42,9 @@ PROMPT_FUN(display_prompt_s)
 PROMPT_FUN(display_prompt_dollar)
 {
     if (geteuid() == 0) {
-        printf("#");
+        printf("%s", "#");
     } else {
-        printf("$");
+        printf("%s", "$");
     }
     return 0;
 }

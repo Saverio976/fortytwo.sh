@@ -32,6 +32,7 @@ static char *get_file_from_list(list_t *list, int *is_error)
     if (file == NULL) {
         write(2, "Missing name for redirect.", 26);
     }
+    list_t_destroy(words);
     return (file);
 }
 
@@ -57,13 +58,6 @@ static char *get_right_file_single(char *string, const char *delim, int nb_max,
     return (file);
 }
 
-//file = get_right_file_single(string, ">");
-//if (file != NULL && file[0] != '\0') {
-//    return (file);
-//}
-//if (file[0] == '\0') {
-//    free(file);
-//}
 static char *get_right_file(char *string, int *is_error)
 {
     char *file = NULL;

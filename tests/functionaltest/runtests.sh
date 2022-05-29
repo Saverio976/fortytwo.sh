@@ -51,6 +51,32 @@ function test_this_command()
 	sleep 0.1
 }
 
+function test_this_param()
+{
+	echo -e "${YELLOW}------------------${RESET}"
+	echo -e "${YELLOW}Testing:[$@]${RESET}"
+
+	MYSH=$($EXEC_BINARY $@ 2>&1)
+	MYRETURNVALUE=$?
+	TCSH=$(tcsh $@ 2>&1)
+	TCSHRETURNVALUE=$?
+
+	if [ "$MYSH" == "$TCSH" ] && [ "$MYRETURNVALUE" == "$TCSHRETURNVALUE" ]
+		then
+			NB_SUCCESS=$(($NB_SUCCESS+1))
+			echo -e "${GREEN}OK${RESET}"
+		else
+			NB_FAILED=$((NB_FAILED+1))
+			echo -e "${RED}KO${RESET}"
+			echo -e "${MAGENTA} MYSH STDOUT = ${CYAN}$MYSH${RESET}"
+			echo -e "${MAGENTA} 	MYSH RETURN VALUE = ${BLUE}$MYRETURNVALUE${RESET}"
+			echo -e "${MAGENTA} TCSH STDOUT = ${CYAN}$TCSH${RESET}"
+			echo -e "${MAGENTA}     TCSH RETURN VALUE = ${BLUE}$TCSHRETURNVALUE${RESET}"
+			echo
+		fi
+	sleep 0.1
+}
+
 echo -e "${YELLOW_BOLD}ECHO TESTS${RESET}"
 
 test_this_command 'echo test'
@@ -115,6 +141,25 @@ test_this_command 'which cd; which ls; which cat; which salut'
 test_this_command 'which cd; which ls; which cat; which clear'
 test_this_command 'which'
 test_this_command 'which ls cd cat'
+
+echo -e "${YELLOW_BOLD}WHERE TEST${RESET}"
+test_this_command 'where cd'
+test_this_command 'where salut'
+test_this_command 'where cd; where ls; where cat; where salut'
+test_this_command 'where cd; where ls; where cat; where clear'
+test_this_command 'where'
+test_this_command 'where cd ls guhriehgeuihgse giesh cat'
+test_this_command 'where ls cd cat'
+
+echo -e "${YELLOW_BOLD}GLOBBINS TEST${RESET}"
+test_this_command 'ls *'
+test_this_command 'ls *e'
+test_this_command 'ls .*'
+test_this_command 'ls .git*'
+test_this_command 'ls [a-z]*'
+test_this_command 'ls *[c-g]'
+test_this_command 'ls [a-z]akefile'
+test_this_command 'ls ????????'
 
 echo -e "${YELLOW_BOLD}SYNTAX ERROR TESTS${RESET}"
 
@@ -204,6 +249,10 @@ test_this_command '| ls'
 test_this_command 'ls |'
 test_this_command 'pwd; ls | cat -e | wc -c'
 test_this_command 'cd\nls | cat -e | wc -c\necho test'
+
+echo -e "${YELLOW_BOLD}EXEC FILE${RESET}"
+test_this_param '-b ./tests/functionaltest/execdirectory/test.sh'
+test_this_param './tests/functionaltest/execdirectory/test.sh'
 
 rm $EXEC_BINARY
 

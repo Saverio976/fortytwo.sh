@@ -35,7 +35,8 @@ SRC_BUILTINS		:=	cd.c							\
 						setenv.c						\
 						unsetenv.c						\
 						alias.c							\
-						which.c
+						which.c							\
+						where.c
 SRC_BUILTINS		:=	$(addprefix builtins/,$(SRC_BUILTINS))
 
 SRC_EXECOMMAND		:=	execute_all.c					\
@@ -46,12 +47,17 @@ SRC_EXECOMMAND		:=	execute_all.c					\
 SRC_EXECOMMAND		:=	$(addprefix execommand/,$(SRC_EXECOMMAND))
 
 SRC_LOOP			:=	entry_point.c					\
+						display_utils.c					\
 						action_key.c					\
 						action_key_arrow.c				\
 						get_line_input.c				\
 						loop.c							\
 						print_prompt.c
 SRC_LOOP			:=	$(addprefix loop/,$(SRC_LOOP))
+
+SRC_COMPLETE		:=	complete_this.c					\
+						remove_same.c
+SRC_COMPLETE		:=	$(addprefix completion/,$(SRC_COMPLETE))
 
 SRC_PARSECOMMAND	:=	get_arguments_array.c			\
 						get_binary_path.c				\
@@ -65,7 +71,13 @@ SRC_PARSECOMMAND	:=	get_arguments_array.c			\
 						clear_str.c						\
 						find_word_in_str.c				\
 						check_null_command.c			\
-						env_value.c
+						env_value.c                     \
+						globbings.c                     \
+						check_size.c                    \
+						check_letters.c					\
+						check_brakets.c                 \
+						globbings_fnc.c                 \
+						check_interrogative.c
 SRC_PARSECOMMAND	:=	$(addprefix parsecommand/,$(SRC_PARSECOMMAND))
 
 SRC_UTILS			:=	count_tokken.c					\
@@ -75,7 +87,8 @@ SRC_UTILS			:=	count_tokken.c					\
 						remove_empty_command.c			\
 						remove_quote.c					\
 						strsplit_not_rec.c				\
-						correct_env.c
+						correct_env.c					\
+						redirect_file.c
 SRC_UTILS			:=	$(addprefix utils/,$(SRC_UTILS))
 
 SRC_PROMPT			:=	display_prompt.c				\
@@ -100,7 +113,8 @@ SRC					:=	create_dict.c					\
 						$(SRC_EXECOMMAND)				\
 						$(SRC_BUILTINS)					\
 						$(SRC_PROMPT)					\
-						$(SRC_HISTORY)
+						$(SRC_HISTORY)					\
+						$(SRC_COMPLETE)
 SRC					:=	$(addprefix src/,$(SRC))
 
 OBJ					:=	$(SRC:%.c=%.o)
@@ -131,7 +145,7 @@ TOBJ		:=	$(TSRC:%.c=%.o)
 
 # ----------------------------------------------------------------------------
 # FLAGS
-CFLAGS		+= 	-Iinclude/ -Ilib/include/ -Wall -Wextra -Wpedantic
+CFLAGS		+= 	-Iinclude/ -Ilib/include/ -Wall -Wextra -Wpedantic -g3
 
 TFLAGS		=	-fprofile-arcs -ftest-coverage
 
@@ -150,12 +164,8 @@ FN_TEST_LDFLAGS	=	-lgcov
 all:		CURR_RULE = all
 all:		init $(LIB_TARGET)
 	@$(MAKE) COMPIL_FASTER -s -j2
-ifeq ("$(wildcard $(NAME))","")
 	@$(MAKE) $(NAME) -s
 	@echo -e $(GREEN)'-> [finished]: $(NAME): all'$(RESET)
-else
-	@echo "nothing to be done"
-endif
 
 COMPIL_FASTER: $(OBJ)
 
@@ -198,6 +208,7 @@ re:		init
 # Test
 .PHONY: tests_run
 tests_run: fn_tests_run
+	@$(RM) $(OBJ)
 
 .PHONY: cr_tests_run
 cr_tests_run: LDFLAGS += $(CR_TEST_LDFLAGS)
