@@ -11,6 +11,7 @@
 #include <dirent.h>
 #include <stdio.h>
 #include "my_strings.h"
+#include "my_wordarray.h"
 #include "globbings.h"
 
 static void add_files(my_files_t **files, char *name)
@@ -63,9 +64,46 @@ static void globbing(my_files_t **my_files, char *str)
         printf("No match with %s\n", str);
     check_letters(my_files, str);
     check_brakets(my_files, str);
-    for (my_files_t *tmp = (*my_files); tmp != NULL; tmp = tmp->next) {
-        printf("%s\n", tmp->name);
+}
+
+
+char *tab_to_str2(char **tab)
+{
+    char *str = NULL;
+    int i = 0;
+    int size = 0;
+
+    size = my_wordarray_size(tab) + my_wordarray_len(tab);
+    str = my_calloc(size + 2);
+    if (!str)
+        return (NULL);
+    while (tab[i]) {
+        str = my_strcat(str, tab[i]);
+        str = my_strcat(str, " ");
+        i++;
     }
+    return str;
+}
+
+static void globbing_to_str(my_files_t *my_files, char *str)
+{
+    int size = 1;
+    int index = 0;
+    char **tab = NULL;
+
+    for (my_files_t *tmp = my_files; tmp != NULL; tmp = tmp->next) {
+        size += 1;
+    }
+    tab = malloc(sizeof(char *) * (size + 1));
+    if (tab == NULL)
+        return (NULL);
+    for (my_files_t *tmp = my_files; tmp != NULL; tmp = tmp->next) {
+        tab[index] = my_strdup(tmp->name);
+        index++;
+    }
+    tab[index] = NULL;
+    free(str);
+    str = tab_to_str2(tab);
 }
 
 void globbing_entry(char *str)
@@ -85,6 +123,7 @@ void globbing_entry(char *str)
         add_files(&my_files, files->d_name);
     }
     globbing(&my_files, str);
+    globbing_to_str(my_files, str);
     free_list(my_files);
     closedir(folder);
 }

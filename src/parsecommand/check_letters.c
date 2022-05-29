@@ -51,6 +51,8 @@ static char *replace_end(char *globbinds, char *file, char letter)
             break;
         }
     }
+    if (file[i] == '\0')
+        return (NULL);
     new = strcat(new, &file[i]);
     return (new);
 }
@@ -67,6 +69,8 @@ int check_for_good_letters(char *str, char *globbinds)
     } else if (globbinds[size - 1] == '*') {
         new = replace_end(globbinds, str, globbinds[size - 2]);
     }
+    if (new == NULL)
+        return (true);
     if (strcmp(new, str) == 0) {
         return (false);
     }
