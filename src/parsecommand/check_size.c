@@ -13,7 +13,7 @@
 static int count_index(char *str, int index)
 {
     while (str[index] != ']' && str[index] != '\0') {
-        index ++;
+        index++;
     }
     return (index);
 }
