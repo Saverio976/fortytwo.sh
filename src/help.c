@@ -23,7 +23,7 @@ static char help_message[8][100] = {
 int print_help(const char exe[])
 {
     my_printf("USAGE: %s [[-b file] | file]\n", exe);
-    for (int i = 0; i < 4; i++) {
+    for (int i = 0; i < 8; i++) {
         my_putstr(help_message[i]);
         my_putchar('\n');
     }
