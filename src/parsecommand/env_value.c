@@ -57,7 +57,7 @@ char *replace_value_env(dico_t *dico, char *str)
         for (pos[1] = 0; tab[pos[0]][pos[1]] != '\0'; pos[1]++) {
             check_env_value(pos, str, tab, dico);
         }
-        globbing_entry(tab[pos[0]]);
+        tab[pos[0]] = globbing_entry(tab[pos[0]]);
     }
     cmd = tab_to_str(tab);
     my_wordarray_free(tab);

@@ -85,7 +85,7 @@ char *tab_to_str2(char **tab)
     return str;
 }
 
-static void globbing_to_str(my_files_t *my_files, char *str)
+static char *globbing_to_str(my_files_t *my_files, char *str)
 {
     int size = 1;
     int index = 0;
@@ -104,15 +104,16 @@ static void globbing_to_str(my_files_t *my_files, char *str)
     tab[index] = NULL;
     free(str);
     str = tab_to_str2(tab);
+    
 }
 
-void globbing_entry(char *str)
+char *globbing_entry(char *str)
 {
     DIR *folder = NULL;
     my_files_t *my_files = NULL;
 
     if (str == NULL || is_globbing(str) == false) {
-        return;
+        return (str);
     }
     folder = opendir("./");
     if (folder == NULL) {
@@ -120,10 +121,17 @@ void globbing_entry(char *str)
     }
     struct dirent *files = NULL;
     while ((files = readdir(folder)) != NULL) {
+        if (strncmp(files->d_name, ".", 1) == 0 ||
+        strncmp(files->d_name, "..", 2) == 0)
+            continue;
         add_files(&my_files, files->d_name);
     }
     globbing(&my_files, str);
-    globbing_to_str(my_files, str);
+    str = globbing_to_str(my_files, str);
+    if (str[0] == '\0') {
+        printf("No match\n");
+    }
+    return (str);
     free_list(my_files);
     closedir(folder);
 }

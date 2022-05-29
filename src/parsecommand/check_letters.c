@@ -12,69 +12,17 @@
 #include <my_strings.h>
 #include "globbings.h"
 
-static char *replace_begin(char *globbinds, char *file, char letter)
+int check_for_good_letters(const char *s1, const char *s2)
 {
-    int i = 0;
-    char *new = malloc(sizeof(char) * (my_strlen(globbinds) +
-    my_strlen(file) + 1));
-
-    if (globbinds == NULL || file == NULL || new == NULL)
-        return (NULL);
-    for (i = 0; file[i] != '\0'; i++) {
-        if (file[i] == letter) {
-            break;
-        }
-        new[i] = file[i];
+    if (*s1 == '\0') {
+        if (*s2 == '*')
+            return check_for_good_letters(s1, s2 + 1);
+        return *s1 == *s2;
     }
-    new[i] = '\0';
-    new = strcat(new, &globbinds[1]);
-    return (new);
-}
-
-static char *replace_end(char *globbinds, char *file, char letter)
-{
-    int i = 0;
-    char *new = malloc(sizeof(char) * (my_strlen(globbinds) +
-    my_strlen(file) + 1));
-
-    if (globbinds == NULL || file == NULL || new == NULL)
-        return (NULL);
-    for (i = 0; globbinds[i] != '\0'; i++) {
-        new[i] = globbinds[i];
-        if (globbinds[i] == letter)
-            break;
-    }
-    new[i + 1] = '\0';
-    for (i = my_strlen(file) - 1; i >= 0; i--) {
-        if (file[i] == letter) {
-            i += 1;
-            break;
-        }
-    }
-    if (file[i] == '\0')
-        return (NULL);
-    new = strcat(new, &file[i]);
-    return (new);
-}
-
-int check_for_good_letters(char *str, char *globbinds)
-{
-    char *new = NULL;
-    int size = my_strlen(globbinds);
-
-    if (size < 2)
-        return (true);
-    if (globbinds[0] == '*') {
-        new = replace_begin(globbinds, str, globbinds[1]);
-    } else if (globbinds[size - 1] == '*') {
-        new = replace_end(globbinds, str, globbinds[size - 2]);
-    }
-    if (new == NULL)
-        return (true);
-    if (strcmp(new, str) == 0) {
-        return (false);
-    }
-    return (true);
+    if (*s2 == '*')
+        return (check_for_good_letters(s1, s2 + 1) ||
+        check_for_good_letters(s1 + 1, s2));
+    return (*s1 == *s2 && check_for_good_letters(s1 + 1, s2 + 1));
 }
 
 void check_letters(my_files_t **my_files, char *globbinds)
@@ -87,7 +35,7 @@ void check_letters(my_files_t **my_files, char *globbinds)
             return;
     }
     while (tmp != NULL) {
-        if (check_for_good_letters(tmp->name, globbinds) == true) {
+        if (check_for_good_letters(tmp->name, globbinds) == false) {
             tmp_delete = tmp;
             tmp = tmp->next;
             delete_tmp(tmp_delete, my_files);
