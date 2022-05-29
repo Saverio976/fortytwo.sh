@@ -86,7 +86,8 @@ SRC_UTILS			:=	count_tokken.c					\
 						remove_empty_command.c			\
 						remove_quote.c					\
 						strsplit_not_rec.c				\
-						correct_env.c
+						correct_env.c					\
+						redirect_file.c
 SRC_UTILS			:=	$(addprefix utils/,$(SRC_UTILS))
 
 SRC_PROMPT			:=	display_prompt.c				\

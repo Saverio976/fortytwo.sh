@@ -5,39 +5,13 @@
 ** the main entry point for the project
 */
 
-#include <fcntl.h>
 #include <stdbool.h>
 #include <stddef.h>
+#include <stdio.h>
 #include <unistd.h>
 #include "my_dico.h"
 #include "my_strings.h"
 #include "mysh.h"
-
-static int redirect_input(const char *file)
-{
-    int saved_input = -1;
-    int fd = 0;
-
-    fd = open(file, O_RDONLY);
-    if (fd <= 0) {
-        return (-1);
-    }
-    saved_input = dup(0);
-    dup2(fd, 0);
-    close(fd);
-    return (saved_input);
-}
-
-static int ends_redirect_input(int saved_input)
-{
-    if (saved_input == -1) {
-        return (0);
-    }
-    close(0);
-    dup2(saved_input, 0);
-    close(saved_input);
-    return (0);
-}
 
 static int handle_batch_file(int ac, char *const av[], dico_t *env,
     int *saved_input)
