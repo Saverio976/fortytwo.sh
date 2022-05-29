@@ -141,3 +141,6 @@ read CHOICE_C
 if [[ "$CHOICE_C" != "" ]]; then
     echo "echo -e $CHOICE_C" >> $HOME/.thrushrc
 fi
+
+echo "You can always customize the startup script"
+echo "You just have to modify $HOME/.thrushrc file"
