@@ -126,5 +126,5 @@ int parse_commands(char *string, shell_t *shell)
     shell->command = or_separator(shell->command);
     shell->command = remove_empty_commands(shell->command);
     shell->command = check_alias(shell->command, shell->alias);
-    return (0);
+    return (shell->status_code);
 }
