@@ -67,9 +67,8 @@ char *replace_value_env(dico_t *dico, char *str, shell_t *shell)
     if (tab == NULL)
         return (NULL);
     for (pos[0] = 0; tab[pos[0]] != NULL && tmp; pos[0]++) {
-        for (pos[1] = 0; tab[pos[0]][pos[1]] != '\0' && tmp; pos[1]++) {
+        for (pos[1] = 0; tab[pos[0]][pos[1]] != '\0' && tmp; pos[1]++)
             tmp = check_env_value(pos, str, tab, dico);
-        }
         tab[pos[0]] = globbing_entry(tab[pos[0]]);
     }
     if (tmp == NULL) {

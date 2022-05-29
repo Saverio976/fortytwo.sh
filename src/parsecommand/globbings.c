@@ -74,7 +74,7 @@ static char *globbing_to_str(my_files_t *my_files, char *str)
     }
     tab[index] = NULL;
     free(str);
-    str = tab_to_str(tab);
+    str = tab_to_str(tab, false);
     my_wordarray_free(tab);
     return (str);
 }

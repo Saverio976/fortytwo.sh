@@ -7,6 +7,7 @@
 
 #ifndef GLOBBINGS_H_
     #define GLOBBINGS_H_
+    #include <stdbool.h>
 
 typedef struct my_files_s {
     char *name;
@@ -14,7 +15,7 @@ typedef struct my_files_s {
     struct my_files_s *prev;
 } my_files_t;
 
-char *tab_to_str(char **tab);
+char *tab_to_str(char **tab, bool need_free);
 char *globbing_entry(char *str);
 void free_list(my_files_t *files);
 void globbing(my_files_t **my_files, char *str);
