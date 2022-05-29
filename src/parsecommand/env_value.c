@@ -5,6 +5,7 @@
 ** env_value
 */
 
+#include <stdbool.h>
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -14,7 +15,7 @@
 #include "mysh.h"
 #include "my_wordarray.h"
 
-static char *tab_to_str(char **tab)
+char *tab_to_str(char **tab, bool need_free)
 {
     char *str = NULL;
     int i = 0;
@@ -29,7 +30,9 @@ static char *tab_to_str(char **tab)
         str = my_strcat(str, " ");
         i++;
     }
-    my_wordarray_free(tab);
+    if (need_free == true) {
+        my_wordarray_free(tab);
+    }
     return str;
 }
 
@@ -72,6 +75,6 @@ char *replace_value_env(dico_t *dico, char *str, shell_t *shell)
         shell->status_code = 1;
         return NULL;
     }
-    cmd = tab_to_str(tab);
+    cmd = tab_to_str(tab, true);
     return cmd;
 }
