@@ -108,7 +108,7 @@ char *globbing_entry(char *str)
     str = globbing_to_str(my_files, str);
     if (str[0] == '\0') {
         free(str);
-        str = my_strdup("no match");
+        str = my_strdup("no_match");
     }
     free_list(my_files);
     return (str);

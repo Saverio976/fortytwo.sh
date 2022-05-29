@@ -60,8 +60,8 @@ static void modif_shell_gobblins(shell_t *shell, char *str, char *cmd)
 {
     if (cmd == NULL)
         return;
-    if (strcmp(str, "no match") == 0 || str == NULL) {
-        printf("%s: No match.\n", cmd);
+    if (strcmp(str, "no_match") == 0 || str == NULL) {
+        printf("%s: No_match.\n", cmd);
         shell->status_code = 1;
     } else {
         shell->status_code = 0;
