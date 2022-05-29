@@ -12,7 +12,7 @@
 #include "mysh.h"
 #include "mysh_struct.h"
 
-shell_t *create_shell(dico_t *env)
+shell_t *create_shell(dico_t *env, bool is_file)
 {
     shell_t *shell = NULL;
 
@@ -28,6 +28,7 @@ shell_t *create_shell(dico_t *env)
     shell->command = NULL;
     shell->alias = NULL;
     shell->env = env;
+    shell->is_file = is_file;
     return (shell);
 }
 
@@ -51,12 +52,12 @@ void destroy_shell(shell_t *shell)
     free(shell);
 }
 
-int entry_point(dico_t *env)
+int entry_point(dico_t *env, bool is_file)
 {
     shell_t *shell = NULL;
     int ret_code = 0;
 
-    shell = create_shell(env);
+    shell = create_shell(env, is_file);
     if (shell == NULL) {
         return (84);
     }

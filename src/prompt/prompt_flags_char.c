@@ -11,34 +11,34 @@
 // \a     an ASCII bell character (07)
 PROMPT_FUN(display_prompt_a)
 {
-    printf("\a");
+    puts("\a");
     return 0;
 }
 
 // \e     an ASCII escape character (033)
 PROMPT_FUN(display_prompt_e)
 {
-    printf("\033");
+    puts("\033");
     return 0;
 }
 
 // \n     newline
 PROMPT_FUN(display_prompt_n)
 {
-    printf("\n");
+    puts("\n");
     return 0;
 }
 
 // \r     carriage return
 PROMPT_FUN(display_prompt_r)
 {
-    printf("\r");
+    puts("\r");
     return 0;
 }
 
 // \\     a backslash
 PROMPT_FUN(display_prompt_backslash)
 {
-    printf("\\");
+    puts("\\");
     return 0;
 }
