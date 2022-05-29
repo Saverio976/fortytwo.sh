@@ -27,18 +27,10 @@ void free_list(my_files_t *files)
     }
 }
 
-void delete_tmp(my_files_t *delete, my_files_t **files)
+static void delete_end(my_files_t *delete, my_files_t **files)
 {
     my_files_t *tmp = NULL;
 
-    if (delete == NULL || (*files) == NULL)
-        return;
-    if (delete->prev == NULL && delete->next == NULL) {
-        free(delete->name);
-        free(delete);
-        (*files) = NULL;
-        return;
-    }
     if (delete->prev == NULL) {
         (*files) = delete->next;
         (*files)->prev = NULL;
@@ -52,4 +44,17 @@ void delete_tmp(my_files_t *delete, my_files_t **files)
     }
     free(delete->name);
     free(delete);
+}
+
+void delete_tmp(my_files_t *delete, my_files_t **files)
+{
+    if (delete == NULL || (*files) == NULL)
+        return;
+    if (delete->prev == NULL && delete->next == NULL) {
+        free(delete->name);
+        free(delete);
+        (*files) = NULL;
+        return;
+    }
+    delete_end(delete, files);
 }

@@ -10,6 +10,14 @@
 #include "my_strings.h"
 #include "globbings.h"
 
+static int count_index(char *str, int index)
+{
+    while (str[index] != ']' && str[index] != '\0') {
+        index ++;
+    }
+    return (index);
+}
+
 static void replace_braket(char *str)
 {
     int i = 0;
@@ -17,10 +25,7 @@ static void replace_braket(char *str)
 
     while (str[i] != '\0') {
         if (str[i] == '[') {
-            i++;
-            while (str[i] != ']' && str[i] != '\0') {
-                i++;
-            }
+            i = count_index(str, i);
         }
         str[j] = str[i];
         i++;

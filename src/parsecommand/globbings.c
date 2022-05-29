@@ -79,7 +79,7 @@ static char *globbing_to_str(my_files_t *my_files, char *str)
     return (str);
 }
 
-static void globbing_loop(my_files_t **my_files, char *str, DIR *folder)
+static void globbing_loop(my_files_t **my_files, DIR *folder)
 {
     struct dirent *files = NULL;
 
@@ -99,8 +99,8 @@ char *globbing_entry(char *str)
         return (str);
     folder = opendir("./");
     if (folder == NULL)
-        return;
-    globbing_loop(&my_files, str, folder);
+        return (str);
+    globbing_loop(&my_files, folder);
     globbing(&my_files, str);
     str = globbing_to_str(my_files, str);
     if (str[0] == '\0') {
