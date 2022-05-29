@@ -14,8 +14,7 @@ THRUSH_TARGET="/bin/thrush"
 THRUSH_TARGET_DIRECTORY="thrushell"
 THRUSH_SOURCE="https://github.com/Saverio976/fortytwo.sh.git"
 THRUSH_SOURCE_INSTALL="https://raw.githubusercontent.com/Saverio976/fortytwo.sh/install.sh"
-THRUSH_SOURCE_BASE_ASSETS="https://raw.githubusercontent.com/Saverio976/https://github.com/Saverio976/fortytwo.sh/assets/"
-
+THRUSH_SOURCE_BASE_ASSETS="https://raw.githubusercontent.com/Saverio976/fortytwo.sh/main/assets/"
 echo -n -e $BLEU_BOLD
 echo "
 ............................................................
@@ -70,11 +69,8 @@ o***oooo*o*o*°oOoOOo**oooo****ooooo***o***°°*ooooooOoo*°°°*o
 oooooo***oo*oooooooooooooo*oooooo**oooooooooooOo*oo*°.°oOooo"
 echo -e $RESET
 
-if [[ $EUID -ne 0 ]]; then
-    echo "Installation must be run as root"
-    echo "if you want to see the installation source: $THRUSH_SOURCE_INSTALL"
-    exit 1
-fi
+echo "if you want to see the installation source: $THRUSH_SOURCE_INSTALL"
+sleep 0.5
 
 if ! command -v git &> /dev/null; then
     echo "You must have git to install Thru.sh"
@@ -89,41 +85,64 @@ fi
 echo -n -e $BLEU_BOLD
 echo -e "Welcome to the installation script of $CYAN Thrushell"
 echo -n -e $RESET
+sleep 0.2
 
 cd /tmp
+echo ""
+
 
 echo "Installation of source code ..."
 git clone $THRUSH_SOURCE $THRUSH_TARGET_DIRECTORY
 cd $THRUSH_TARGET_DIRECTORY
 echo "Installation of source code ended"
+sleep 0.2
+
+echo ""
 
 echo "Compilation of binary ..."
 make
 echo "Compilation of binary ended"
+sleep 0.2
 
+echo ""
+
+echo "Please enter sudo password: (the binary will be moved from $THRUSH_TARGET_EXE to $THRUSH_TARGET)"
 sudo mv $THRUSH_TARGET_EXE $THRUSH_TARGET
 echo "Binary moved to $THRUSH_TARGET"
+sleep 0.1
 
 sudo bash -c "echo $THRUSH_TARGET >> /etc/shells"
+
+echo ""
 
 echo -e "\nDo you want to make it your default shell [y/n]? "
 read IS_DEFAULT
 if [[ "$IS_DEFAULT" == "y" || "$IS_DEFAULT" == "Y" ]]; then
-    chsh -s $THRUSH_TARGET
-    echo "Thrushell will be your next default shell after a reboot"
+    echo "Do you confirm this choice [y/n]? "
+    read IS_DEFAULT_CONFIRM
+    if [[ "$IS_DEFAULT" == "y" || "$IS_DEFAULT" == "Y" ]]; then
+        chsh -s $THRUSH_TARGET
+        echo "Thrushell will be your next default shell after a reboot"
+    else
+        echo "you can make it your default shell with:"
+        echo "chsh -s $THRUSH_TARGET"
+    fi
 else
     echo "you can make it your default shell with:"
     echo "chsh -s $THRUSH_TARGET"
 fi
 
 echo -e "$GREEN""Thanks for the installation of Thrushell $RESET"
+sleep 0.2
 
 echo "Do you want to customize it [y/n]?"
 read CUSTOM_C
 echo "" > $HOME/.thrushrc
-if [[ "$IS_DEFAULT" != "y" && "$IS_DEFAULT" != "Y" ]]; then
+if [[ "$CUSTOM_C" != "y" && "$CUSTOM_C" != "Y" ]]; then
     exit 0
 fi
+
+echo ""
 
 if command -v curl &>/dev/null; then
     echo "First : Do you want Nicolas (n), Clément (c), or the Void (v) ?"
@@ -135,12 +154,16 @@ if command -v curl &>/dev/null; then
     fi
 fi
 
+echo ""
+
 echo "Do you want a custom message when you lanch this shell ?"
 echo "(write nothing for no message)"
 read CHOICE_C
 if [[ "$CHOICE_C" != "" ]]; then
     echo "echo -e $CHOICE_C" >> $HOME/.thrushrc
 fi
+
+echo ""
 
 echo "You can always customize the startup script"
 echo "You just have to modify $HOME/.thrushrc file"
