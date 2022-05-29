@@ -7,68 +7,76 @@
 
 #include <stdbool.h>
 #include <unistd.h>
+#include "my_list.h"
+#include "my_macro.h"
+#include "my_wordarray.h"
 #include "my_puts.h"
 #include "my_strings.h"
 #include "mysh.h"
 #include "mysh_struct.h"
 #include "loop.h"
+#include "complete.h"
 
-void display_input(shell_t *shell, int *current_pos)
+char *tab_to_str(char **tab);
+
+static void modif_completion_str(shell_t *shell, int *cur_pos, list_t *comp)
 {
-    clear_input(shell, current_pos, *current_pos);
-    for (int i = 0; i < *current_pos - 1; i++) {
-        my_putchar('\b');
-        my_putchar(' ');
-        my_putchar('\b');
+    char **arr = NULL;
+    int len = 0;
+    char *tmp = NULL;
+
+    if (list_t_len(comp) <= 0) {
+        return;
     }
-    my_putstr(shell->last_input);
-    for (int i = my_strlen(shell->last_input); i > *current_pos; i--) {
-        my_putchar('\b');
+    arr = my_wordarray_from_str(shell->last_input, ' ');
+    if (arr == NULL) {
+        return;
     }
+    len = my_wordarray_len(arr);
+    free_secure(arr[len - 1]);
+    arr[MAX(len - 1, 0)] = my_strdup(comp->data);
+    tmp = tab_to_str(arr);
+    free_secure(shell->last_input);
+    shell->last_input = my_strstrip(tmp, " ");
+    shell->last_input_len = my_strlen(shell->last_input);
+    free_secure(tmp);
+    my_wordarray_free(arr);
 }
 
-void clear_input(shell_t *shell, int *current_pos, int to_go)
-{
-    for (int i = *current_pos; i < my_strlen(shell->last_input); i++) {
-        my_putchar(' ');
-    }
-    for (int i = 0; i < my_strlen(shell->last_input); i++) {
-        my_putchar('\b');
-        my_putchar(' ');
-        my_putchar('\b');
-    }
-    *current_pos = 0;
-    for (int i = 0; i < to_go; i++) {
-        my_putchar(' ');
-        *current_pos += 1;
-    }
-}
-
-//TODO: complete binary/path
 bool use_key_tab(shell_t *shell, __attribute__((unused)) int *cur_pos)
 {
+    list_t *all = NULL;
+
     if (my_strlen(shell->last_input) <= 0) {
         return (false);
     }
-    my_printf("\nCompletion not inplemented...\n");
-    if (isatty(0)) {
-        print_prompt(shell);
-        my_putstr(shell->last_input);
+    all = complete_this(shell->last_input, shell->env);
+    if (list_t_len(all) <= 0) {
+        return (false);
     }
+    if (list_t_len(all) == 1) {
+        clear_input(shell, cur_pos, 0);
+        modif_completion_str(shell, cur_pos, all);
+        display_input(shell, cur_pos);
+        list_t_destroy(all);
+        return (false);
+    }
+    display_completion(shell, cur_pos, all);
+    list_t_destroy(all);
     return (false);
 }
 
 bool use_key_ctrld(shell_t *shell, __attribute__((unused)) int *cur_pos)
 {
+    list_t *all = NULL;
+
     if (my_strlen(shell->last_input) <= 0) {
         shell->is_end = true;
         return (true);
     }
-    my_printf("\nCompletion not inplemented...\n");
-    if (isatty(0)) {
-        print_prompt(shell);
-        my_putstr(shell->last_input);
-    }
+    all = complete_this(shell->last_input, shell->env);
+    display_completion(shell, cur_pos, all);
+    list_t_destroy(all);
     return (false);
 }
 

@@ -35,7 +35,8 @@ SRC_BUILTINS		:=	cd.c							\
 						setenv.c						\
 						unsetenv.c						\
 						alias.c							\
-						which.c
+						which.c							\
+						where.c
 SRC_BUILTINS		:=	$(addprefix builtins/,$(SRC_BUILTINS))
 
 SRC_EXECOMMAND		:=	execute_all.c					\
@@ -46,12 +47,17 @@ SRC_EXECOMMAND		:=	execute_all.c					\
 SRC_EXECOMMAND		:=	$(addprefix execommand/,$(SRC_EXECOMMAND))
 
 SRC_LOOP			:=	entry_point.c					\
+						display_utils.c					\
 						action_key.c					\
 						action_key_arrow.c				\
 						get_line_input.c				\
 						loop.c							\
 						print_prompt.c
 SRC_LOOP			:=	$(addprefix loop/,$(SRC_LOOP))
+
+SRC_COMPLETE		:=	complete_this.c					\
+						remove_same.c
+SRC_COMPLETE		:=	$(addprefix completion/,$(SRC_COMPLETE))
 
 SRC_PARSECOMMAND	:=	get_arguments_array.c			\
 						get_binary_path.c				\
@@ -105,7 +111,8 @@ SRC					:=	create_dict.c					\
 						$(SRC_EXECOMMAND)				\
 						$(SRC_BUILTINS)					\
 						$(SRC_PROMPT)					\
-						$(SRC_HISTORY)
+						$(SRC_HISTORY)					\
+						$(SRC_COMPLETE)
 SRC					:=	$(addprefix src/,$(SRC))
 
 OBJ					:=	$(SRC:%.c=%.o)
@@ -136,7 +143,7 @@ TOBJ		:=	$(TSRC:%.c=%.o)
 
 # ----------------------------------------------------------------------------
 # FLAGS
-CFLAGS		+= 	-Iinclude/ -Ilib/include/ -Wall -Wextra -Wpedantic
+CFLAGS		+= 	-Iinclude/ -Ilib/include/ -Wall -Wextra -Wpedantic -g3
 
 TFLAGS		=	-fprofile-arcs -ftest-coverage
 
