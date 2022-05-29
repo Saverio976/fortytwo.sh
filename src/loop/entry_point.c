@@ -24,6 +24,7 @@ shell_t *create_shell(dico_t *env)
     shell->is_end = false;
     shell->almost_the_end = false;
     shell->last_input = NULL;
+    shell->last_input_len = 0;
     shell->command = NULL;
     shell->alias = NULL;
     shell->env = env;
