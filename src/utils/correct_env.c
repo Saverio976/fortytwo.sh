@@ -79,6 +79,6 @@ dico_t *correct_env(dico_t *env)
     env = add_pwd_user(env);
     env = dico_t_rem(env, "OLDPWD");
     env = add_vars(env);
-    env = dico_t_add_data(env, "PS1", (void *) ps1_custom, NULL);
+    env = dico_t_add_data(env, "PS1", my_strdup(ps1_custom), free);
     return (env);
 }
