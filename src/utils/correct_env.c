@@ -13,7 +13,7 @@
 
 static const char ps1_custom[] = "\033[1;33m╭─\\A \033[1;36m\\u \033[0;34m->" \
                                     " \033[0;34m(\033[1;31m\\W\033[0;34m) " \
-                                    "\033[1;33m✗\n╰─ ~ \033[1;30m ";
+                                    "\033[1;33m✗\n╰─ ~ \033[0m ";
 
 static const char nls_path_default[] = "/usr/share/locale/%L/LC_MESSAGES/" \
                                         "%N.cat:/usr/share/locale/%l/" \
