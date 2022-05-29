@@ -14,8 +14,7 @@ THRUSH_TARGET="/bin/thrush"
 THRUSH_TARGET_DIRECTORY="thrushell"
 THRUSH_SOURCE="https://github.com/Saverio976/fortytwo.sh.git"
 THRUSH_SOURCE_INSTALL="https://raw.githubusercontent.com/Saverio976/fortytwo.sh/install.sh"
-THRUSH_SOURCE_BASE_ASSETS="https://raw.githubusercontent.com/Saverio976/https://github.com/Saverio976/fortytwo.sh/assets/"
-
+THRUSH_SOURCE_BASE_ASSETS="https://raw.githubusercontent.com/Saverio976/fortytwo.sh/main/assets/"
 echo -n -e $BLEU_BOLD
 echo "
 ............................................................
