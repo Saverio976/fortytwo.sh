@@ -42,6 +42,7 @@ struct shell_s {
     dico_t *env;
     bool is_end;
     bool almost_the_end;
+    bool is_file;
     size_t last_input_len;
 };
 

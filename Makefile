@@ -157,12 +157,8 @@ FN_TEST_LDFLAGS	=	-lgcov
 all:		CURR_RULE = all
 all:		init $(LIB_TARGET)
 	@$(MAKE) COMPIL_FASTER -s -j2
-ifeq ("$(wildcard $(NAME))","")
 	@$(MAKE) $(NAME) -s
 	@echo -e $(GREEN)'-> [finished]: $(NAME): all'$(RESET)
-else
-	@echo "nothing to be done"
-endif
 
 COMPIL_FASTER: $(OBJ)
 
@@ -205,6 +201,7 @@ re:		init
 # Test
 .PHONY: tests_run
 tests_run: fn_tests_run
+	@$(RM) $(OBJ)
 
 .PHONY: cr_tests_run
 cr_tests_run: LDFLAGS += $(CR_TEST_LDFLAGS)
