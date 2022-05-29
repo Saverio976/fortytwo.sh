@@ -10,46 +10,72 @@
 #include <string.h>
 #include <stdio.h>
 #include "globbings.h"
+#include "my_strings.h"
 
 static int find_pos(char *str)
 {
-    int pos = 0;
-
-    for (int i = 0; str[i] != '\0'; i++) {
-        if (str[i] == '[') {
-            pos = i + 1;
-            break;
-        }
-    }
-    return (pos);
-}
-
-static int check_char(char *str, char letter)
-{
     int i = 0;
 
-    for (i = 0; str[i] != '\0'; i++) {
-        if (str[i] == letter)
-            return (true);
+    while (str[i] != '\0') {
+        if (str[i] == '[')
+            return (i);
+        i++;
     }
-    return (false);
+    return (0);
+}
+
+static char *create_compare_string(char *str)
+{
+    int str_index = 0;
+    int is_ok = true;
+    char *new = malloc(sizeof(char) * (strlen(str) + 1));
+
+    if (new == NULL)
+        return (NULL);
+    for (int i = 0; str[i] != '\0'; i ++) {
+        if (str[i] == '[')
+            is_ok = false;
+        if (str[i] == ']')
+            is_ok = true;
+        if (is_ok == true) {
+            new[str_index] = str[i];
+            str_index++;
+        }
+    }
+    new[str_index] = '\0';
+    return (new);
+}
+
+static char find_end(char *str, int pos)
+{
+    char c = 'a';
+
+    for (int i = pos; str[i] != '\0'; i++) {
+        if (str[i] == ']' && i >= 1)
+            return (str[i - 1]);
+    }
+    return (c);
 }
 
 int check_for_brakets(char *file, char *globbinds)
 {
-    char c = '\0';
+    char start = 'a';
+    char end = 'z';
     int pos = 0;
+    char *compare = NULL;
 
-    if (file == NULL || globbinds == NULL)
-        return (true);
-    for (int i = 0; globbinds[i] != '\0'; i++) {
-        if (globbinds[i] == '*' || globbinds[i] == '?')
-            return (false);
-    }
     pos = find_pos(globbinds);
-    c = file[pos - 1];
-    if (check_char(globbinds, c) == true)
-        return (false);
+    compare = create_compare_string(globbinds);
+    start = globbinds[pos + 1];
+    end = find_end(globbinds, pos);
+    for (int i = start; i <= end; i ++) {
+        compare[pos] = i;
+        if (check_for_good_letters(file, compare) == true) {
+            free(compare);
+            return (false);
+        }
+    }
+    free(compare);
     return (true);
 }
 

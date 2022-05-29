@@ -18,6 +18,7 @@ typedef struct my_files_s {
 char *tab_to_str(char **tab, bool need_free);
 char *globbing_entry(char *str);
 void free_list(my_files_t *files);
+int check_for_good_letters(const char *s1, const char *s2);
 void globbing(my_files_t **my_files, char *str);
 void check_size(my_files_t **files, char *str);
 void check_letters(my_files_t **my_files, char *str);
