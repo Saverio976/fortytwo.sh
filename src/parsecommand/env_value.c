@@ -7,6 +7,7 @@
 
 #include <string.h>
 #include <stdlib.h>
+#include <stdio.h>
 #include "my_list.h"
 #include "mysh_struct.h"
 #include "my_strings.h"
@@ -33,11 +34,13 @@ char *tab_to_str(char **tab)
 
 static void check_env_value(int pos[2], char *str, char **tab, dico_t *dico)
 {
+
     if (tab[pos[0]][pos[1]] == '$' && str[pos[0] + 1] != '\0') {
         str = dico_t_get_value(dico, tab[pos[0]] + pos[1] + 1);
         if (str == NULL) {
+            printf("%s: Undefined variable.\n", &tab[0][1]);
             free(tab[pos[0]]);
-            tab[pos[0]] = my_strdup(" ");
+            tab[pos[0]] = strdup("\0");
         } else {
             free(tab[pos[0]]);
             tab[pos[0]] = strdup(str);
