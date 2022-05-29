@@ -81,7 +81,8 @@ SRC_UTILS			:=	count_tokken.c					\
 						remove_empty_command.c			\
 						remove_quote.c					\
 						strsplit_not_rec.c				\
-						correct_env.c
+						correct_env.c					\
+						redirect_file.c
 SRC_UTILS			:=	$(addprefix utils/,$(SRC_UTILS))
 
 SRC_PROMPT			:=	display_prompt.c				\
@@ -157,12 +158,8 @@ FN_TEST_LDFLAGS	=	-lgcov
 all:		CURR_RULE = all
 all:		init $(LIB_TARGET)
 	@$(MAKE) COMPIL_FASTER -s -j2
-ifeq ("$(wildcard $(NAME))","")
 	@$(MAKE) $(NAME) -s
 	@echo -e $(GREEN)'-> [finished]: $(NAME): all'$(RESET)
-else
-	@echo "nothing to be done"
-endif
 
 COMPIL_FASTER: $(OBJ)
 
@@ -205,6 +202,7 @@ re:		init
 # Test
 .PHONY: tests_run
 tests_run: fn_tests_run
+	@$(RM) $(OBJ)
 
 .PHONY: cr_tests_run
 cr_tests_run: LDFLAGS += $(CR_TEST_LDFLAGS)

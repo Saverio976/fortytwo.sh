@@ -17,9 +17,9 @@
 #include "loop.h"
 #include "complete.h"
 
-char *tab_to_str(char **tab);
+char *tab_to_str(char **tab, bool need_free);
 
-static void modif_completion_str(shell_t *shell, int *cur_pos, list_t *comp)
+static void modif_completion_str(shell_t *shell, list_t *comp)
 {
     char **arr = NULL;
     int len = 0;
@@ -35,12 +35,11 @@ static void modif_completion_str(shell_t *shell, int *cur_pos, list_t *comp)
     len = my_wordarray_len(arr);
     free_secure(arr[len - 1]);
     arr[MAX(len - 1, 0)] = my_strdup(comp->data);
-    tmp = tab_to_str(arr);
+    tmp = tab_to_str(arr, true);
     free_secure(shell->last_input);
     shell->last_input = my_strstrip(tmp, " ");
     shell->last_input_len = my_strlen(shell->last_input);
     free_secure(tmp);
-    my_wordarray_free(arr);
 }
 
 bool use_key_tab(shell_t *shell, __attribute__((unused)) int *cur_pos)
@@ -56,7 +55,7 @@ bool use_key_tab(shell_t *shell, __attribute__((unused)) int *cur_pos)
     }
     if (list_t_len(all) == 1) {
         clear_input(shell, cur_pos, 0);
-        modif_completion_str(shell, cur_pos, all);
+        modif_completion_str(shell, all);
         display_input(shell, cur_pos);
         list_t_destroy(all);
         return (false);
@@ -72,6 +71,9 @@ bool use_key_ctrld(shell_t *shell, __attribute__((unused)) int *cur_pos)
 
     if (my_strlen(shell->last_input) <= 0) {
         shell->is_end = true;
+        if (isatty(0)) {
+            my_putstr("exit\n");
+        }
         return (true);
     }
     all = complete_this(shell->last_input, shell->env);

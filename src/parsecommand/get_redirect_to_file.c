@@ -32,6 +32,7 @@ static char *get_file_from_list(list_t *list, int *is_error)
     if (file == NULL) {
         write(2, MISSING_ERR, 27);
     }
+    list_t_destroy(words);
     return (file);
 }
 

@@ -11,12 +11,14 @@
 #include <stdbool.h>
 #include <stdlib.h>
 #include "builtins.h"
+#include "my_dico.h"
 #include "mysh_struct.h"
 #include "mysh.h"
 #include "my_fs.h"
 #include "my_strings.h"
 #include "my_puts.h"
 #include "my_wordarray.h"
+#include "loop.h"
 
 static char **my_split_command(char *command, char *limit)
 {
@@ -42,16 +44,16 @@ static char **my_split_command(char *command, char *limit)
 
 static int print_path(char *cmd, char *path)
 {
-    int size = 0;
     int return_value = 1;
     char **path_array = NULL;
 
     path_array = my_split_command(path, ":");
-    for (int i = 0; path_array[i] != NULL; i += 1) {
+    for (int i = 0; i < my_wordarray_len(path_array); i += 1) {
         path = join_path('/', 2, path_array[i], cmd);
-        if (path == NULL)
+        if (path == NULL) {
             continue;
-        if (access(path, F_OK) == 0) {
+        }
+        if (access(path, X_OK) == 0) {
             printf("%s\n", path);
             return_value = 0;
         }
@@ -71,24 +73,24 @@ static int execute_where(shell_t *shell, char *command)
         my_printf("%s is a shell built-in\n", command);
         builtin_return_value = 0;
     }
-    path = my_strdup(getenv("PATH"));
-    if (path == NULL)
+    path = my_strdup(dico_t_get_value(shell->env, "PATH"));
+    if (path == NULL) {
         path = my_strdup("/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/sbin");
+    }
     return_value = print_path(command, path);
-    if (path != NULL)
-        free(path);
-    if (return_value == 1 && builtin_return_value == 1)
-        return (1);
-    return (0);
+    free_secure(path);
+    return (return_value == 1 && builtin_return_value == 1);
 }
 
 static int make_no_sense(char *str)
 {
-    if (str == NULL)
+    if (str == NULL) {
         return (false);
+    }
     if (strncmp(str, "./", 2) == 0 || strncmp(str, "/", 1) == 0 ||
-        strncmp(str, "../", 3) == 0)
+            strncmp(str, "../", 3) == 0) {
         return (true);
+    }
     return (false);
 }
 
@@ -111,6 +113,5 @@ void where_builtins(shell_t *shell, command_t *command)
         }
         return_value += execute_where(shell, command->arguments[i]);
     }
-    if (return_value >= 1)
-        shell->status_code = 1;
+    shell->status_code = (return_value >= 1) ? 1 : shell->status_code;
 }
