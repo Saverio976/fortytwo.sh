@@ -1,1 +1,50 @@
-NOP CLEMENT SEND PIC
+                                                                                
+                                                                                
+                                                                                
+                              .°*************°                                  
+                          ..*oooooooooooooooooo°                                
+                       .*o***ooooooooooooooooooOo*.                             
+                     .°oooo****ooooooooooooooooooooo°                           
+                     oooooooo***oo*ooooooooOOOOOoooooo°                         
+                   °*ooooooooo*****oooOOOOOOoOOOOOOOoooo.                       
+                 °ooooooooooooo***ooooooOOOOoOOOOOOOOoooo°                      
+                oOo**o*°°**********oo**oooooOOOOOOOOOOoooo*                     
+               oOOoo*°..........°..°*o*****oooooooOOooo**ooo°                   
+              o#OOo*°........      ...°°°**°°*ooooOOoooo*oooo*                  
+              *#OOo°........            ...°°°*oooOOoo****ooooo.                
+              °##o°°.........             ....°*ooooooo***oooo*.                
+               #O*°°°........            .....°*oooo*°oo***oo°                  
+               *O**°°.........           .....°*oOOoo**ooo*o.                   
+               .O*°°°...............    .......°*oOOoooooo*o*.                  
+                oo*°°............°°°°..°°°.....°°**oooOo*°**oo.                 
+                *O*°°°°°°.°°°°°°**ooo**°°*oo*.....°*oo*°o*°*oo*.                
+                °O*°°°°°****°°*oooooooooooOo°......°°**oooo°oo*                 
+                .Oo*oooooooo**°ooooooOOo***°........°*oo*°°°oO°                 
+                 oOoOOOOOO#O°.°°****°°°..............°*oo*°°*o                  
+                °O#OOOO##OO*..o*......... ............°*°°°.*°                  
+              *O#OOOOOoo**oo° .*...       ....... ....°°.°°.**.                 
+              °O#OOOoo**°°°*.  .°°..      ....... ....°°...*ooO*                
+                *O#Oo°°°..°°.   .°°°°........°.......°°...*OOoooO°              
+                  .**°....°.....°.°***°°°°°.°°°.......°°°*O#OOO*O*              
+                   °*°°°°°*o***oOoo°°°****°°°°°°°°.....*oOOO##Oo*               
+                   °o******oOOOOOo*°..°**o**°°°°°°.....*oOOO#OOO°               
+                   .Ooo****oOOOo*°°°°°**oo**°°°°°°.....*oO###Ooo.               
+                    OOooooooOOOo**ooooo***°°°°*°°°°°°..*oO##O#Oo                
+                    °OoooOOOOOOOo*°........°°°*°°°°°°. *OO##OOo°                
+                     *Oo**oOOOo**°°°°.....°°°°**°°°°°. °OO#OOo*                 
+                      oOooooooooo**°°....°°°°***°°**°. °OOOOO°                  
+                       oOOooooo**°......°°°*********°...OOO*                    
+                        oOOOo*°°°°....°°°******ooo**°...*o*                     
+                         .oOOo**°°*****oooo*ooOOoo**°°. °Oo                     
+                           .o#OOoooOOOOOOoOOOOoooo**°°...Oo                     
+                             *OOOOOOOOOOOOOOooooo***°°.. **                     
+                             °OoOOOOOOOOOOooooo*****°°.....                     
+                             .OoooOOOOOOoooooo******°°°.. .°                    
+                          .°*OOoooOOOOOOooooo*******°°°...  .*°.                
+                     .°*oO##@#OoooOOOOOooooo********°°°....°oooo*°.             
+             ..°**oOO##########OooOoOoooooo********°°°°°°*OOOoooooo*°.          
+      .°*ooOOOOO################OOOOoooooo*******°°°°°*oOOOOOOOOOOOOoo*°.       
+    °oOOOOOOOOOOOOOOO#############OOOooooo****°°°°*ooOOOOOOOOOOOOOOOOOOoo*°.    
+  .oOOOOOOOOOOOOOOOOOOOOO##########OoooooOOoo*oooOO#OOOOOOOOOOOOOOOOOOOOOoooo*. 
+ *OOOOOOOOOOOOOOOOOOOOOOOOOO########OOooO########OOOOOOOOOOOOOOOOOOOOOOOOOOOOOoo
+oOOOOOOOOOOOOOOOOOOOOOOOOOOOO##########OO######OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO
