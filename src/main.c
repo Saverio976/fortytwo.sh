@@ -41,13 +41,21 @@ static int ends_redirect_input(int saved_input)
 static int handle_batch_file(int ac, char *const av[], dico_t *env,
     int *saved_input)
 {
-    if (ac >= 3 && my_strcmp(av[1], "-b") == 0) {
-        *saved_input = redirect_input(av[2]);
+    char *tmp = NULL;
+
+    if (ac <= 1) {
+        return (0);
+    }
+    if ((ac >= 3 && my_strcmp(av[1], "-b") == 0) ||
+            my_strstartswith(av[1], "-") == 0) {
+        tmp = (my_strstartswith(av[1], "-") == 1) ? av[2] : av[1];
+        *saved_input = redirect_input(tmp);
         if (*saved_input < 0) {
-            my_puterror(av[3], "No such file or directory.\n");
+            my_puterror(tmp, "No such file or directory.\n");
             dico_t_destroy(env);
             return (1);
         }
+        return (0);
     }
     return (0);
 }
