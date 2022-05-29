@@ -10,33 +10,6 @@
 #include "my_strings.h"
 #include "globbings.h"
 
-static void delete_tmp(my_files_t *delete, my_files_t **files)
-{
-    my_files_t *tmp = NULL;
-
-    if (delete == NULL || (*files) == NULL)
-        return;
-    if (delete->prev == NULL && delete->next == NULL) {
-        free(delete->name);
-        free(delete);
-        (*files) = NULL;
-        return;
-    }
-    if (delete->prev == NULL) {
-        (*files) = delete->next;
-        (*files)->prev = NULL;
-        if ((*files)->next != NULL)
-            (*files)->next->prev = (*files);
-    } else {
-        tmp = delete->prev;
-        tmp->next = delete->next;
-        if (delete->next != NULL)
-            delete->next->prev = tmp;
-    }
-    free(delete->name);
-    free(delete);
-}
-
 static void replace_braket(char *str)
 {
     int i = 0;
@@ -45,7 +18,7 @@ static void replace_braket(char *str)
     while (str[i] != '\0') {
         if (str[i] == '[') {
             i++;
-            while (str[i] != ']') {
+            while (str[i] != ']' && str[i] != '\0') {
                 i++;
             }
         }

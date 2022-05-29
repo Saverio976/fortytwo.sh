@@ -9,34 +9,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
+#include <my_strings.h>
 #include "globbings.h"
-
-static void delete_tmp(my_files_t *delete, my_files_t **files)
-{
-    my_files_t *tmp = NULL;
-
-    if (delete == NULL || (*files) == NULL)
-        return;
-    if (delete->prev == NULL && delete->next == NULL) {
-        free(delete->name);
-        free(delete);
-        (*files) = NULL;
-        return;
-    }
-    if (delete->prev == NULL) {
-        (*files) = delete->next;
-        (*files)->prev = NULL;
-        if ((*files)->next != NULL)
-            (*files)->next->prev = (*files);
-    } else {
-        tmp = delete->prev;
-        tmp->next = delete->next;
-        if (delete->next != NULL)
-            delete->next->prev = tmp;
-    }
-    free(delete->name);
-    free(delete);
-}
 
 static char *replace_begin(char *globbinds, char *file, char letter)
 {
@@ -67,9 +41,8 @@ static char *replace_end(char *globbinds, char *file, char letter)
         return (NULL);
     for (i = 0; globbinds[i] != '\0'; i++) {
         new[i] = globbinds[i];
-        if (globbinds[i] == letter) {
+        if (globbinds[i] == letter)
             break;
-        }
     }
     new[i + 1] = '\0';
     for (i = my_strlen(file) - 1; i >= 0; i--) {
@@ -85,7 +58,6 @@ static char *replace_end(char *globbinds, char *file, char letter)
 int check_for_good_letters(char *str, char *globbinds)
 {
     char *new = NULL;
-    char *new2 = NULL;
     int size = my_strlen(globbinds);
 
     if (size < 2)
@@ -106,6 +78,10 @@ void check_letters(my_files_t **my_files, char *globbinds)
     my_files_t *tmp_delete = NULL;
     my_files_t *tmp = (*my_files);
 
+    for (int i = 0; globbinds[i] != '\0'; i++) {
+        if (globbinds[i] == '[' || globbinds[i] == '?')
+            return;
+    }
     while (tmp != NULL) {
         if (check_for_good_letters(tmp->name, globbinds) == true) {
             tmp_delete = tmp;

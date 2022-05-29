@@ -62,17 +62,9 @@ static void globbing(my_files_t **my_files, char *str)
     if ((*my_files) == NULL)
         printf("No match with %s\n", str);
     check_letters(my_files, str);
+    check_brakets(my_files, str);
     for (my_files_t *tmp = (*my_files); tmp != NULL; tmp = tmp->next) {
         printf("%s\n", tmp->name);
-    }
-}
-
-void free_list(my_files_t *files)
-{
-    for (my_files_t *tmp = files; tmp != NULL; tmp = files) {
-        files = files->next;
-        free(tmp->name);
-        free(tmp);
     }
 }
 
@@ -93,6 +85,6 @@ void globbing_entry(char *str)
         add_files(&my_files, files->d_name);
     }
     globbing(&my_files, str);
-    //free_list(my_files);
+    free_list(my_files);
     closedir(folder);
 }
