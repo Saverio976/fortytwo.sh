@@ -7,7 +7,7 @@ The thrush shell
 ## Installation
 
 ```bash
-sudo bash -c "$(curl -fsSL https://raw.githubusercontent.com/Saverio976/https://github.com/Saverio976/fortytwo.sh/install.sh)"
+sudo bash -c "$(curl -fsSL https://raw.githubusercontent.com/Saverio976/fortytwo.sh/main/install.sh)"
 ```
 
 ## Uninstall
