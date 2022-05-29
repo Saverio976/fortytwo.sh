@@ -7,6 +7,7 @@
 
 #include <stdbool.h>
 #include <stdlib.h>
+#include <string.h>
 #include <sys/types.h>
 #include <dirent.h>
 #include <stdio.h>
@@ -79,13 +80,13 @@ static char *globbing_to_str(my_files_t *my_files, char *str)
     return (str);
 }
 
-static void globbing_loop(my_files_t **my_files, DIR *folder)
+static void globbing_loop(my_files_t **my_files, DIR *folder, char *str)
 {
     struct dirent *files = NULL;
 
     while ((files = readdir(folder)) != NULL) {
-        if ((my_strcmp(files->d_name, ".") == 0
-        || my_strcmp(files->d_name, "..") == 0) && files->d_type == DT_DIR)
+        if (strncmp(str, ".", 1) != 0 &&
+        strncmp(files->d_name, ".", 1) == 0)
             continue;
         add_files(my_files, files->d_name);
     }
@@ -102,7 +103,7 @@ char *globbing_entry(char *str)
     folder = opendir("./");
     if (folder == NULL)
         return (str);
-    globbing_loop(&my_files, folder);
+    globbing_loop(&my_files, folder, str);
     globbing(&my_files, str);
     str = globbing_to_str(my_files, str);
     if (str[0] == '\0') {
