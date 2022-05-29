@@ -57,7 +57,7 @@ static char find_end(char *str, int pos)
     return (c);
 }
 
-int check_for_brakets(char *file, char *globbinds)
+static int check_for_brakets(char *file, char *globbinds)
 {
     char start = 'a';
     char end = 'z';
@@ -84,6 +84,10 @@ void check_brakets(my_files_t **my_files, char *globbinds)
     my_files_t *tmp_delete = NULL;
     my_files_t *tmp = (*my_files);
 
+    for (int i = 0; globbinds[i] != '\0'; i ++) {
+        if (globbinds[i] == '?')
+            return;
+    }
     while (tmp != NULL) {
         if (check_for_brakets(tmp->name, globbinds) == true) {
             tmp_delete = tmp;

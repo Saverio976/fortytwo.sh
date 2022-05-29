@@ -16,6 +16,7 @@ void globbing(my_files_t **my_files, char *str)
         return;
     check_letters(my_files, str);
     check_brakets(my_files, str);
+    check_interrogative(my_files, str);
 }
 
 void free_list(my_files_t *files)

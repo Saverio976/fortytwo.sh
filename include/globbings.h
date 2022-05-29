@@ -21,6 +21,7 @@ void free_list(my_files_t *files);
 int check_for_good_letters(const char *s1, const char *s2);
 void globbing(my_files_t **my_files, char *str);
 void check_size(my_files_t **files, char *str);
+void check_interrogative(my_files_t **files, char *str);
 void check_letters(my_files_t **my_files, char *str);
 void check_brakets(my_files_t **my_files, char *str);
 void delete_tmp(my_files_t *delete, my_files_t **files);

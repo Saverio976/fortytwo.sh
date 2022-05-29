@@ -46,6 +46,7 @@ static int count_size(char *str)
             replace_braket(tmp);
     }
     size = my_strlen(tmp);
+    free(tmp);
     return (size);
 }
 

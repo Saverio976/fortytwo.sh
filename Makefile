@@ -76,7 +76,8 @@ SRC_PARSECOMMAND	:=	get_arguments_array.c			\
 						check_size.c                    \
 						check_letters.c					\
 						check_brakets.c                 \
-						globbings_fnc.c
+						globbings_fnc.c                 \
+						check_interrogative.c
 SRC_PARSECOMMAND	:=	$(addprefix parsecommand/,$(SRC_PARSECOMMAND))
 
 SRC_UTILS			:=	count_tokken.c					\
