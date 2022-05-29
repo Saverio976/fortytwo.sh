@@ -71,7 +71,6 @@ static void modif_shell_gobblins(shell_t *shell, char *str, char *cmd)
 char *replace_value_env(dico_t *dico, char *str, shell_t *shell)
 {
     char **tab = NULL;
-    char *cmd = NULL;
     char *tmp = (void *) 1;
     int pos[2] = {0};
 
@@ -89,5 +88,5 @@ char *replace_value_env(dico_t *dico, char *str, shell_t *shell)
         shell->status_code = 1;
         return NULL;
     }
-    return (cmd = tab_to_str(tab, true));
+    return (tab_to_str(tab, true));
 }
