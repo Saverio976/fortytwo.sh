@@ -84,8 +84,8 @@ static void globbing_loop(my_files_t **my_files, DIR *folder)
     struct dirent *files = NULL;
 
     while ((files = readdir(folder)) != NULL) {
-        if ((my_strcmp(files->d_name, ".") == 0 ||
-        my_strcmp(files->d_name, "..") == 0) && files->d_type == DT_DIR)
+        if ((my_strcmp(files->d_name, ".") == 0
+        || my_strcmp(files->d_name, "..") == 0) && files->d_type == DT_DIR)
             continue;
         add_files(my_files, files->d_name);
     }
