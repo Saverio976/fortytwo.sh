@@ -9,8 +9,33 @@
 #include <stdbool.h>
 #include <unistd.h>
 #include "my_dico.h"
-#include "mysh.h"
+#include "my_fs.h"
 #include "mysh_struct.h"
+#include "mysh.h"
+#include "loop.h"
+
+shell_t *add_config(shell_t *shell)
+{
+    const char to_add[] = ".thrushrc";
+    const char *home = dico_t_get_value(shell->env, "HOME");
+    char *tmp = NULL;
+
+    if (home == NULL) {
+        return (shell);
+    }
+    tmp = join_path('/', 2, home, to_add);
+    if (tmp == NULL || access(tmp, R_OK) != 0) {
+        free_secure(tmp);
+        return (shell);
+    }
+    //TODO: call redirect to file
+    free(tmp);
+    while (shell->is_end != true) {
+        loop(shell);
+    }
+    //TODO: call end redirection
+    return (shell);
+}
 
 shell_t *create_shell(dico_t *env)
 {
@@ -28,6 +53,7 @@ shell_t *create_shell(dico_t *env)
     shell->command = NULL;
     shell->alias = NULL;
     shell->env = env;
+    add_config(shell);
     return (shell);
 }
 
