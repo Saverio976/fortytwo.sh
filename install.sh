@@ -89,6 +89,8 @@ echo -n -e $RESET
 sleep 0.2
 
 cd /tmp
+echo ""
+
 
 echo "Installation of source code ..."
 git clone $THRUSH_SOURCE $THRUSH_TARGET_DIRECTORY
@@ -96,10 +98,14 @@ cd $THRUSH_TARGET_DIRECTORY
 echo "Installation of source code ended"
 sleep 0.2
 
+echo ""
+
 echo "Compilation of binary ..."
 make
 echo "Compilation of binary ended"
 sleep 0.2
+
+echo ""
 
 echo "Please enter sudo password: (the binary will be moved from $THRUSH_TARGET_EXE to $THRUSH_TARGET)"
 sudo mv $THRUSH_TARGET_EXE $THRUSH_TARGET
@@ -108,11 +114,20 @@ sleep 0.1
 
 sudo bash -c "echo $THRUSH_TARGET >> /etc/shells"
 
+echo ""
+
 echo -e "\nDo you want to make it your default shell [y/n]? "
 read IS_DEFAULT
 if [[ "$IS_DEFAULT" == "y" || "$IS_DEFAULT" == "Y" ]]; then
-    chsh -s $THRUSH_TARGET
-    echo "Thrushell will be your next default shell after a reboot"
+    echo "Do you confirm this choice [y/n]? "
+    read IS_DEFAULT_CONFIRM
+    if [[ "$IS_DEFAULT" == "y" || "$IS_DEFAULT" == "Y" ]]; then
+        chsh -s $THRUSH_TARGET
+        echo "Thrushell will be your next default shell after a reboot"
+    else
+        echo "you can make it your default shell with:"
+        echo "chsh -s $THRUSH_TARGET"
+    fi
 else
     echo "you can make it your default shell with:"
     echo "chsh -s $THRUSH_TARGET"
